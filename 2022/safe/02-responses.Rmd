@@ -1,0 +1,25 @@
+## Responses to SSC and Plan Team Comments on Assessments in General
+
+> "The SSC requests that all authors fill out the risk table in 2019…" (SSC December 2018)  
+
+A risk table has been included in this full assessment.
+
+> "The Team recommends all GOA authors evaluate any bottom trawl survey information used in their assessment prior to 1990 including the 1984 and 1987 surveys and conduct sensitivity analyses to evaluate their usefulness to the assessment. This may apply for Aleutian Islands surveys but this was only raised during GOA assessment considerations." (PT, November 2021)
+
+In recent assessments survey biomass estimates from 1984 and 1987 (note that age and size composition data were not included) have been included in the survey biomass estimate, however those surveys used different vessels and gear and are not directly comparable to survey data from 1990+. 
+A suite of incremental models were run to investigate the effects of removing 1980s survey data from the assessment and removal of these surveys has minimal effect on derived quantities in recent years. 
+Therefore they have been excluded from this assessment going forward.
+
+## Responses to SSC and Plan Team Comments Specific to this Assessment
+
+> The Team recommends evaluating how the definition of the length composition plus
+group, and alternative data-weighting methods, affect model performance.” (Plan Team,
+November 2015); “Finally, the SSC notes the increasing proportion of fish in the fishery
+length composition plus-group and looks forward to seeing the results of the ongoing
+investigations into alternative length composition bin structures. The SSC also agrees
+with the high priority placed on improving maturity-at-age information for northern
+rockfish.” (SSC, December 2018)
+
+The authors have increased the length plus group by 5 cm and present finding as the author’s recommended model. Alternative data-weightings have been examined and are presented but not selected as the preferred model at this time. 
+Skip spawning has been observed for northern rockfish, however the spatial and temporal extent are unknown. 
+A preliminary examination of spawning biomass estimates with skip spawning is included in the figures, though further examination is warranted.

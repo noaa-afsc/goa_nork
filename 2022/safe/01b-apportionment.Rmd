@@ -1,0 +1,51 @@
+## Area Allocation of Harvest
+
+The following table shows the recommended ABC apportionment for `r year` and `r year +1`. 
+Apportionment is based on the random effects model developed by Plan Team survey averaging working group, which was fit to area-specific design-based biomass indices through 2021 from the bottom trawl survey. 
+
+```{r}
+# apportionment table example
+
+appo <- data.frame(X = c("", 2023, 2024, 2023, 2024),
+          X.1 = c("", "abc", 'ofl', "abc", "ofl"),
+          Western = c(52.7, 2614, NA, 2497, NA),
+          Central = c(47.3, 2350, NA, 2244, NA),
+          Eastern = c(0.02, 1, NA, 1, NA),
+          Total = c(100, 4965, 5927, 4742, 5661))
+
+flextable::font(
+    flextable::footnote(
+      flextable::flextable(appo[-1,]),
+                          i=1, j=5,
+                          value = flextable::as_paragraph("For management purposes the small ABC in the Eastern area is combined with the Other Rockfish complex."),
+                          ref_symbol = "1",
+                          part = "header"),
+                        fontname = "Times New Roman",
+                        part = "all"
+  ) %>% 
+    flextable::add_header_row(values = paste0(appo[1,], "%"), top=FALSE) %>%
+    flextable::border_remove() %>% 
+    flextable::compose(i=1, j=1:2, part='header', 
+                       value=flextable::as_paragraph('')) %>%
+    flextable::compose(i=2, j=1:2, part='header', 
+                        value=flextable::as_paragraph('Area Apportionment')) %>% 
+    flextable::merge_h(i=1:2, part = "header") %>% 
+    flextable::font(fontname = "Times New Roman", part = "all") %>%
+    flextable::fontsize(size = 11, part = "all") %>% 
+    flextable::align(j = 1, part = "all", align="left") %>% 
+     flextable::compose(i = 1:2, j = 1, 
+                       value = flextable::as_paragraph(as.character(year)), 
+                       part = "body") %>% 
+    flextable::compose(i = 3:4, j = 1, 
+                       value = flextable::as_paragraph(as.character(year+1)), 
+                       part = "body")  %>% 
+    flextable::compose(i = 1:4, j = 2, 
+                       value = flextable::as_paragraph(rep(c('ABC (t)', 'OFL (t)'), 2)), 
+                       part = "body") %>% 
+    flextable::padding(padding = 0.2, part = "all")  %>%  
+    # flextable::height(height = 0.2, part='body') %>% 
+    # flextable::hrule(rule = "exact") %>% 
+    flextable::hline_top(part='all') %>% 
+    flextable::hline_bottom() 
+  
+```

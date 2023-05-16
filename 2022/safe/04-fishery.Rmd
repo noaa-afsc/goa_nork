@@ -1,0 +1,115 @@
+# Fishery 
+
+## Description of the Directed Fishery
+
+In the Gulf of Alaska, northern rockfish are generally caught with bottom trawls identical to those used in the Pacific ocean perch (*S. alutus*) fishery. 
+Many of these nets are equipped with so-called “tire gear” in which automobile tires are attached to the footrope to facilitate towing over rough substrates. 
+Most of the catch has been taken during July, as the directed rockfish trawl fishery in the Gulf of Alaska has traditionally opened around July 1. 
+Rockfish trawlers usually direct their efforts first toward Pacific ocean perch because of its higher value relative to other rockfish species. 
+After the TAC for Pacific ocean perch has been reached and NMFS closes directed fishing for this species, trawlers switch and target northern rockfish. 
+With implementation of the Central Gulf Rockfish Pilot Project in 2007, catches have been spread out more throughout the year.
+
+Historically, bottom trawls have accounted for nearly all the commercial harvest of northern rockfish in the Gulf of Alaska.
+In the years 1990-98, bottom trawls took over 99% of the catch [@Clausen2002]. 
+Before 1996, most of the slope rockfish trawl catch (>90%) was taken by large factory-trawlers that processed the fish at sea. 
+A significant change occurred in 1996, however, when smaller shore-based trawlers began taking a sizable portion of the catch in the Central Gulf for delivery to processing plants in Kodiak. 
+Factory trawlers continued to take nearly all the northern rockfish catch in the Western area during this period.
+
+A study of the northern rockfish fishery for the period 1990-98 showed that 89% of northern rockfish catch was taken from just five relatively small fishing grounds: Portlock Bank, Albatross Bank, an unnamed bank south of Kodiak Island that fishermen commonly refer to as the “Snakehead”, Shumagin Bank, and Davidson Bank [@Clausen2002]. 
+The Snakehead accounted for 46% of the northern rockfish catch during these years. 
+All of these grounds can be characterized as relatively shallow (75–150 m) offshore banks on the outer continental shelf.
+
+Data from the observer program for 1990-98 indicated that 82% of the northern rockfish catch during that period came from directed fishing for northern rockfish and 18% was taken as incidental catch in fisheries for other species [@Clausen2002].
+
+### Catch Patterns
+
+Total commercial catch (t) of northern rockfish in the GOA for the years 1961-2018 is summarized by foreign, joint venture, and domestic fisheries (Table 10-\@ref(tab:catch) and Figure 10-\@ref(fig:fcatch)).
+Catches of GOA northern rockfish during the years 1961-1976 were estimated as 5% of the foreign GOA Pacific ocean perch catch in the same years. 
+A Pacific ocean perch trawl fishery by the U.S.S.R. and Japan began in the Gulf of Alaska in the early 1960's. 
+This fishery developed rapidly with massive efforts by the Soviet and Japanese fleets. 
+Catches peaked in 1965 when a total of nearly 350,000 metric tons (t) were caught, but declined to 45,500 t by 1976. 
+Some northern rockfish were likely taken in this fishery, but there are no available summaries of northern rockfish catches for this period. 
+Foreign catches of all rockfish were often reported simply as “Pacific ocean perch” with no attempt to differentiate species. 
+The only detailed analysis of bycatch in slope rockfish fisheries of the Gulf of Alaska is that of @Ackley2001 who examined data from the observer program for the years 1993-95. 
+Consequently, our best estimate of northern rockfish catch from 1961-1976 comes from analysis of the ratio of northern rockfish catch to Pacific ocean perch catch in the years 1993-1995. 
+For hauls targeting on Pacific ocean perch, northern rockfish composed 5% of the catch [@Ackley2001].
+
+Catches of GOA northern rockfish during the years 1977-1983 were available from NMFS foreign and joint venture fisheries observer data. 
+With the advent of a NMFS observer program aboard foreign fishing vessels in 1977, enough information on species composition of rockfish catches was collected so that estimates of the northern rockfish catch were made for 1977-83 from extrapolation of catch compositions from the foreign observer program [@Clausen2002]. 
+The relatively large catch estimates for the foreign fishery in 1982-83 are an indication that at least some directed fishing for northern rockfish probably occurred in those years. 
+Joint venture catches of northern rockfish, however, appear to have been relatively modest.
+
+Catches of GOA northern rockfish during the years 1984-1989 were estimated as 8% of the domestic slope rockfish catch during the same years. 
+A completely domestic trawl fishery for rockfish in the Gulf of Alaska began in 1984 but a domestic observer program was not implemented until 1990. 
+Domestic catches of GOA northern rockfish during the years 1984-1989 were estimated from the ratio of domestic northern rockfish catch to domestic slope rockfish catch (8%) reported by the 1990 NMFS observer program.
+ 
+Catches of GOA northern rockfish during the years 1990-1992 were estimated from extrapolation of catch compositions from the domestic observer program [@Clausen2002]. 
+Catch estimates of northern rockfish increased greatly from about 1,700 t in 1990 to nearly 7,800 t in 1992. 
+The increases for 1991 and 1992 can be explained by the removal of Pacific ocean perch and shortraker/rougheye rockfish from the slope rockfish management group. 
+As a result of this removal, relatively low TAC’s were adopted for these three species, and the rockfish fleet redirected more of its effort to northern rockfish in 1991 and 1992.
+
+Catches of GOA northern rockfish during the years 1993-`r year` were available directly from NMFS domestic fisheries observer data. 
+Northern rockfish were removed from the slope rockfish assemblage and managed with an individual TAC beginning in 1993. 
+As a consequence, directly reported catch for northern rockfish has been available since 1993. 
+Catch of northern rockfish was reduced after the implementation of a northern specific TAC in 1993. 
+Most of the catch since 1993 has been taken in the Central GOA, where the majority of the northern rockfish exploitable biomass is located. 
+Gulfwide catches for the years 1993-`r year` have ranged from `r catch %>% dplyr::filter(Year>=1993) %>% dplyr::summarise(catch = min(Catch)) %>% dplyr::pull(catch) %>% comma(.)` t to `r catch %>% dplyr::filter(Year>=1993) %>% dplyr::summarise(catch = max(Catch)) %>% dplyr::pull(catch) %>% comma(.)` t. 
+Annual ABCs and TACs have been relatively consistent during this period and have varied between 3,000--6,000 t.
+In 2001, catch of northern rockfish was below TAC because the maximum allowable bycatch of Pacific halibut was reached in the central Gulf of Alaska for “deep water trawl species,” which includes northern rockfish. 
+Catches of northern rockfish were near their TAC’s in 2003 – 2016, however in 2017 catch was 48% of the TAC and `r year` projected catch is likely to reach 53% of the TAC. 
+Consultation with industry representatives suggested the low catch to TAC ratio in 2017 was largely driven by the fleet targeting alternative higher value species. 
+Research catches of northern rockfish have been relatively small and are listed in Table 10a-1 in Appendix 10A.
+
+### Bycatch and Discards
+
+The only detailed analysis of incidental catch in slope rockfish fisheries of the Gulf of Alaska is that of @Ackley2001 who examined data from the observer program for the years 1993-95. 
+For hauls targeting on northern rockfish, the predominant incidental species were dusky rockfish, distantly followed by “other slope rockfish,” Pacific ocean perch, and arrowtooth flounder.
+
+Total FMP groundfish catch estimates in the GOA rockfish fishery from `r year-4`--`r year` are shown in Table 10-\@ref(tab:fmp-bycatch).
+As an average for the GOA rockfish fishery during `r year-4`--`r year`, the largest non-rockfish bycatch groups are arrowtooth flounder, sablefish, atka mackerel and walleye pollock.
+Non-FMP species catch in the rockfish target fisheries is dominated by giant grenadier (*Albatrossia pectoralis*) and miscellaneous fish (Table 10-\@ref(tab:nonfmp-bycatch)). 
+However, the amounts from northern rockfish targeted hauls are likely lower as this includes all rockfish target hauls.
+
+Prohibited species catch in the GOA rockfish fishery is generally low for most species. 
+Catch of prohibited and non-target species generally decreased with implementation of the Central GOA Rockfish Program. 
+Since the `r year-2` assessment the prohibited species catch observed in `r year-1` and `r year` increased for Chinook salmon and non-chinook salmon increased, and remained at similar levels for halibut (Table 10-\@ref(tab:psc)).
+
+In summary, northern rockfish are most likely to be associated with other rockfish fisheries and the bycatch of non-rockfish species in the northern rockfish fishery are likely low but the only data available is for all rockfish-targeted hauls. 
+Bycatch estimates decreased for the majority of species in the Central GOA following the implementation of the Rockfish Pilot Program. 
+The significant prohibited species that are encountered are Pacific halibut, Chinook and non-Chinook salmon.
+
+Gulf-wide discard rates (percent of the total catch discarded within management categories; Table 10-\@ref(tab:discard)) of northern rockfish are show for 1993--`r year`. 
+These rates are generally considered to be low and are consistent with other GOA rockfish species.
+These discard rates are generally similar to those in the GOA for Pacific ocean perch and dusky rockfish. 
+Discard mortality is assumed to be 100% for GOA northern rockfish.
+
+
+## Management Measures 
+
+From 1988-1993, the North Pacific Fishery Management Council (NPFMC) managed northern rockfish in the Gulf of Alaska as part of the slope rockfish assemblage. 
+In 1991, the NPFMC divided the slope rockfish assemblage in the Gulf of Alaska into three management subgroups: Pacific ocean perch, shortraker/rougheye rockfish, and a complex of all other species of slope rockfish, including northern rockfish. 
+In 1993, a fourth management subgroup, northern rockfish, was also created. 
+In 2004, rougheye rockfish and shortraker rockfish were also split and managed separately. 
+These subgroups were established to protect Pacific ocean perch, shortraker/rougheye, and northern rockfish (the four most sought-after commercial species in the assemblage) from possible overfishing. 
+Each subgroup is now assigned an individual ABC (acceptable biological catch) and TAC (total allowable catch). 
+Prior to 1991, an ABC and TAC were assigned to the entire assemblage. 
+In the assessments after 1991 and until this year’s assessment, ABC and TAC for each subgroup, including northern rockfish, is apportioned to the three management areas of the Gulf of Alaska (Western, Central, and Eastern) based on a weighted average of the proportion of biomass by area from the three most recent Gulf of Alaska trawl surveys.
+In this year’s assessment ABC and TAC is apportioned to the three management areas in the Gulf of Alaska with the random effects model developed by the Plan Team survey averaging working group. 
+Northern rockfish are scarce in the eastern Gulf of Alaska, and the ABC apportioned to the Eastern Gulf management area is small. 
+This translates to a TAC that is too difficult to be managed effectively as a directed fishery. 
+Since 1999, the ABC for northern rockfish apportioned to the Eastern Gulf management area is included in the West Yakutat ABC for “other slope rockfish.”
+
+Amendment 41, which took effect in 2000, prohibited trawling east of 140 degrees W. longitude in the Eastern GOA. 
+However, trawling has not occured in this area since 1998. 
+Since most slope rockfish, especially Pacific ocean perch, are caught exclusively with trawl gear, this amendment could have concentrated fishing effort for slope rockfish in the Eastern area in the relatively small area between 140$^\circ$ and 147$^\circ$ W longitude that remained open to trawling. 
+This probably does not have a major effect on northern rockfish populations because their abundance in the Eastern area is low.
+
+In November, 2006, NMFS issued a final rule to implement Amendment 68 of the GOA groundfish Fishery Management Plan for 2007 through 2011. 
+This action implemented the Central GOA Rockfish Pilot Program (RPP). 
+The intention of this Program was to enhance resource conservation and improve economic efficiency for harvesters and processors in the rockfish fishery. 
+An additional objective was to spread out the fishery in time and space, allowing for enhanced market conditions for product and reducing the pressure of what was an approximately two-week fishery in July. 
+The primary rockfish management groups in this program are northern rockfish, Pacific ocean perch, and pelagic shelf rockfish. 
+Potential effects of this program on northern rockfish include: 1) Extended fishing season lasting from May 1 – November 15, 2) changes in spatial distribution of fishing effort within the Central GOA, 3) improved at-sea and plant observer coverage for vessels participating in the rockfish fishery, and 4) a higher potential to harvest 100% of the TAC in the Central GOA region. 
+In a comparison of catches in the four years before the RPP to the four years after, it appears that average catches have increased overall (although, this may be due to increased observer coverage) and have spread out spatially in the western and central Gulf [see Figure 10.1 in @Hulson2013]. 
+The authors will continue to monitor the benefits and consequences of this action. 
+A summary of key management measures and a time series of catch, ABC and TAC are provided in Table 10-\@ref(tab:mgmt).

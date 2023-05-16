@@ -1,0 +1,85 @@
+# Ecosystem Considerations
+
+In general, a determination of ecosystem considerations for GOA northern rockfish is hampered by a lack of biological and habitat information. 
+However, a review of the most recent (2021) GOA Ecosystem Status Report did not reveal strong evidence of declining trends in indicators which results in strong concern for northern rockfish. 
+Information regarding the FMP, non-FMP, and prohibited species caught in rockfish target fisheries to help understand ecosystem impacts by the northern fishery (Tables 12-\@ref(tab:fmp-bycatch) - 12-\@ref(tab:psc)).
+
+## Ecosystem Effects on the Stock
+
+*Prey availability/abundance trends:* Unfortunately, there is no information on the food habits of larval or post-larval rockfish to help determine possible relationships between prey availability and year-class strength. 
+Moreover, identification to the species level for field collected larval slope rockfish is difficult. 
+Visual identification is not possible, though genetic techniques allow identification to species level for larval slope rockfish. 
+Some juvenile rockfish found in inshore habitat feed on shrimp, amphipods, and other crustaceans, as well as some mollusk and fish. 
+Adult northern rockfish feed on euphausiids. 
+Euphausiids are also a major item in the diet of walleye pollock. Changes in the abundance of walleye pollock could lead to a corollary change in the availability of euphausiids, which could then impact northern rockfish. 
+Northern rockfish body condition in 2021 improved from 2019, but continued to be below average, a persistent trend since 2013. 
+Limited information on biomass of calanoid copepod and euhausiids (adult prey) in 2022 indicate average to above average availability [@Hopcroft2022; @Drummond2022; @Hatch2022; @Fergusson2022]. 
+Shrimp (juvenile prey) CPUEs have been increasing in the Chirikof, Yakutat, and Southeastern regions over 2019 and 2021 AFSC bottom trawl surveys, while they have declined in the Kodiak region [@Palsson2021]. 
+We have no information on other juvenile prey species, such as myctophids, squids, hermit crabs, and molluscs.
+
+*Predator population trends:* There is no indication of increased predation or competition on northern rockfish. 
+Potential predators include Pacific halibut and other large fish. 
+Competitors for zooplankton prey could include Pacific Ocean perch [@Hulson2021], which remains in high abundance, and walleye pollock, which slightly declined in 2022 [@Monnahan2021]. 
+Predator effects would likely be more important on larval, post-larval, and small juvenile northern rockfish, but information on these life stages and their predators is lacking.
+However, survival of larvae are thought to be more related to the abundance and timing of prey availability than predation, due to the lack of rockfish as a prey item commonly found in diets. 
+
+*Changes in physical environment:* Changes in structural habitat present a potential concern for northern rockfish. 
+Vertical structure, including sponges, corals, and rocky habitat, is important habitat for northern rockfish and has experienced multi-year decline (with high uncertainty) across the GOA. 
+Observations in 2021 from AFSC’s bottom trawl and observer data of non-target catches (both not designed to sample structural epifauna and associated with high uncertainty) can be used to monitor trends in structural epifauna, although with uncertainty as these surveys/fisheries are not designed to target these species [AFSC bottom trawl, @Palsson2021a, Observer data, @Whitehouse2021].  
+By combining this fishery independent (AFSC survey) and fishery dependent (observer data) datasets, however, we can see a consistent trend rise above potential variability due to potential gear and effort changes (observer data) and the non-targeted sampling of both methods. 
+A VAST model was run for gorgonian corals, pennatulaceans (e.g., sea pens), and sponges integrating and modeling trawls station densities across the Gulf of Alaska (Palsson 2021). 
+The coral abundance index is variable over time but the trend suggests low abundances resulting from the two most recent surveys (2019 and 2021) compared to most index values observed before 2017. 
+The gulf-wide abundance of pennatulaceans shows an increasing trend from 1990 to 2005 and then a variable trend thereafter and a peak in 2017 followed by a decline in 2019. 
+However, the 2021 index value increased from the 2019 value. 
+The trend of sponges shows relative stability until 2015 followed by a continual 7 year decline in the GOA wide index through 2021 to a historic low value. 
+The declines in sponges are driven by trends in western GOA. 
+Sea anemones (not modeled in VAST) declined in Shumangins in 2019 and 2021, and Kodiak experienced a slight decline in 2021.
+
+It is reasonable to expect that the 2022, and predicted 2023 average deeper ocean temperatures, would provide moderate spawning habitat and surface thermal conditions for northern rockfish during a time when they are spawning and growing to a size that promotes over winter survival. 
+Larval abundance of northern rock sole, along with late winter/early spring shelf spawners (e.g., Pacific cod and walleye pollock), associate with cooler winters and enhanced alongshore spring winds. 
+Larval surveys in Shelikof Strait in 2021 observed approximately average abundance of larval rockfish (not identified to species) and age-0 surveys in western GOA (2022) observed above average Pacific cod and walleye pollock larval abundance indicating moderate to above average conditions for northern rock sole. 
+Surface temperatures were below average in the winter, transitioned from below average to above average in the spring [Satellite: @Lemagie2022, Seward Line: 5.7°C, @Danielson2022, AFSC SECM survey in Icy Strait: @Fergusson2022], and above average in the summer across the GOA (Seward Line: 12.3°C).  
+Thermal conditions for adults (banks along shelf edge approximately 75-150m) may have slightly increased to above average in 2022 (longline survey (250m), Siwicke 2022). 
+AFSC bottom trawl survey data revealed a western shift and slight decrease in depth in northern rockfish distribution within the GOA with no relationship to change in temperature. 
+
+
+Euphausiids are also a major item in the diet of walleye pollock. Changes in the abundance of walleye pollock could lead to a corollary change in the availability of euphausiids, which could then impact northern rockfish. 
+The limited information available on temperature and zooplankton indicate average foraging and growing conditions for the zooplanktivorous northern rockfish during 2020. 
+Heat wave conditions occurred during 2020 but were not as severe as 2019 during the summer and fall in the GOA [@Barbeaux2020]. 
+Sea surface temperatures were about 1°C above normal in the western GOA and average in the eastern GOA during the 2020 summer (Alaska Center for Climate Assessment & Policy ACCAP, Thoman personal communication). 
+Inside waters of the GOA were slightly more anomalously warm than offshore temperatures (ACCAP). 
+Offshore of Kodiak, waters above the continental shelf along the GAK line remained anomalously warm (0.5°C) at 200-250 m depth in 2020 but cooler than 2019 [@Danielson2020]. 
+Along the GOA slope, the AFSC Longline Survey Subsurface Temperature Index indicates above average temperatures at the surface and at depth (250 m) in 2020 relative to the 2005-2019 time series and cooler temperatures in 2020 relative to 2019 (Siwicke personal communication). 
+In the inside waters, Prince William Sound has remained warm since 2014 [@Danielson2020]. 
+However, for the inside waters of the eastern GOA, the top 20 m temperatures of Icy Strait in northern southeast Alaska during summer were slightly below average (8.8°C) in 2020 relative to the 23 year time series (1997-2019) [@Fergusson2022]. 
+A recent study published in the U.S. West Coast suggests that the warming that occurred during 2014-2016 may have been beneficial for rockfish recruitment [@Morgan2019].
+
+The primary prey of the adult northern rockfish are euphausiids. 
+Warm conditions tend to be associated with zooplankton communities that are dominated by smaller and less lipid rich species in the GOA [@Kimmel2019]. 
+There was limited information on zooplankton in 2020. 
+In the inside waters of Icy Strait, northern southeast Alaska, total zooplankton densities were at the 24 year mean and the lipid content of all zooplankton taxa combined examined during 2020 was average for the time series (1997-2020) and similar to 2019 [@Fergusson2022]. 
+By taxa, lipid content was above average for the large calanoid copepods, average for hyperiid amphipods, but lower than average for euphausiids, small copepods and gastropods indicating average nutritional quality of the prey field possibly utilized by larval, juvenile, and adult rockfish. 
+In the western GOA, the mean biomass of large calanoids and euphausiids averaged over the top 100m south of Seward Alaska during May were about average in 2020 relative to the time series, 1998-2019 [@Fergusson2022].
+
+
+## Fishery Effects on the Ecosystem 
+
+*Fishery-specific contribution to bycatch of HAPC biota:* In the GOA, bottom trawl fisheries for pollock, deepwater flatfish, and Pacific ocean perch account for most of the observed bycatch of coral, while rockfish fisheries account for little of the bycatch of sea anemones, sea whips, and sea pens. 
+The bottom trawl fisheries for Pacific ocean perch and Pacific cod and the pot fishery for Pacific cod account for most of the observed bycatch of sponges (Table 10-\@ref(tab:nonfmp-bycatch)).
+
+*Fishery-specific concentration of target catch in space and time relative to predator needs in space and time (if known) and relative to spawning components:* The directed slope rockfish trawl fishery that begins in July is concentrated in known areas of abundance and typically lasts only a few weeks. 
+The annual exploitation rates on rockfish are thought to be quite low. 
+Insemination is likely in the fall or winter, and parturition is likely mostly in the spring. 
+While reproductive activities are probably not directly affected by the commercial fishery, there is evidence of skip spawning often caused by an a lack of fertilization [@Conrath2019].
+If fishing were to reduce the population substantially or cause significant localized depletion it would be possible to increase the amount of observed skip spawning within the stock.
+
+*Fishery-specific effects on amount of large size target fish:* No evidence for targeting large fish.
+
+*Fishery contribution to discards and offal production:* Fishery discard rates of northern rockfish during 2009-2022 have been 1.5-9.1%.
+
+*Fishery-specific effects on age-at-maturity and fecundity of the target fishery:* Unknown.
+
+*Fishery-specific effects on EFH living and non-living substrate:* Unknown, but the heavy-duty “rockhopper” trawl gear commonly used in the fishery can disturb seafloor habitat. 
+Table 10-\@ref(tab:nonfmp-bycatch) shows the estimated bycatch of living structure such as benthic urochordates, corals, sponges, sea pens, and sea anemones by the GOA rockfish fisheries. 
+The average bycatch of corals/bryozoans and sponges by rockfish fisheries are a large proportion of the catch of those species taken by all Gulfwide fisheries.
+

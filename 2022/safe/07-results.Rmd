@@ -1,0 +1,105 @@
+# Results
+
+## Model Evaluation
+
+The author's preferred model is model `r pref_mod`. 
+The examined models were:
+
+```{r}
+data.frame(Model = c("base", 
+                     "m18.2b",
+                     "m22",
+                     "m22.1",
+                     "m22.1a",
+                     "m22.1b"),
+           Description = c("2020 model (m18.2b) and results (includes 1980s survey data)",
+                           "base model w/data updated through 2022",
+                           "m18.2b using GAP default VAST (survey data 1990+)",
+                           "m22 w/increased length plus group",
+                           "m22.1 re-weighted",
+                           "m22.1 re-weighted, with survey weight = 1")) %>% 
+  flextable::flextable() %>% 
+  flextable::padding(padding = 0.8, part = "all") %>% 
+  flextable::autofit() %>% 
+  flextable::font(fontname = "Times", part = "all") %>% 
+  flextable::fontsize(size = 11)  
+```
+
+When we present alternative model configurations, our usual criteria for choosing a superior model are: (1) the best overall fit to the data (in terms of negative log-likelihood), (2) biologically reasonable patterns of estimated recruitment, catchabilities, and selectivity, (3) a good visual fit to length and age compositions, and (4) parsimony. 
+We've presented results for multiple models because the 2020 and 2022 models differ in either trawl survey biomass inputs, the length plus group was increased, or the model was re-weighted iteratively. 
+The 'base' model and m18.2b are excluded from consideration since they use trawl survey data from the 1980s. 
+A general examination of these models relative to m22 shows an increase in estimate trawl survey biomass when 2021 survey data is included and a further increase in estimated biomass when the 1980s data are excluded (Figure 10-\@ref(fig:fcomparesrv)). 
+However m18.2b and m22 generate essentially the same total and spawning biomass (Figure 10-\@ref(fig:fcomparebio)) though m22 has a lower data likelihood (Table 10-\@ref(tab:likelihood)). 
+Survey biomass estimates are very similar between models m22, m22.1, and m22.1a (Figure 10-\@ref(fig:fcomparesrv2)) with only m22.1b presenting a different assessment output with  lower estimates of biomass in early years and a higher estimates of survey biomass in later years.  
+However, the total and spawning biomass estimates from models m22, m22.1, and m22.1a do differ (Figure 10-\@ref(fig:fcomparebio2)). 
+Increasing the length composition plus size by 5cm slightly decreases abundance and re-weighting this model further decreases abundance. 
+The iterative re-weighting process used in m22.1a changed the fishery age composition, survey age composition, and fishery length composition weights (previously all set at 0.5) to 1.339, 0.835 and 0.973, respectively.
+This model increases the data likelihood (Table 10-\@ref(tab:likelihood)), though the re-weighted model is not directly comparable to m 22 or m22.1. 
+Of note is the increase in catchability *q* which has the effect of reducing abundance. 
+Model m22.1b is the only model that changes biomass other than simply by scale, which is a response to the change in compositional data weightings and survey weight. 
+Overall compositional data weights were similar to those from m22.1a at 1.325, 0.827, and 0.984 for the fishery age, survey age, and survey length compositional data weights, respectively.
+Model m22.1b again increases the data likelihood, though is not directly comparable to the other models due to the re-weighting, it also has the highest estimated biomass and ABC.  
+
+Model `r pref_mod` produces good visual fits to the data, and biologically reasonable patterns of recruitment, abundance, and selectivity. 
+Therefore, the recommended 2022 model is utilizing the new information effectively, and we use it to recommend the `r year+1` ABC and OFL.
+While the re-weighted models are compelling, particularly to change the survey biomass weight to 1.0, there appears to be a wide range of outcomes from small changes in data weights and we would prefer to explore this more before putting forward one of these models to provide advice for management.
+
+## Time Series Results
+
+Key results have been summarized in Tables 10-\@ref(tab:likelihood) – 10-\@ref(tab:timseries). 
+In general, model predictions continue to fit the data well (Figures 10-\@ref(fig:fcatch), 10-\@ref(fig:fsurvey), 10-\@ref(fig:ffac), 10-\@ref(fig:fsac), 10-\@ref(fig:ffsc))
+
+*Definitions*  
+Spawning biomass is the biomass estimate of mature females in tons. 
+Total biomass is the biomass estimate of all `r params$species` age-2 and greater in tons. 
+Recruitment is measured as number of age-2 `r params$species`. 
+Fishing mortality is fully-selected *F*, meaning the mortality at the age the fishery has fully selected the fish. 
+
+*Biomass and Exploitation Trends*  
+The estimates of current population abundance indicate that it is dominated by fish from the 1993 and 1998 year-classes (Table 10-\@ref(tab:numbers)). 
+Since the early 1990s the total biomass estimated in the model plateaued close to 200,000 t through the early 2000s and has been decreasing since (Figure 10-\@ref(fig:fbiomass)). 
+Similarly, the spawning biomass estimated in the model has also been decreasing since the mid 2000s. 
+From 1990 on total biomass is generally folling the trend observed in the fit to VAST model-based survey biomass index (Figure 10-\@ref(fig:fsurvey)). 
+
+
+
+The estimated selectivity curve for the fishery and survey data suggested a pattern similar to previous assessments for northern rockfish (Figure 10-\@ref(fig:fslx)). 
+The commercial fishery targets slightly larger and (likely) older fish and the survey should sample a larger range of ages. 
+Ninety-five percent of northern rockfish are selected in the fishery by age 10. 
+The age at 50% selection is 9.1 for the survey and 8.2 for the fishery, age at 50% maturity is estimated at 10.6 years.
+
+
+@Goodman2002 suggested that stock assessment authors use a “management path” graph as a way to evaluate management and assessment performance over time. 
+In the management path we plot the ratio of fishing mortality to $F_{OFL}$ ($F_{35\%}$) and the estimated spawning biomass relative to $B_{35\%}$. 
+Harvest control rules based on $F_{35\%}$ and $F_{40\%}$ and the tier 3b adjustment are provided for reference. 
+The historical management path for northern rockfish has been above the $F_{OFL}$ adjusted limit for only a few years in the 1960s. 
+In recent years, northern rockfish have been above $B_{35\%}$ and below $F_{35\%}$ (Figure 10-\@ref(fig:fphase)). 
+The trajectory of fishing mortality has remained below the $F_{40\%}$ level most of the time and below $F_{35\%}$ in all years except 1964-76 during the period of intense fishing for Pacific ocean perch. 
+Parameter estimates from this year’s model were similar to the previous northern rockfish assessment (Table 10-\@ref(tab:likelihood)). 
+Selectivity estimates for the fishery and the survey are similar, but with the survey selectivity increasing somewhat more gradually with age. 
+Compared to the maturity at age curve that is estimated, selectivity occurs at slightly younger ages than the age of maturity (Table 10-\@ref(tab:numbers) and Figure 10-\@ref(fig:fslx)).
+The fishing mortality rate *F* has been fairly consistent since 1990 (Figure 10-\@ref(fig:fF)), and the exploitation rate has been generally around the long-term average (Figure 10-\@ref(fig:fcatch-bio)).
+
+
+*Recruitment*  
+Recruitment estimates show a high degree of uncertainty, but indicate several large year-classes in the early and late 1970’s, early 1980’s and mid 1990’s (Tables 10-\@ref(tab:compare) and 10-\@ref(tab:timseries) and Figure 10-\@ref(fig:frecruit)). 
+Recruitment since 2005 has been considerably lower than the 1970--2005 time period. 
+There is no clear trend between recruitment and spawning stock biomass (Figure 10-\@ref(fig:frecssb)). 
+Fits to the fishery and survey age compositions were reasonable with this year’s recommended model (Figures 10-\@ref(fig:ffac) and 10-\@ref(fig:fsac)).
+Increasing proportions of GOA northern rockfish in the plus age or length groups for both survey and fishery composition indicate a substantial number of individuals are successfully surviving natural and fishing mortality to attain old age and large size.
+
+*Retrospective analysis*  
+From the MCMC chains described in the *Uncertainty approach* section, we summarize the posterior densities of key parameters for the recommended model using histograms (Figure 10-\@ref(fig:fhist)) and credible intervals (Table 10-\@ref(tab:mcmcpar)). 
+We also use these posterior distributions to show uncertainty around time series estimates such as total biomass, recruitment, and spawning biomass (Figures 10-\@ref(fig:fbiomass), 10-\@ref(fig:frecruit), 10-\@ref(fig:fswath)).
+
+Table 10-\@ref(tab:mcmcpar) shows the maximum likelihood estimate (MLE) of key parameters with their corresponding standard deviations derived from the Hessian matrix compared to the standard deviations derived from MCMC methods. 
+The Hessian and MCMC standard deviations are larger for the estimates of *q*, $F_{40\%}$, ABC, and female spawning biomass. 
+These larger standard deviations indicate that these parameters are more uncertain than indicated by the standard estimates. 
+However, all estimates fall within the Bayesian credible intervals.
+The distributions of these parameters are slightly skewed with higher MLE estimates than MCMC medians for current spawning and total biomass and ABC, indicating possibilities of higher biomass estimates (Figure 10-\@ref(fig:fhist)). 
+Uncertainty estimates in the time series of spawning biomass also result in a skewed distribution towards higher values, particularly at the end of the time series and into the 15 year projected times series (Figure 10-\@ref(fig:fswath)).
+
+A within-model retrospective analysis of the recommended model was conducted for the last 10 years of the time-series by dropping data one year at a time. 
+The revised Mohn’s “rho” statistic [@Hanselman2013] in female spawning biomass was -0.082, an improvement from -0.236 in the previous model) indicating that the model slightly increases the estimate of female spawning biomass in recent years as data is added to the assessment. 
+The retrospective female spawning biomass and the relative difference in female spawning biomass from the model in the terminal year are shown in Figure 10-\@ref(fig:fretro) (with 95% credible intervals from MCMC). 
+

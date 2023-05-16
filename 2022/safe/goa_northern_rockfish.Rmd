@@ -1,0 +1,161 @@
+---
+params:
+  chapter: 10
+  species: "northern rockfish"
+  species_complex: "no"
+  area: "Gulf of Alaska"
+  tier: 3
+author: "Benjamin C. Williams, Peter-John F. Hulson, Chris R. Lunsford and Bridget Ferriss"
+date: "November 2022"
+
+# don't do anything below this line unless you are cool with the consequences
+output:
+  bookdown::word_document2:
+     reference_docx: "template.docx"
+     toc: false
+     number_sections: false
+     css: "styles.css"
+     pandoc_args:  
+       - '--lua-filter=scholarly-metadata.lua'
+       - '--lua-filter=author-info-blocks.lua'
+
+always_allow_html: true        
+fontsize: 11pt
+geometry:
+  - top=1in
+  - bottom=1in
+  - left=1in
+  - right=1in     
+fig_caption: true
+bibliography: "safe_bibby.bib"
+csl: "fishfish.csl"
+
+---
+
+```{r setup, include=FALSE, echo = FALSE}
+# remotes::install_github("crsh/rmdfiltr")
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.pos = "!h", out.extra = "", ft.keepnext = F)
+knitr::opts_knit$set(eval.after = "fig.cap")
+x = 1
+sprintf("Figure %s. " , paste0(params$chapter, '.',x))
+```
+
+```{r}
+if(params$species_complex=="no"){
+   title = paste0(params$chapter, ". Assessment of the ", tools::toTitleCase(params$species), " Stock in the ", params$area)
+  } else {
+    title = paste0(params$chapter, ". Assessment of the ", tools::toTitleCase(params$species), " Stock Complex in the ", params$area)  
+  }
+
+
+```
+
+---
+title: `r title`
+---
+
+```{r load, warning=F, message=F}
+# load
+library(safe)
+comma <- function(x) format(round(as.numeric(x), digits = 0), big.mark = ",")
+# globals
+species = params$species
+pref_mod = "m22.1"
+year = 2022
+date = 'October 22, 2022'
+model = "nr"
+end_proj = year + 15
+best_f = 0.0763 # from the best_f function in groundfishr package
+
+mohn = -0.082
+
+catch = vroom::vroom(here::here(year, "data", "output", "fsh_catch.csv"))
+c0 = catch %>% dplyr::filter(Year==year-1) %>% dplyr::pull(Catch) %>% comma(.)
+tot = comma(read.csv(here::here(year, "safe", "data", "tier3.csv"))[3,4])
+ofl = comma(read.csv(here::here(year, "safe", "data", "tier3.csv"))[11,4])
+ofl0 = comma(0000000000000000)
+sb1 = comma(read.csv(here::here(year, "safe", "data", "tier3.csv"))[4,4])
+sb2 = comma(read.csv(here::here(year, "safe", "data", "tier3.csv"))[4,5])
+b35 = comma(read.csv(here::here(year, "safe", "data", "tier3.csv"))[7,4])
+b40 = comma(read.csv(here::here(year, "safe", "data", "tier3.csv"))[6,4])
+b100 = comma(read.csv(here::here(year, "safe", "data", "tier3.csv"))[5,4])
+
+f40 = read.csv(here::here(year, "safe", "data", "tier3.csv"))[8,4]
+f35 = read.csv(here::here(year, "safe", "data", "tier3.csv"))[10,4]
+
+# bring in as numeric
+abc = as.numeric(read.csv(here::here(year, "safe", "data", "tier3.csv"))[13,4])
+abc0 = as.numeric(read.csv(here::here(year, "safe", "data", "tier3.csv"))[13,2])
+abc01 = as.numeric(read.csv(here::here(year, "safe", "data", "tier3.csv"))[13,3])
+
+# calculate percents
+perc = abs(round((abc-abc0)/abc0 * 100))
+perc1 = abs(round((abc-abc01)/abc01 * 100))
+
+# change to text
+
+abc = comma(abc)
+abc0 = comma(abc0)
+# todo: read from proj output
+c1 = 2003 # estimated catch in current year
+c2 = 2654 # proj catch year + 1
+c3 = 2464 # proj catch year + 2
+# todo: build a function/switch to auto run the tier(a/b) - also for overfishing/overfished
+```
+
+```{r, child="01-summary.Rmd", eval = T}
+```
+
+```{r, child="02-responses.Rmd", eval = T}
+```
+
+```{r, child="03-intro.Rmd", eval = T}
+```
+
+```{r, child="04-fishery.Rmd", eval = T}
+```
+
+```{r, child="05-data.Rmd", eval = T}
+```
+
+```{r, child="06-model.Rmd", eval = T}
+```
+
+```{r, child="07-results.Rmd", eval = T}
+```
+
+```{r, child="08-abc.Rmd", eval = T}
+```
+
+```{r, child="09-ecosystem.Rmd", eval = T}
+```
+
+```{r, child="10-gaps.Rmd", eval = T}
+```
+
+\pagebreak
+
+\allsectionsfont{\centering}
+
+\pagebreak
+
+# References
+
+<div id="refs"></div>
+
+```{r, child="11-tables.Rmd", eval = T}
+```
+
+\pagebreak
+
+```{r, child="12-figures.Rmd", eval = T}
+```
+
+\pagebreak
+
+```{r, child="13-append_a.Rmd", eval = T}
+```
+
+\pagebreak
+```{r, child="14-append_vast.Rmd", eval = T}
+```

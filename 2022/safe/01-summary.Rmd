@@ -1,0 +1,75 @@
+# Executive Summary
+
+We use a statistical age-structured model as the primary assessment tool for GOA northern rockfish which qualifies as a Tier 3 stock. 
+This assessment consists of a population model, which uses survey and fishery data to generate a historical time series of population estimates, and a projection model, which uses results from the population model to predict future population estimates and recommended harvest levels. 
+The data sets used in this assessment include total catch biomass, fishery age and size compositions, trawl survey abundance estimates, and trawl survey age compositions. 
+For Gulf of Alaska northern rockfish in `r year`, we present a full assessment with updated assessment and projection model results to recommend harvest levels for the next two years.
+
+## Summary of Changes in Assessment Inputs
+*Changes to input data:* Relative to the last full assessment the following substantive changes have been made to assessment inputs: 
+
+  - include survey biomass estimates for `r year-1`, 
+  - update survey age compositions with `r year-1` data,
+  - update fishery age compositions with `r year-2` data,
+  - update final catch values for `r year-2` and `r year-1`, and use preliminary catch for `r year`.
+
+The survey biomass estimate is based upon the Groundfish Assessment Program’s Vector Autoregressive Spatio-temporal (VAST) model for the GOA through 2021.  
+Survey data from the 1980s were excluded from this assessment.
+In the last few assessments survey biomass from 1984 and 1987 have been included in the survey biomass estimate (though not in the compositional data), however those surveys used different vessels and gear and are not directly comparable to survey data from 1990+. 
+Removal of these data had minimal effects on model performance and they have been excluded from this assessment going forward.
+
+*Changes in assessment methodology:* 
+The following model change is recommended in the current assessment: extend the length plus group from 38 cm to 45 cm.
+
+## Summary of Results
+
+A suite of incremental models were run to investigate the effects of removing 1980s survey data from the assessment, increasing the length plus group, re-weighting of compositional data, and changing the survey biomass weight from 0.25 to 1.0. 
+
+```{r}
+data.frame(Model = c("base", 
+                     "m18.2b",
+                     "m22",
+                     "m22.1",
+                     "m22.1a",
+                     "m22.1b"),
+           Description = c("2020 model (m18.2b) and results (includes 1980s survey data)",
+                           "base model w/data updated through 2022, using GAP default VAST",
+                           "m18.2b using GAP default VAST (survey data 1990+)",
+                           "m22 w/increased length plus group",
+                           "m22.1 w/Francis re-weighting",
+                            "m22.1a w/survey biomass weight set to 1")) %>% 
+  flextable::flextable() %>% 
+  flextable::padding(padding = 0, part = "all") %>% 
+  flextable::autofit() %>% 
+  flextable::font(fontname = "Times", part = "all") %>% 
+  flextable::fontsize(size = 10)  
+```
+
+The author's preferred model is `r pref_mod`, which is the 2020 model with updated data through `r year`, and an increased length plus group that uses a VAST model-based index of survey abundance with GAP default settings.
+This model generally produces good visual fits to the data and biologically reasonable patterns of recruitment, abundance, and selectivity, and relatively low retrospective Mohn's rho value.
+
+The `r pref_mod` projected age 2+ total biomass for `r year+1` is `r tot` t. 
+The recommended ABC for `r year+1` is `r abc` t, the maximum allowable ABC under Tier 3a. 
+This ABC is a `r perc`% decrease compared to the `r year` ABC of `r abc0` t and a `r perc1`% increase from the projected `r year + 1` ABC from last year. 
+The `r year+1` GOA-wide OFL for northern rockfish is `r ofl` t. 
+
+The stock is not being subject to overfishing, is not currently overfished, nor is it approaching a condition of being overfished. 
+
+Reference values for northern rockfish are summarized in the following table:
+
+```{r, child= "01a-main_table.Rmd", eval = T}
+
+```
+
+
+```{r, child= "01b-apportionment.Rmd", eval = T}
+
+```
+
+
+
+```{r, child= "01c-plan_team.Rmd", eval = F}
+
+```
+
+

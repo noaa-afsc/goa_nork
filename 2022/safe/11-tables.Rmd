@@ -1,0 +1,539 @@
+# Tables
+
+```{r catch, eval = T}
+vroom::vroom(here::here(year, 'data', 'output', 'fsh_catch.csv')) %>%
+  dplyr::left_join(vroom::vroom(here::here(year, "data", "user_input", "abc_tac.csv"))) %>% 
+  dplyr::select(Year, Foreign, `Joint Venture` = Joint, Domestic, Total = Catch, ABC, TAC) %>% 
+  dplyr::mutate(ptac = round(Total / TAC * 100),
+                Foreign = ifelse(Foreign==0, 1, Foreign),
+                `Joint Venture` = ifelse(`Joint Venture`==0, 1, `Joint Venture`)) -> dat 
+
+
+flextable::flextable(dat) %>% 
+  flextable::colformat_double(j=2:7, digit=0 ) %>% 
+  flextable::colformat_double(j=1, big.mark = "", digit=0) %>% 
+  flextable::fontsize(size = 10, part = "all") %>% 
+  flextable::set_header_labels(ptac = "% TAC") %>% 
+  flextable::align(j=1, part="all") %>% 
+  flextable::autofit() %>% 
+  flextable::footnote(
+    i=28, j=1,part="body",
+    value = flextable::as_paragraph("Slope rockfish assemblage management implemented by NPFMC."),
+    ref_symbol = "1") %>% 
+  flextable::footnote(
+    i=31, j=1, part = "body",
+    value = flextable::as_paragraph("Slope rockfish divided into 3 management subgroups:  Pacific ocean perch, shortraker/ rougheye, and other slope rockfish."),
+    ref_symbol = "2") %>% 
+  flextable::footnote(
+    i=33, j=1, part="body",
+    value = flextable::as_paragraph("A fourth management subgroup, northern rockfish, was created."),
+    ref_symbol = "3") %>% 
+  flextable::footnote(
+    i=47, j=1, part="body",
+    value = flextable::as_paragraph("Central Gulf Rockfish Pilot Project implemented for rockfish fishery."),
+    ref_symbol = "4") %>% 
+  flextable::footnote(
+    i=62, j=1, part="body",
+    value = flextable::as_paragraph("Catch through 2022-10-28."),
+    ref_symbol = "5") %>% 
+   flextable::set_caption("Commercial catch (t) of dusky rockfish in the Gulf of Alaska, with Gulf-wide values of acceptable biological catch (ABC), total allowable catch (TAC), and percent TAC harvested (% TAC). Values are a combination of foreign observer data, joint venture catch data, and NMFS Regional Office Catch Accounting System data.") %>% 
+  flextable::fit_to_width(6.5) %>% 
+  flextable::padding(padding = 0.05, part = "all")  %>% 
+  flextable::font(fontname = "Times New Roman", part = "all")
+```
+
+\pagebreak
+
+
+```{r fmp-bycatch}
+read.csv(here::here(year, "data", "output", "fmp_catch.csv")) %>%
+  dplyr::group_by(year, species) %>% 
+  dplyr::summarise(c = sum(conf),
+                   weight = sum(catch)) %>% 
+  dplyr::mutate(value = ifelse(c<=3, NA,  weight)) %>% 
+  # dplyr::ungroup() %>% 
+  # dplyr::mutate(value = ifelse(!is.na(value), round(value,0), "Conf")) %>% 
+  dplyr::select(-c(c, weight)) %>% 
+  tidyr::pivot_wider(names_from=year, values_from = value) %>% 
+  # dplyr::mutate(dplyr::across(dplyr::everything(), ~tidyr::replace_na(.x, "-"))) %>% 
+  flextable::flextable() %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::fontsize(size = 10, part = "all") %>% 
+  flextable::padding(padding = 0.5, part = "all")  %>%  
+  flextable::autofit() %>% 
+  flextable::set_header_labels(values = 
+                                 list(species = "Species Group")) %>% 
+  flextable::colformat_double(j=2:6, digit=0) %>% 
+  flextable::fit_to_width(6.5) %>% 
+  flextable::set_caption("FMP species incidental catch estimates in tons for Gulf of Alaska rockfish targeted fisheries. Blanks = Confidential because of less than three vessels, or not caught. Source: NMFS AKRO Blend/Catch Accounting System via AKFIN 2022-10-28.")
+```
+
+\pagebreak
+
+```{r nonfmp-bycatch}
+read.csv(here::here(year, "data", "output", "non-fmp_catch.csv")) %>%
+  dplyr::group_by(year, species) %>% 
+  dplyr::summarise(c = sum(conf),
+                   weight = sum(weight),
+                   count = sum(count)) %>% 
+  dplyr::mutate(value = dplyr::case_when(!is.na(weight) & c>3 ~ weight,
+                                         !is.na(count) & c>3 ~ count),
+                value = ifelse(is.na(value), "Conf", round(value,2))) %>% 
+  dplyr::select(-c(c, weight, count)) %>% 
+  tidyr::pivot_wider(names_from=year, values_from = value) %>% 
+  dplyr::mutate(dplyr::across(dplyr::everything(), ~tidyr::replace_na(.x, "-"))) %>% 
+  flextable::flextable() %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::fontsize(size = 10, part = "all") %>% 
+  flextable::padding(padding = 0.5, part = "all")  %>%  
+  flextable::autofit() %>% 
+  flextable::set_header_labels(values = 
+                                 list(species = "Species Group")) %>% 
+  flextable::colformat_double(j=2:6, digit=0) %>% 
+  flextable::fit_to_width(6.5) %>% 
+  flextable::set_caption("Non-FMP species bycatch estimates in tons for Gulf of Alaska rockfish targeted fisheries. Conf. = Confidential because of less than three vessels. Source: NMFS AKRO Blend/Catch Accounting System via AKFIN 2022-10-28.")
+```
+
+\pagebreak
+
+```{r psc}
+read.csv(here::here(year, "data", "output", "psc_catch.csv")) %>%
+  flextable::flextable() %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::fontsize(size = 10, part = "all") %>% 
+  flextable::padding(padding = 0, part = "all")  %>%  
+  flextable::autofit() %>% 
+  flextable::set_header_labels(values = 
+                                 list(species_group_name = "Species Group",
+                                      X2018 = 2018,
+                                      X2019 = 2019,
+                                      X2020 = 2020,
+                                      X2021 = 2021,
+                                      X2022 = 2022)) %>% 
+  flextable::colformat_double(j=2:6, digit=0) %>% 
+  flextable::set_caption("Prohibited Species Catch (PSC) estimates reported in tons for halibut and herring, and thousands of animals for crab and salmon, by year, for the GOA rockfish fishery 2014-2018. Source: NMFS AKRO Blend/Catch Accounting System PSCNQ via AKFIN 2022-10-28.")
+```
+
+\pagebreak
+
+```{r discard}
+data.frame(year = 1993:2003,
+           perc = c(26.5,17.7,12.7,16.6,28.0,18.4,11.3,10.0,17.7,10.0,9.4),
+           year1 = c(2004:2014),
+           perc1 = c(7.8,4.2,9.1,2.6,4.9,3.1,1.5,3.9,2.5,4.1,3.8),
+           year2 = c(2015:2022,NA, NA, NA),
+           perc2 = c(4.6,5.5,7.9,3.6,5.6,1.4,1.6,1.5,NA, NA, NA)) %>% 
+  flextable::flextable() %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::fontsize(size = 11, part = "all") %>% 
+  flextable::colformat_num(j=c(1,3, 5), 
+                           big.mark = "") %>% 
+  flextable::set_header_labels(values = list(year = "Year", year1 = "Year", year2 = "Year", perc = "% discard", perc1 ="% discard", perc2 = "% discard")) %>% 
+  flextable::align(j=c(1,3), part = 'all') %>% 
+  flextable::width(j=1:6, width=0.5) %>%   
+  flextable::align(j=1:6, align = "center", part = 'all') %>%
+  flextable::padding(padding = 0.8, part = "all") %>% 
+  flextable::border_remove() %>%
+  flextable::hline_top(part = "header") %>%
+  flextable::hline_top() %>% 
+  flextable::hline_bottom() %>%
+  flextable::set_caption("Gulf of Alaska discard rates rates (percent of the total catch discarded within management categories) of northern rockfish.")
+
+```
+
+\pagebreak
+
+```{r mgmt}
+vroom::vroom(here::here(year, 'data', 'output', 'fsh_catch.csv')) %>%
+  dplyr::left_join(vroom::vroom(here::here(year, "data", "user_input", "abc_tac.csv"))) %>% 
+  dplyr::mutate(perc_tac = round(Catch / TAC * 100)) %>%  
+  dplyr::select(Year, Catch, ABC, TAC, `% TAC` = perc_tac, `Management measure` = measure) %>% 
+  flextable::flextable() %>%
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::fontsize(size = 10, part = "all") %>% 
+  # flextable::compose(j = 6, value = flextable::as_paragraph("Management measure"), part = "header") %>% 
+  flextable::align(j=1, part = 'all') %>% 
+  flextable::colformat_double(j=1, 
+                              big.mark = "",
+                              digits=0) %>% 
+  flextable::colformat_double(j=2:5, 
+                              digits=0) %>% 
+  flextable::width(j=1:5, width=0.5) %>%
+  flextable::width(j=6, width=3.5) %>%
+  # flextable::fit_to_width(max_width = 6) %>% 
+  flextable::border_remove() %>%
+  flextable::hline_top(part = "header") %>%
+  flextable::hline_top() %>% 
+  flextable::hline_bottom() %>% 
+  flextable::padding(padding = 0.7, part = "all") %>%   
+    flextable::fit_to_width(6.5) %>% 
+  flextable::set_caption("Summary of key management measures and the time series of catch, ABC, and TAC for northern rockfish in the Gulf of Alaska. Catch through 2022-10-28.")
+```
+
+\pagebreak
+
+```{r fsc}
+
+read.csv(here::here(year, pref_mod, "tables", "fsc.csv")) %>%
+  dplyr::mutate(dplyr::across(2:16, round, 3)) %>% 
+  flextable::flextable() %>% 
+  flextable::colformat_double(i=32:33, digit=0 ) %>% 
+  flextable::set_header_labels(values = 
+                                 list(name = "Length (cm)",
+                                      'X1991' = '1991',
+                                      'X1992' = '1992',
+                                      'X1993' = '1993',
+                                      'X1994' = '1994',
+                                      'X1995' = '1995',
+                                      'X1996' = '1996',
+                                      'X1997' = '1997',
+                                      'X2003' = '2003',
+                                      'X1999' = '1999',
+                                      'X2007' = '2007',
+                                      'X2009' = '2009',
+                                      'X2011' = '2011',
+                                      'X2013' = '2013',
+                                      'X2015' = '2015',
+                                      'X2017' = '2017',
+                                      'X2019' = '2019',
+                                      'X2021' = '2021'
+                                 )) %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::fontsize(size = 9, part = "all") %>% 
+  flextable::padding(padding = 0.8, part = "all")  %>%  
+  flextable::autofit() %>% 
+  flextable::fit_to_width(6.5) %>% 
+  flextable::set_caption("Fishery length compositions for northern rockfish in the Gulf of Alaska. Lengths below 22 are pooled and lengths greater than 47 are pooled. Survey size compositions are not used in model.")
+
+```
+
+\pagebreak
+
+```{r fac}
+read.csv(here::here(year, pref_mod, "tables", "fac.csv")) %>%
+  flextable::flextable() %>% 
+  flextable::colformat_double(i=45:46, digit=0 ) %>% 
+  flextable::set_header_labels(values = 
+                                 list(name = "Length (cm)",
+                                      'X1998' = '1998',
+                                      'X1999' = '1999',
+                                      'X2000' = '2000',
+                                      'X2001' = '2001',
+                                      'X2002' = '2002',
+                                      'X2003' = '2003',
+                                      'X2004' = '2004',
+                                      'X2005' = '2005',
+                                      'X2006' = '2006',
+                                      'X2008' = '2008',
+                                      'X2010' = '2010',
+                                      'X2012' = '2012',
+                                      'X2014' = '2014',
+                                      'X2016' = '2016',
+                                      'X2018' = '2018',
+                                      'X2020' = '2020'
+                                 )) %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::fontsize(size = 9, part = "all") %>% 
+  flextable::padding(padding = 0.5, part = "all")  %>%  
+  flextable::autofit() %>% 
+  flextable::fit_to_width(6.5) %>% 
+  flextable::set_caption("Fishery age compositions for northern rockfish in the Gulf of Alaska.")
+```
+
+\pagebreak
+
+```{r vast}
+read.csv(here::here(year, "data", "user_input", "vast_default.csv")) %>%
+  dplyr::mutate(dplyr::across(2:5, round, 0)) %>% 
+  flextable::flextable() %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::fontsize(size = 10, part = "all") %>% 
+  flextable::padding(padding = 0.8, part = "all")  %>%  
+  flextable::set_header_labels(values = 
+                                 list(year = 'Year',
+                                      biomass = "Biomass (t)",
+                                      se = "SE",
+                                      lci = 'Lower CI',
+                                      uci = "Upper CI")) %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::autofit() %>% 
+  flextable::align(j=1, part= "all") %>%
+  flextable::set_caption("GOA northern rockfish biomass estimates, standard errors, and confidence intervals, based on results of NMFS bottom trawl surveys using a geostatistical general linear mixed model estimator used in model 22.1b.")
+
+```
+
+\pagebreak
+
+```{r db, eval = T}
+read.csv(here::here(year, "data", "output", "goa_ts_biomass_db.csv")) %>%
+  flextable::flextable() %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::fontsize(size = 10, part = "all") %>% 
+  flextable::padding(padding = 0.5, part = "all")  %>%  
+  flextable::set_header_labels(values = 
+                                 list(year = 'Year',
+                                      biomass = "Biomass (t)",
+                                      se = "SE",
+                                      lci = 'Lower CI',
+                                      uci = "Upper CI")) %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::autofit() %>% 
+  flextable::align(j=1, part= "all") %>%
+  flextable::set_caption("GOA northern rockfish biomass estimates, standard errors, and confidence intervals, based on results of NMFS bottom trawl surveys using a design-based estimator.")
+```
+
+\pagebreak
+
+```{r sac}
+
+read.csv(here::here(year, pref_mod, "tables", "sac.csv")) %>%
+  dplyr::mutate(dplyr::across(2:16, round, 3)) %>% 
+  flextable::flextable() %>% 
+  flextable::colformat_double(i=45:46, digit=0 ) %>% 
+  flextable::set_header_labels(values = 
+                                 list(name = "Length (cm)",
+                                      'X1990' = '1990',
+                                      'X1993' = '1993',
+                                      'X1996' = '1996',
+                                      'X1999' = '1999',
+                                      'X2001' = '2001',
+                                      'X2003' = '2003',
+                                      'X2005' = '2005',
+                                      'X2007' = '2007',
+                                      'X2009' = '2009',
+                                      'X2011' = '2011',
+                                      'X2013' = '2013',
+                                      'X2015' = '2015',
+                                      'X2017' = '2017',
+                                      'X2019' = '2019',
+                                      'X2021' = '2021'
+                                 )) %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::fontsize(size = 9, part = "all") %>% 
+  flextable::padding(padding = 0.8, part = "all")  %>%  
+  flextable::autofit() %>% 
+  flextable::fit_to_width(6.5) %>% 
+  flextable::set_caption("NMFS trawl survey age compositions for northern rockfish in the Gulf of Alaska.")
+```
+
+
+\pagebreak
+
+```{r ssc}
+
+read.csv(here::here(year, pref_mod, "tables", "ssc.csv")) %>%
+  dplyr::mutate(dplyr::across(2:16, round, 3)) %>% 
+  flextable::flextable() %>% 
+  flextable::colformat_double(i=32:33, digit=0 ) %>% 
+  flextable::set_header_labels(values = 
+                                 list(name = "Length (cm)",
+                                      'X1990' = '1990',
+                                      'X1993' = '1993',
+                                      'X1996' = '1996',
+                                      'X1999' = '1999',
+                                      'X2001' = '2001',
+                                      'X2003' = '2003',
+                                      'X2005' = '2005',
+                                      'X2007' = '2007',
+                                      'X2009' = '2009',
+                                      'X2011' = '2011',
+                                      'X2013' = '2013',
+                                      'X2015' = '2015',
+                                      'X2017' = '2017',
+                                      'X2019' = '2019',
+                                      'X2021' = '2021'
+                                 )) %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::fontsize(size = 9, part = "all") %>% 
+  flextable::padding(padding = 0.8, part = "all")  %>%  
+  flextable::autofit() %>% 
+  flextable::fit_to_width(6.5) %>% 
+  flextable::set_caption("NMFS trawl survey length compositions for northern rockfish in the Gulf of Alaska. Lengths below 22 are pooled and lengths greater than 47 are pooled. Survey size compositions are not used in model.")
+```
+
+
+\pagebreak
+
+```{r likelihood}
+read.csv(here::here(year, "data", "user_input", "likelihood.csv")) %>%
+  flextable::flextable() %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::fontsize(size = 10, part = "all") %>% 
+  flextable::set_header_labels(values = 
+                                 list(year = 'Year',
+                                      biomass = "Biomass (t)",
+                                      se = "SE",
+                                      lci = 'Lower CI',
+                                      uci = "Upper CI")) %>% 
+  flextable::colformat_double(i=17, digits=0) %>% 
+  flextable::colformat_double(i=18:21, digits=3) %>% 
+  flextable::colformat_double(i=22:26, digits=0) %>% 
+  flextable::hline(i=c(7,14)) %>% 
+  flextable::bold(i=c(9,16), j=1) %>% 
+  flextable::width(j=1, width=2) %>% 
+  flextable::autofit() %>% 
+  flextable::align(j=1, part= "all") %>%
+  flextable::padding(padding = 0.1, part = "all") %>%  
+  flextable::set_caption("Likelihood values and estimates of key parameters for a select few models for GOA northern rockfish.")
+```
+
+\pagebreak
+
+```{r numbers, eval = T}
+read.csv(here::here(year, "data", "user_input", "numbers.csv")) %>% 
+  flextable::flextable() %>% 
+  flextable::add_header_row(value = c("", "", "Percent", "", "Selectivity", "Selectivity"), colwidths = rep(1,6)) %>% 
+  flextable::merge_at(i=1, j=5:6, part = 'header') %>% 
+  flextable::align(i=1, j=5:6, part="header", align = "center") %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::autofit() %>% 
+  flextable::fontsize(size = 10, part = "all") %>% 
+  flextable::padding(padding = 0, part = "all") %>% 
+    flextable::border_remove() %>% 
+  flextable::hline_bottom() %>% 
+  flextable::hline_top() %>% 
+  flextable::hline_top(part="header") %>%  
+  flextable::set_caption("Estimated numbers (thousands), fishery selectivity, and survey selectivity of northern rockfish in the Gulf of Alaska based on the preferred model. Also shown are schedules of age-specific weight and female maturity.")
+
+```
+
+
+\pagebreak
+
+```{r compare, eval = T}
+read.csv(here::here(year, "data", "user_input", "compare.csv")) %>% 
+  flextable::flextable() %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::autofit() %>% 
+  flextable::fontsize(size = 9, part = "all") %>% 
+  flextable::padding(padding = 0.8, part = "all") %>% 
+  flextable::add_header_row(value = c("", "Spawning biomass", "Spawning biomass", "6+ biomass", "6+ biomass", "Catch/6+ biomass", "Catch/6+ biomass", "Age-2+ recruits", "Age-2+ recruits"), colwidths = rep(1,9)) %>% 
+  flextable::border_remove() %>% 
+  flextable::merge_at(i=1, j=c(2:3), part = 'header') %>% 
+  flextable::merge_at(i=1, j=c(4:5), part = 'header') %>% 
+  flextable::merge_at(i=1, j=c(6:7), part = 'header') %>% 
+  flextable::merge_at(i=1, j=c(8:9), part = 'header') %>% 
+  flextable::align(i=1, part="header", align = "center") %>% 
+  flextable::align(j=1, part="all") %>% 
+  flextable::hline_bottom() %>% 
+  flextable::hline_top() %>% 
+  flextable::hline_top(part="header") %>% 
+  flextable::colformat_num(j=1, big.mark="") %>% 
+  flextable::fit_to_width(6.5) %>% 
+  flextable::set_header_labels(values = list(sPrevious = "Previous",
+                                             tPrevious = "Previous",
+                                             cPrevious = "Previous",
+                                             rPrevious = "Previous",
+                                             sCurrent = "Current",
+                                             tCurrent = "Current",
+                                             cCurrent = "Current",
+                                             rCurrent = "Current")) %>%  
+  flextable::set_caption("Comparison of 2022 estimated time series of female spawning biomass, 6+ biomass (age 6 and greater), catch/(6+ biomass), and the number of age-2+ recruits for northern rockfish in the Gulf of Alaska compared with 2020 estimates.")
+
+```
+
+                                 
+\pagebreak
+
+```{r timseries, eval = T}
+read.csv(here::here(year, pref_mod, "tables", "ts.csv")) %>% 
+  flextable::flextable() %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::autofit() %>% 
+  flextable::fontsize(size = 10, part = "all") %>% 
+  flextable::padding(padding = 0.8, part = "all") %>% 
+  flextable::colformat_int(j=1, big.mark="") %>% 
+  flextable::colformat_double(j=2:10, digits = 0) %>% 
+  flextable::add_header_row(value = c("", "Age 2+ recruits", "Age 2+ recruits", "Age 2+ recruits", "Total biomass", "Total biomass", "Total biomass", "Spawning biomass", "Spawning biomass", "Spawning biomass"), colwidths = rep(1,10)) %>% 
+  flextable::border_remove() %>% 
+  flextable::merge_at(i=1, j=c(2:4), part = 'header') %>% 
+  flextable::merge_at(i=1, j=c(5:7), part = 'header') %>% 
+  flextable::merge_at(i=1, j=c(8:10), part = 'header') %>% 
+  flextable::align(i=1, part="header", align = "center") %>% 
+  flextable::hline_bottom() %>% 
+  flextable::hline_top() %>% 
+  flextable::align(part="all", j=1, align="left") %>% 
+  flextable::hline_top(part="header") %>% 
+  flextable::set_header_labels(values = list(year = "Year",
+                                             recruits = "Mean",
+                                             rec_lci = "2.5%",
+                                             rec_uci = "97.5%",
+                                             tot_biom = "Mean",
+                                             tot_lci = "2.5%",
+                                             tot_uci = "97.5%",
+                                             sp_biom = "Mean",
+                                             sp_lci = "2.5%",
+                                             sp_uci = "97.5%")) %>%  
+  flextable::autofit() %>% 
+  flextable::fit_to_width(6.5) %>% 
+  flextable::set_caption("Estimated time series of number at age-4 recruits (thousands), total biomass, and female spawning biomass with 95% confidence bounds for northern rockfish in the Gulf of Alaska, from this year’s model MCMC results.")
+
+```
+
+\pagebreak 
+
+```{r mcmcpar}
+read.csv(here::here(year, pref_mod, "tables", "mcmc_pars.csv")) %>% 
+  flextable::flextable() %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::autofit() %>% 
+  flextable::fontsize(size = 10, part = "all") %>% 
+  flextable::padding(padding = 1, part = "all") %>% 
+  flextable::colformat_double(i=1:3, digits=3) %>% 
+  flextable::colformat_double(i=4:5, digits=0) %>% 
+  flextable::add_header_row(
+    value = c("", "", "mu", "Median", "", "σ", "BCI", "BCI"), colwidths = rep(1,8)) %>% 
+  flextable::border_remove() %>% 
+  flextable::hline_bottom() %>% 
+  flextable::hline_top() %>% 
+  flextable::align(part="all", j=1, align="left") %>% 
+  flextable::hline_top(part="header") %>% 
+  flextable::fit_to_width(6.5) %>% 
+  flextable::set_header_labels(values = list(name = "Parameter",
+                                             value = "mu",
+                                             mean = "MCMC",
+                                             median = "MCMC",
+                                             std.dev = "σ",
+                                             sd = "MCMC",
+                                             tot_uci = "97.5%",
+                                             sp_biom = "Mean",
+                                             lci = "Lower",
+                                             uci = "Upper")) %>%
+  flextable::set_caption("Estimates of key parameters with Hessian estimates of standard deviation σ, MCMC standard deviations σ_MCMC, and 95% Bayesian credible intervals (BCI) derived from MCMC.")
+```          
+
+\pagebreak
+
+```{r proj, eval = T}
+ read.csv(here::here(year, "data", "user_input", "proj.csv")) %>% 
+  flextable::flextable() %>% 
+  flextable::border_remove() %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::fontsize(size = 10, part = "all") %>% 
+  flextable::add_header_row(value = c("", "Maximum", "Author's F", "Half", "5-year", "No", "", "Approaching"), colwidths = rep(1, 8)) %>% 
+  flextable::set_header_labels(values = list(
+    max = "permissible F",
+    author = "(Estimated catches)",
+    half = "maximum F",
+    avg = "average F")) %>% 
+  flextable::colformat_double(i=c(1:15, 32:45), digits = 0) %>% 
+  flextable::hline_bottom() %>% 
+  flextable::hline_top() %>% 
+  flextable::align(part="all", j=1, align="left") %>% 
+  flextable::hline_top(part="header") %>% 
+  flextable::merge_at(i=1, j=1:8) %>% 
+  flextable::align(part="body", i=1, align="center") %>% 
+  flextable::merge_at(i=16, j=1:8) %>% 
+  flextable::align(part="body", i=16, align="center") %>% 
+  flextable::merge_at(i=31, j=1:8) %>% 
+  flextable::align(part="body", i=31, align="center") %>% 
+  flextable::width(j=1, width=0.5) %>% 
+  flextable::padding(padding = 0, part = "all") %>% 
+  flextable::colformat_int(j=1, big.mark="") %>% 
+  flextable::align(j=2:8, align="center", part = 'all') %>% 
+  flextable::autofit()  %>%  
+  flextable::fit_to_width(6.5) %>% 
+  flextable::set_caption("Set of projections of spawning biomass (SB) and yield for northern rockfish in the Gulf of Alaska. Six harvest scenarios designed to satisfy the requirements of Amendment 56, NEPA, and MSFCMA. For a description of scenarios see section *Harvest Recommendations*.")
+  
+
+```

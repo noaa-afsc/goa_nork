@@ -1,0 +1,115 @@
+# Analytical approach
+
+## General Model Structure
+
+The basic model for GOA northern rockfish is described as a separable age-structured model and was implemented using AD Model Builder software [@Fournier2012]. 
+The assessment model is based on a generic rockfish model developed in a workshop held in February 2001 [@Courtney2007] and follows closely the GOA Pacific ocean perch model [@Hulson2021]. 
+The northern rockfish model is fit to a time series extending from 1961-`r year`. 
+As with other rockfish age-structured models, this model does not attempt to fit a stock-recruitment relationship but estimates a mean recruitment, which is adjusted by estimated recruitment deviations for each year. 
+We do this because there does not appear to be an obvious stock-recruitment relationship in the model estimates, and there have been very high recruitments at low stock size (Figure 10-\@ref(fig:frecssb)).
+The parameters, population dynamics, and equations of the model are shown below:
+
+```{r}
+knitr::include_graphics(here::here(year, 'safe', 'images', 'box1.png'))
+knitr::include_graphics(here::here(year, 'safe', 'images', 'box2.png'))
+knitr::include_graphics(here::here(year, 'safe', 'images', 'box3.png'))
+```
+
+
+## Description of Alternative Models
+
+A suite of incremental models were run to investigate the effects of removing 1980s survey data from the assessment, increasing the length plus group, re-weighting of compositional data, and changing the survey biomass weight from 0.25 to 1.0. 
+
+The models examined are:
+
+```{r}
+data.frame(Model = c("base", 
+                     "m18.2b",
+                     "m22",
+                     "m22.1",
+                     "m22.1a",
+                     "m22.1b"),
+           Description = c("2020 model (m18.2b) and results (includes 1980s survey data)",
+                           "base model w/data updated through 2022",
+                           "m18.2b using GAP default VAST (survey data 1990+)",
+                           "m22 w/increased length plus group",
+                           "m22.1 re-weighted",
+                           "m22.1 re-weighted, with survey weight = 1")) %>% 
+  flextable::flextable() %>% 
+  flextable::padding(padding = 0.8, part = "all") %>% 
+  flextable::autofit() %>% 
+  flextable::font(fontname = "Times", part = "all") %>% 
+  flextable::fontsize(size = 11)  
+```
+
+Since the SSC and Plan Team have both recommended that 1980s survey data be excluded for GOA assessments. The base model and m18.2b are presented for comparison but are not discussed. 
+Going forward m22 will be considered the base model as it excludes the 1980s survey data. 
+Three additional variants of m22 were examined to explore the effects of increasing the length composition plus group by 5 cm (m22.1), re-weighting age and length compositional data (m22.1a), and re-weighting with the survey weight changed to 1.0 (m22.1b). 
+The trawl survey weighting was set at 0.25 (the equivalent of doubling the survey variance) for the past two full assessment cycles in order to reduce the influence of the highly precise VAST survey abundance estimates.
+
+
+
+## Parameters Estimated Outside the Assessment Model
+
+A von Bertalanffy growth curve was fitted, for both sexes combined, to survey size at age data from 1990-2021 using length-stratified methods [@Quinn1999; @Bettoli2001]. 
+An age to size conversion matrix was then constructed by adding normal error with a standard deviation equal to the survey data for the probability of different sizes for each age class.
+The length-weight relationship for combined sexes, using the formula $W = aL^b$, where $W$ is weight in grams and $L$ is fork length in mm, $a$ = 0.0783 and $b$ = 2.0742.
+Previous parameters are available from @Heifetz1991; @Courtney1999; and @Malecha2007. 
+The estimated parameters for the growth curve from length-stratified methods are:  
+$L_\infty$ = 41.68 cm, $\kappa$ = 0.16, and $t_0$ = -0.38.
+
+Weight-at-age was constructed with weight at age data from the same data set as the length at age.
+Mean weight-at-age is approximated by the equation: 
+$$W_a =W_\infty (1-e^(-\kappa(age-t_0 ) ) )^b.$$ 
+The estimated growth parameters from length-stratified methods are:  
+$W_\infty$ = 1081 g, $\kappa$ = 0.17, $t_0$ = -0.16, and *b* = 3.04.
+
+Aging error matrices were constructed by assuming that the break-and-burn ages were unbiased but had a given amount of normal error around each age based on between-reader percent agreement tests conducted at the AFSC Age and Growth lab. 
+We fix the variability of recruitment deviations ($\sigma_r$) at 1.5 which allows for highly variable recruitment.
+
+
+## Parameters Estimated Inside the Assessment Model
+
+The estimates of natural mortality (*M*) and catchability (*q*) are computed with the use of lognormal prior distributions as penalties that are added to the overall objective function in order to constrain parameter estimates to reasonable values and to speed model convergence.
+Arithmetic means and standard errors ($\mu, \sigma$) for the lognormal distributions were provided as inputs to the model. 
+The standard errors for selected model parameters were estimated based on multivariate normal approximation of the covariance matrix. 
+The prior mean for natural mortality of 0.06 is based on the estimate provided by @Heifetz1991 using the methods of @Alverson1975. 
+Natural mortality is a difficult parameter to estimate within the model so we assign a “tight” prior CV of 5%. 
+Catchability is a parameter that is unclear for rockfish, so while we assign it a prior mean of 1 (assuming all fish in the area swept are captured and there is no herding of fish from outside the area swept, and that there is no effect of untrawlable grounds), we assign it a less precise CV of 45%. 
+This allows the parameter more freedom than that allowed to natural mortality. 
+These methods are also used in the GOA Pacific ocean perch and GOA dusky rockfish assessments.
+
+The fit to the combined observations of maturity-at-age obtained in the preferred assessment model is shown in Figure 10-\@ref(fig:fslx). 
+Parameters for the logistic function describing maturity-at-age estimated conditionally in the model, as well as all other parameters estimated conditionally, were identical to estimating maturity-at-age independently. 
+Estimating maturity-at-age parameters conditionally influences the model only through the evaluation of uncertainty, as the MCMC procedure includes variability in the maturity parameters in conjunction with variability in all other parameters, rather than assuming the maturity parameters are fixed. 
+Thus, estimation of maturity-at-age within the assessment model allows for uncertainty in maturation to be incorporated into uncertainty for key model results (e.g., ABC). 
+
+Given that we are using Bayesian estimation, there is no need to implement a recruitment bias-correction algorithm [e.g., @Methot2011].
+
+The numbers of estimated parameters from the model are:
+
+```{r, eval = T}
+
+data.frame(Parameter = c("Natural mortality", "Catchability", "Log mean recruitment", 
+						"Spawners per recruit levels", "Recruitment deviations", 
+						"Average fishing mortality", "Fishing mortality deviations", 
+                   "Logistic fishery selectivity", "Logistic survey selectivity", 
+                   "Logistic maturity at age", "Total"),
+           Symbol = c("M", "q", "\\mu_r",  "F_{35\\%},~F_{40\\%},~F_{50\\%}", "\\tau_y", "\\mu_F", "\\phi_y", "a_{f50\\%}, \\gamma_f", "a_{s50\\%}, \\gamma_s", "a_{m50\\%}, \\gamma_m", "" ),
+           Number = c(1, 1, 1, 3, 110, 1, 62, 2, 2, 2, 185)) %>% 
+  flextable::flextable() %>% 
+  flextable::compose(j="Symbol", value=flextable::as_paragraph(flextable::as_equation(Symbol))) %>% 
+  flextable::width(j=1, width=3) %>% 
+  flextable::width(j=2, width=2) %>% 
+  flextable::align(j=2, part='header', align='center') %>% 
+  flextable::height(height=0.15, part='body') %>% 
+  flextable::hrule(rule='exact', part='body') %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+    flextable::padding(padding = 0.8, part = "all")  %>% 
+    flextable::fontsize(size = 11, part = "all") 
+```
+
+Evaluation of model uncertainty is obtained through a Markov Chain Monte Carlo (MCMC) algorithm [@Gelman1995]. 
+The chain length of the MCMC was 10,000,000 and was thinned to one iteration out of every 2,000. 
+We omit the first 1,000,000 iterations to allow for a burn-in period. 
+We use these MCMC methods to provide further evaluation of uncertainty in the results below including 95% credible intervals for some parameters (computed as the 5^th^ and 95^th^ percentiles of the MCMC samples).

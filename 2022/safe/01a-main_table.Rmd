@@ -1,0 +1,5 @@
+```{r}
+# using built in example data 
+data <- vroom::vroom(here::here(year, "safe", "data", "tier3.csv"))
+safe::main_table(data, year, tier=3, c1, c2, c3)
+```

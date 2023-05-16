@@ -1,0 +1,101 @@
+# Data
+
+
+The following table summarizes the data used in the stock assessment model for northern rockfish (* denotes new data for this assessment):
+
+```{r}
+
+data.frame(Source = c(rep("NMFS Groundfish survey", 2),
+                      rep("U.S. trawl fishery", 3)),
+           Data = c("Survey biomass",
+                    "Age composition",
+                    "Catch",
+                    "Age composition",
+                    "Length composition"),
+           Years = c("1990-1999 (triennial), 2001-2019 (biennial), 2021*",
+                     "1990-1999 (triennial), 2003-2019 (biennial), 2021*",
+                     "1961-2020, 2021-2022*",
+                     "1998-2002, 2004-2006, 2008-2018 (biennial), 2020*",
+                     "1991-1997, 2003, 2007-2019 (biennial), 2021*"))  %>% 
+  flextable::flextable() %>% 
+    flextable::width(j = ~ Source, width = 1) %>% 
+    flextable::width(j = ~ Data, width = 1.5) %>% 
+   flextable::width(j = ~ Years, width = 4) %>% 
+   flextable::merge_v(j = 1) %>% 
+  flextable::font(fontname = "Times", part = "all") %>% 
+   flextable::padding(padding = 0, part = "all") %>% 
+  flextable::fontsize(size = 10) %>% 
+  flextable::theme_vanilla() %>% 
+  flextable::fix_border_issues() 
+
+```
+
+## Fishery
+
+### Catch
+
+Catch of northern rockfish ranges from `r catch %>% dplyr::summarise(catch = min(Catch)) %>% dplyr::pull(catch) %>% comma(.)` t to `r catch %>% dplyr::summarise(catch = max(Catch)) %>% dplyr::pull(catch) %>% comma(.)` t during 1961-`r year`. 
+Detailed descriptions of catch are provided in Table 10-\@ref(tab:catch) and Figure 10-\@ref(fig:fcatch).
+This is the commercial catch history used in the assessment model. 
+In response to Annual Catch Limits (ACLs) requirements, assessments now document all removals including catch that is not associated with a directed fishery. 
+Estimates of all removals not associated with a directed fishery including research catches are available and are presented in Appendix 10a. 
+In summary, annual research removals have typically been less than 100 t and very little is taken in recreational or Pacific halibut fisheries. 
+These levels likely do not pose a significant risk to the northern rockfish stock in the GOA.
+
+### Age and Size Composition
+
+Observers aboard fishing vessels and at onshore processing facilities have provided data on size and age composition of the commercial catch of northern rockfish. 
+Ages were determined from the break-and-burn method [@Chilton1982]. 
+Length compositions are presented in Table 10-\@ref(tab:fsc) and Figure 10-\@ref(fig:ffsc) and age compositions are presented in Table 10-\@ref(tab:fac) and Figure 10-\@ref(tab:fac); these tables also include associated annual sample sizes and number of hauls sampled for the age and length compositions. 
+The fishery age compositions indicate that stronger than average year-classes occurred around the year 1976 and 1984. 
+The fishery age compositions from 2004 and 2006 also indicate that the 1996-1998 year-classes were strong. 
+There are few younger fish observed in the age compositions for more recent years.
+The clustering of several large year-classes in each period is most likely due to aging error. 
+Recent fishery length compositions (2003-present) indicate that a large proportion of the northern rockfish catch are found to be larger than 38 cm, which was the previous plus length bin.
+Length composition data show a slight increase in the size of fish caught, this is well aligned with the lack of younger fish observed in the fishery age compositions for the same time periods.
+
+## Survey
+
+### Biomass Estimates from Trawl Surveys
+Bottom trawl surveys were conducted in the GOA triennially from 1984--1999 and biennially from since 2001. 
+The surveys provide an index of biomass, size and age composition data, and growth characteristics. 
+The trawl surveys have used a stratified random design to sample fishing stations that cover all areas of the GOA out to a depth of 1,000 m (in some surveys only to 500 m). 
+Generally, attempts have been made through the years to standardize the survey design and the fishing nets used, but there have been some exceptions to this standardization. 
+In particular, much of the survey effort in 1984 and 1987 was by Japanese vessels that used a very different net design and a different survey design than what has been the standard used by U.S. vessels throughout the surveys. 
+To deal with this problem the 1980s survey data have been excluded from this assessment.
+
+Gulf-wide biomass estimates from the VAST model-based index are presented in Table 10-\@ref(tab:vast) and Figure 10-\@ref(fig:fsurvey).
+The author's preferred model uses VAST with a lognormal error distribution to model positive catch rates instead of the GAP default gamma distribution (see Appendix 10b).
+The spatial distribution of the catches of northern rockfish in the `r year-5`, `r year-3`, and `r year-1` surveys are shown in Figure 10-\@ref(fig:fcpue). 
+The magnitude of catch varies greatly with several large tows typically occurring in each survey. 
+The precision of some of the biomass estimates has been low and is reflected in the high CVs associated with some survey biomass estimates of northern rockfish that are the result of few very large catches during the survey. 
+In 2001, a single very large survey haul of northern rockfish greatly increased the biomass estimates and resulted in wide confidence bounds. 
+The haul in 2001 was the largest individual catch (14 t) of northern rockfish ever taken during a GOA survey; this tow accounted for 58.7% of total survey catch by mass in that year. 
+In contrast, the 2005 and 2007 survey had several large hauls of northern rockfish in the Central Gulf with similar confidence bounds. 
+Due to the substantial variability observed in the design-based index this assessment is using the VAST model-based index of abundance, though trawl survey biomass from a design-based estimator is also presented per SSC request (Table 10-\@ref(tab:db)). 
+
+
+### Age and Size Composition 
+
+Ages for northern rockfish were determined from the break-and-burn method [@Chilton1982].
+These age compositions (Table 10-\@ref(tab:sac) and Figure 10-\@ref(fig:fsac)) indicate that recruitment of northern rockfish is highly variable. 
+The 1990 and 1996 surveys show especially strong year-classes from the period around 1975-77; although they differ as to which specific years were greatest, likely due to age determination errors. 
+The 1993, 1996, and 1999 age compositions also indicate that the 1983-85 year-classes may be stronger than average. 
+Recent age compositions (2005-2011) indicate that the 1996-98 year-classes may also be stronger than average, which is in agreement with recent age compositions obtained from the commercial fishery described above. 
+Trawl surveys provide size composition data for northern rockfish but are not used directly in the current age structured assessment model (Table 10-\@ref(tab:ssc) and Figure 10-\@ref(fig:fssc)). 
+In years with age readings, trawl survey size composition data are multiplied by an age-length key (computed from length-stratified otolith collections) to obtain survey age compositions. 
+Similar to the fishery length compositions discussed above, a large proportion of northern rockfish lengths are greater than the previous plus length bin (38 cm); especially in recent years.
+However, this issue has been addressed with the increased plus size group in this assessment.
+Also similar to the fishery age compositions, the proportion of older fish been increasing since the mid to early 2000s with few younger fish observed.
+
+### Maturity Data
+
+In previous stock assessments for northern rockfish, age at maturity was based on a logistic curve fit to ovarian samples collected from female northern rockfish in the central GOA in the spring of 1996 (n=75, C. Lunsford pers. comm. July 1997, Heifetz et al. 2009). 
+A study reevaluating maturity of northern rockfish [@Chilton2007, n=157] provides additional information for maturity-at-age. 
+This study collected ovarian samples from female northern rockfish throughout the year in both 2000 and 2001. 
+In a report submitted to the GOA Groundfish Plan Team in September 2010, the two studies were compared and the advantages and disadvantages of the different approaches for studying maturity (histology versus visual inspection) were discussed [@Rodgveller2010]. 
+In this year’s assessment, as in the 2020 assessment, we combine the data from both studies to estimate maturity of northern rockfish. 
+Due to the relatively small sample sizes for each study, the close proximity in time for each study (4 years apart compared to the 51 year time series used in this assessment), and the large difference in the age at 50% maturity [12.8 years used in previous assessments compared to 8 years obtained by @Chilton2007], we combine these data and estimate an intermediate maturity-at-age rather than consider time-dependent changes in maturity (Figure 10-\@ref(fig:fslx)). 
+There could be time-dependent changes in maturity-at-age for northern rockfish, although, additional data would be necessary to evaluate this hypothesis.
+More recently, @Conrath2019 has reported skip spawning in northern rockfish, the impacts of which are not currently incorporated into the assessment as the spatial and temporal aspects are unknown. 
+

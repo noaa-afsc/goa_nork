@@ -1,0 +1,111 @@
+# Figures
+
+```{r fcatch, fig.cap="Estimated and observed long-term and recent commercial catch of GOA northern rockfish in the Gulf of Alaska.", eval = T}
+
+knitr::include_graphics(here::here(year, pref_mod, "figs", "catch.png"))
+```
+
+```{r ffsc, fig.cap="Fishery length compositions for GOA northern rockfish. Observed values are bars, lines are the predicted lengths from author's recommended model.", eval = T}
+
+knitr::include_graphics(here::here(year, pref_mod, "figs", "fishery_length_comp.png"))
+```
+
+```{r ffac, fig.cap="Fishery age compositions for GOA northern rockfish. Observed values are bars, lines are the predicted lengths from author's recommended model.", eval = T}
+
+knitr::include_graphics(here::here(year, pref_mod, "figs", "fishery_age_comp.png"))
+```
+
+```{r fsurvey, fig.cap="Observed (geostatistical model-based estimates) and predicted GOA northern rockfish trawl survey biomass based on the 2022 recommended model. Error bars are approximate asymptotic 95% confidence intervals of model error.", eval = T}
+
+knitr::include_graphics(here::here(year, pref_mod, "figs", "srv1_biomass.png"))
+```
+
+```{r fcpue, fig.cap="Spatial distribution of northern rockfish in the Gulf of Alaska during the 2017, 2019, and 2021 NMFS trawl surveys.", eval = T}
+knitr::include_graphics(here::here(year, "figs", "cpue.jpg"))
+```
+
+```{r fsac, fig.cap="Survey age compositions for GOA northern rockfish. Observed values are bars, lines are the predicted lengths from author's recommended model.", eval = T}
+
+knitr::include_graphics(here::here(year, pref_mod, "figs", "survey_age_comp.png"))
+```
+
+```{r fssc, fig.cap="Survey length compositions (not used in model) for GOA northern rockfish.", eval = T}
+
+knitr::include_graphics(here::here(year, pref_mod, "figs", "survey_length_comp.png"))
+```
+
+```{r fslx, fig.cap="Estimated maturity, fishery and survey selectivities for GOA northern rockfish from the 2022 model.", eval = T}
+
+knitr::include_graphics(here::here(year, pref_mod, "figs", "selex.png"))
+```
+
+```{r frecssb, fig.cap="Scatterplot of spawner-recruit estimates for the GOA northern rockfish author's recommended model.", eval = T}
+
+knitr::include_graphics(here::here(year, pref_mod, "figs", "recr-ssb.png"))
+```
+
+```{r fcomparesrv, fig.cap="Comparisons of observed and predicted GOA northern rockfish trawl survey biomass for different base model variants. Error bars are approximate asymptotic 95% confidence intervals of model error. for different model variants.", eval = T}
+knitr::include_graphics(here::here(year, "figs", "fcomparesrv.png"))
+```
+
+```{r fcomparebio, fig.cap="Comparisons of spawning and total biomass for different base model variants.", eval = T}
+knitr::include_graphics(here::here(year, "figs", "fcomparebio.png"))
+```
+
+```{r fcomparesrv2, fig.cap="Comparisons of observed and predicted GOA northern rockfish trawl survey biomass for model 22 (m22) variants. Error bars are approximate asymptotic 95% confidence intervals of model error. for different model variants.", eval = T}
+knitr::include_graphics(here::here(year, "figs", "fcomparesrv2.png"))
+```
+
+```{r fcomparebio2, fig.cap="Comparisons of spawning and total biomass for different variants of model 22 (m22).", eval = T}
+knitr::include_graphics(here::here(year, "figs", "fcomparebio2.png"))
+```
+
+```{r fbiomass, fig.cap="Model estimated total biomass and spawning biomass with 95% credible intervals determined by MCMC (shaded) for Gulf of Alaska northern rockfish.", eval = T}
+
+knitr::include_graphics(here::here(year, pref_mod, "figs", "est_biomass.png"))
+```
+
+```{r fphase, fig.cap="Time series of northern rockfish estimated spawning biomass (SSB) relative to B_(35%) and fishing mortality (F) relative to F_(35%) for author recommended model.", eval = T}
+
+knitr::include_graphics(here::here(year, pref_mod, "figs", "phase_plane.png"))
+```
+
+```{r fF, fig.cap="Time series of estimated fully selected fishing mortality for GOA northern rockfish from the 2022 model.", eval = T}
+
+knitr::include_graphics(here::here(year, pref_mod, "figs", "fF.png"))
+```
+
+```{r fcatch-bio, fig.cap="Gulf of Alaska northern rockfish catch/age 2+ biomass ratio with approximate 95% confidence intervals. Observed catch values were used for 1990-2022, the 2022 catch values were estimated using an expansion factor. The horizontal dashed line is the mean value for the entire dataset.", eval = T}
+
+knitr::include_graphics(here::here(year, pref_mod, "figs", "catch_bio.png"))
+```
+
+```{r frecruit, fig.cap="Estimates of age-4 recruitment with 95% credible intervals for GOA northern rockfish.", eval = T}
+
+knitr::include_graphics(here::here(year, pref_mod, "figs", "recruits.png"))
+```
+
+```{r fhist, fig.cap="Histograms of estimated posterior distributions for key parameters derived (or estimated, in the case of *q*) from the MCMC for GOA northern rockfish. Vertical black lines represent the maximum likelihood estimate for comparison with the MCMC results.", eval = T}
+
+knitr::include_graphics(here::here(year, pref_mod, "figs", "hists.png"))
+```
+
+```{r fswath, fig.cap="Median northern rockfish spawning stock biomass from MCMC simulations with Bayesian credible intervals including projections for 2023-2037, when managing under Scenario 2. Assumes the same average yield ratio forward in time. Dotted horizontal line is $B_{40\\%}$ and solid horizontal line is $B_{35\\%}$ based on recruitments from 1977-2018. Each shade is 5% of the posterior distribution.", eval = T}
+
+knitr::include_graphics(here::here(year, pref_mod, "figs", "swath.png"))
+```
+
+```{r fretro, fig.cap="Retrospective peels of estimated female spawning biomass and total biomass for the past 10 years from the recommended model with 95% credible intervals derived from MCMC.", eval = T}
+
+knitr::include_graphics(here::here(year, pref_mod, "figs", "retro.png"))
+```
+
+```{r fre, fig.cap="Time series of estimated fully selected fishing mortality for GOA northern rockfish from the 2022 model.", eval = T}
+
+knitr::include_graphics(here::here(year, pref_mod, "figs", "re.png"))
+```
+
+```{r fskip, fig.cap="Estimate of spawning biomass if skip spawning at levels reported in Conrath 2019 occurred regularly.", eval = T}
+
+knitr::include_graphics(here::here(year, "figs", "skip.png"))
+```
