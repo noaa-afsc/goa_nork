@@ -1,0 +1,63 @@
+main.cpp: In constructor 'model_parameters::model_parameters(int, int, char**)':
+main.cpp:497:24: error: cannot bind non-const lvalue reference of type 'long int&' to an rvalue of type 'long int'
+   rnorms.fill_randn_ni(rnseed);
+                        ^~~~~~
+In file included from C:\PROGRA~2\ADMB-12.1\include/admodel.h:59,
+                 from main.cpp:7:
+C:\PROGRA~2\ADMB-12.1\include/fvar.hpp:2536:9: note:   initializing argument 1 of 'void dvar_matrix::fill_randn_ni(long int&)'
+    void fill_randn_ni(long int &n);
+         ^~~~~~~~~~~~~
+main.cpp:498:23: error: cannot bind non-const lvalue reference of type 'long int&' to an rvalue of type 'long int'
+   unifs.fill_randu_ni(rnseed);
+                       ^~~~~~
+In file included from C:\PROGRA~2\ADMB-12.1\include/admodel.h:59,
+                 from main.cpp:7:
+C:\PROGRA~2\ADMB-12.1\include/fvar.hpp:2537:9: note:   initializing argument 1 of 'void dvar_matrix::fill_randu_ni(long int&)'
+    void fill_randu_ni(long int &n);
+         ^~~~~~~~~~~~~
+main.cpp: In member function 'double model_parameters::Get_ABCs(const int&)':
+main.cpp:833:1: warning: no return statement in function returning non-void [-Wreturn-type]
+ }
+ ^
+main.cpp: In member function 'void model_parameters::Profile_F(const int&)':
+main.cpp:1974:32: error: binding reference of type 'int&' to 'const int' discards qualifiers
+     yld1  = yield(F1,Stmp,Rtmp,ispp);
+                                ^~~~
+In file included from main.cpp:39:
+./main.htp:273:12: note:   initializing argument 4 of 'dvariable model_parameters::yield(dvariable&, dvariable&, dvariable&, int&)'
+  dvariable yield(dvariable& Ftmp, dvariable& Stmp,dvariable& Rtmp,int& ispp);
+            ^~~~~
+main.cpp: In member function 'void model_parameters::get_msy(const int&)':
+main.cpp:2014:35: error: binding reference of type 'int&' to 'const int' discards qualifiers
+       yld1   = yield(F1,Stmp,Rtmp,ispp); //cout <<ii<<" " <<F1<<" "<< Stmp <<" "<<yld1<<" "<<Rtmp<<" "<<" "<< endl; } exit(1);/*
+                                   ^~~~
+In file included from main.cpp:39:
+./main.htp:273:12: note:   initializing argument 4 of 'dvariable model_parameters::yield(dvariable&, dvariable&, dvariable&, int&)'
+  dvariable yield(dvariable& Ftmp, dvariable& Stmp,dvariable& Rtmp,int& ispp);
+            ^~~~~
+main.cpp:2015:35: error: binding reference of type 'int&' to 'const int' discards qualifiers
+       yld2   = yield(F2,Stmp,Rtmp,ispp);
+                                   ^~~~
+In file included from main.cpp:39:
+./main.htp:273:12: note:   initializing argument 4 of 'dvariable model_parameters::yield(dvariable&, dvariable&, dvariable&, int&)'
+  dvariable yield(dvariable& Ftmp, dvariable& Stmp,dvariable& Rtmp,int& ispp);
+            ^~~~~
+main.cpp:2016:35: error: binding reference of type 'int&' to 'const int' discards qualifiers
+       yld3   = yield(F3,Stmp,Rtmp,ispp);
+                                   ^~~~
+In file included from main.cpp:39:
+./main.htp:273:12: note:   initializing argument 4 of 'dvariable model_parameters::yield(dvariable&, dvariable&, dvariable&, int&)'
+  dvariable yield(dvariable& Ftmp, dvariable& Stmp,dvariable& Rtmp,int& ispp);
+            ^~~~~
+main.cpp:2024:23: error: cannot bind non-const lvalue reference of type 'dvariable&' to an rvalue of type 'dvariable'
+   msytmp =  yield(Fmsy(ispp),Stmp,Rtmp,ispp);
+                   ~~~~^~~~~~
+In file included from C:\PROGRA~2\ADMB-12.1\include/admodel.h:59,
+                 from main.cpp:7:
+C:\PROGRA~2\ADMB-12.1\include/fvar.hpp:1523:4: note:   after user-defined conversion: 'dvariable::dvariable(const prevariable&)'
+    dvariable(const prevariable &);
+    ^~~~~~~~~
+In file included from main.cpp:39:
+./main.htp:273:12: note:   initializing argument 1 of 'dvariable model_parameters::yield(dvariable&, dvariable&, dvariable&, int&)'
+  dvariable yield(dvariable& Ftmp, dvariable& Stmp,dvariable& Rtmp,int& ispp);
+            ^~~~~

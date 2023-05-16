@@ -1,0 +1,158 @@
+# Executive summary
+
+Gulf of Alaska northern rockfish (*Sebastes polyspinis*) have historically been assessed on a biennial stock assessment schedule to coincide with the availability of new trawl survey data (odd years). 
+In 2017, the Alaska Fisheries Science Center (AFSC) participated in a stock assessment prioritization process. 
+It was recommended that the Gulf of Alaska (GOA) northern rockfish remain on a biennial stock assessment schedule with a full stock assessment produced in even years and a partial stock assessment produced in odd years. 
+For a partial assessment, the projection model is updated with new catch information and results are used to recommend harvest levels for the next two years. 
+This incorporates the most current catch information without re-estimating model parameters and biological reference points.
+
+The GOA northern rockfish is classified as a Tier 3 stock and is assessed using a statistical age-structure model.
+This assessment consists of a population model, which uses survey and fishery data to generate a historical time series of population estimates, and a projection model, which uses results from the population model to predict future population estimates and recommended harvest levels. 
+The data used in this assessment includes total catch biomass, fishery age and size compositions, trawl survey abundance estimates, and trawl survey age compositions. 
+
+\allsectionsfont{\raggedright}
+## Summary of Changes in Assessment Inputs
+*Changes in the input data:* There were no changes made to the assessment model inputs as this is an off-cycle year. 
+New data added to the projection model included updated catch data from `r year-1` (`r filter(catch, Year == year-1) %>% pull(Catch) %>% prettyNum(., big.mark = ",", digits = 0)` t) and new estimated catches for `r year`-`r year + 2`. 
+Catch data were queried on `r data_pull`. 
+The `r year` catch was estimated by increasing the observed catch by an expansion factor of `r yld %>% pull(catch_rat) %>% round(., 3)`, which accounts for the average fraction of catch taken after `r data_pull2` in the last three complete years (`r year - 3`-`r year-1`). 
+This expansion factor results in an estimated catch for `r year` of `r filter(catch, Year == year) %>% pull(Catch) %>% prettyNum(., big.mark = ",", digits = 0)` t. 
+To estimate future catches, we updated the yield ratio to `r yld %>% pull(yld) %>% round(., 2)`, which was the average ratio of catch to ABC for the last three complete catch years (`r year - 3`-`r year-1`). 
+This yield ratio was multiplied by the projected ABCs from the updated projection model to generate catches of 3,089 t in `r year + 1` and 2,884 t in `r year + 2`.
+
+*Changes in assessment methodology:* There were no changes from the 2020 assessment [@Williams2020] since this is an off-cycle year.
+
+\allsectionsfont{\raggedright}
+## Summary of Results
+*ABC recommendation*  
+For the `r year + 1` fishery, we recommend maximum allowable ABC of 5,147 t from the updated projection model. 
+This ABC is a minor increase over the `r year+1` projected ABC of 5,100 t from the 2020 full assessment. 
+The 2022 GOA-wide OFL is 6,143 t.
+
+The stock is not being subject to overfishing, is not currently overfished, nor is it approaching a condition of being overfished. 
+The test for determining whether overfishing is occurring is based on the `r year -1` catch compared to OFL. 
+The official total catch for `r year-1` is `r filter(catch, Year == year-1) %>% pull(Catch) %>% prettyNum(., big.mark = ",", digits = 0)` t which is less than the `r year -1` OFL of 6,396 t; therefore, the stock is not being subjected to overfishing. 
+The tests for evaluating whether a stock is overfished or approaching a condition of being overfished require examining model projections of spawning biomass relative to $B_{35\%}$ for `r year + 1` and `r year + 2`. 
+The estimates of spawning biomass for `r year + 1` and `r year + 2` from the current year projection model are 40,474 t and 37,408 t, respectively. 
+Both estimates are above the $B_{35\%}$ estimate of 29,691 t and, therefore, the stock is not currently overfished nor approaching an overfished condition.
+
+Reference values for northern rockfish are summarized in the following table, with the recommended ABC and OFL values in bold.
+
+\begin{center}
+\begin{tabular}{ |lcccc|}
+\hline
+ & \multicolumn{2}{c}{\cellcolor[gray]{0.9} As estimated or} & 
+    \multicolumn{2}{c|}{As estimated or}\\
+ & \multicolumn{2}{c}{\cellcolor[gray]{0.9} specified \emph{last} year for:} & 
+    \multicolumn{2}{c|}{specified \emph{this} year for:}\\
+    
+ \textbf{Quantity/Status}                 & \cellcolor[gray]{0.9} 2021    & \cellcolor[gray]{0.9} 2022   & 2022* & 2023*\\ 
+ \hline
+    M (natural mortality)                 & \cellcolor[gray]{0.9} 0.059    &\cellcolor[gray]{0.9} 0.059    &  0.059  & 0.059\\
+    Tier                                  & \cellcolor[gray]{0.9} 3a      & \cellcolor[gray]{0.9} 3a     & 3a & 3a\\
+    Projected total (age 2+) biomass (t)  & \cellcolor[gray]{0.9} 102,715 & \cellcolor[gray]{0.9} 99,957 & 100,371 &	96,045 \\
+    Projected female spawning biomass (t) & \cellcolor[gray]{0.9} 42,791  & \cellcolor[gray]{0.9} 40,462 & 40,474 &	37,408 \\
+    $B_{100\%}$                           & \cellcolor[gray]{0.9} 84,832  & \cellcolor[gray]{0.9} 84,832 & 84,832	& 84,832 \\
+    $B_{40\%}$                            & \cellcolor[gray]{0.9} 33,933  & \cellcolor[gray]{0.9} 33,933 & 33,933 &	33,933 \\
+    $B_{35\%}$                            & \cellcolor[gray]{0.9} 29,691  & \cellcolor[gray]{0.9} 29,691 & 29,691	 & 29,691 \\
+  $F_{OFL}$                               & \cellcolor[gray]{0.9} 0.073   & \cellcolor[gray]{0.9} 0.073  & 0.073 & 0.073\\
+   $maxF_{ABC}$                           & \cellcolor[gray]{0.9} 0.061   & \cellcolor[gray]{0.9} 0.061  & 0.061 & 0.061\\
+   $F_{ABC}$                              & \cellcolor[gray]{0.9} 0.061   & \cellcolor[gray]{0.9} 0.061  & 0.061 & 0.061\\
+    OFL                                   & \cellcolor[gray]{0.9} 6,396   & \cellcolor[gray]{0.9} 6,088  & \bf{6,143} &	5,874 \\
+    maxABC (t)                            & \cellcolor[gray]{0.9} 5,358   & \cellcolor[gray]{0.9} 5,100  & \bf{5,147} &	4,921 \\
+     ABC (t)                              & \cellcolor[gray]{0.9} 5,358   & \cellcolor[gray]{0.9} 5,100  & \bf{5,147} &	4,921 \\
+ \hline     
+\bf{Status}  & \multicolumn{2}{c}{\cellcolor[gray]{0.9} As determined}         &  \multicolumn{2}{c|}{As determined} \\
+             & \multicolumn{2}{c}{\cellcolor[gray]{0.9} \emph{last} year for:} &  \multicolumn{2}{c|}{\emph{this} year for:}\\
+             & \cellcolor[gray]{0.9} 2019 & \cellcolor[gray]{0.9} 2020         & 2020 & 2021\\ 
+ \hline       
+    Overfishing             & \cellcolor[gray]{0.9}No & \cellcolor[gray]{0.9}n/a & No & n/a  \\
+    Overfished              & \cellcolor[gray]{0.9} n/a & \cellcolor[gray]{0.9}No & n/a & No \\
+    Approaching overfishing &\cellcolor[gray]{0.9} n/a & \cellcolor[gray]{0.9}No & n/a & No \\
+\hline
+\multicolumn{5}{l}{\footnotesize *Projections are based on an estimated catch of 2,471 t for 2021, and estimates of 3,089 t and 2,884 t used \par}\\
+\multicolumn{5}{l}{\footnotesize in place of maximum permissible ABC for 2022 and 2023.\par}\\
+
+\end{tabular}
+\end{center}
+
+```{r, child=c("02-table.Rmd"), eval = FALSE}
+
+```
+
+*Fishery trends*
+
+Catch data for northern rockfish in the GOA were updated as of `r data_pull` (NMFS Alaska Regional Office Catch Accounting System via the Alaska Fisheries Information Network [AKFIN] database, www.akfin.org). 
+The northern rockfish catch/biomass ratio has ranged from 0.015-0.038 since 1991 (Figure 10-1) and has been near 0.02 for the past four years.
+To calculate this catch/biomass ratio (exploitation rate) observed catches through `r year-1` and estimated catches for `r year` are divided by age 2+ biomass estimates. 
+Biomass from 1991-`r year-1` are from the 2020 full stock assessment and the estimate for `r year` is from the `r year` projection model. 
+The approximate 95\% confidence intervals are calculated assuming a normal distribution with standard errors estimated in the 2020 full stock assessment for 1991-`r year-1` and a coefficient of variation in 2021 that is assumed the same as the estimate in the terminal year of the 2020 full assessment. 
+
+*Survey trends*
+
+For informational purposes, updated trends from the `r year` bottom trawl survey are presented here for both a geostatistical model and a design-based model. 
+A geostatistical model is approved for use in the northern rockfish assessment model for estimating survey biomass. 
+This geostatistical model estimates a 33% decrease in biomass from the 2019 survey (Figure 10-2) and is below the long term mean.
+Large fluctuations in the northern rockfish biomass estimates have been observed for many survey years for both the design-based estimator and the model-based estimator.
+
+\allsectionsfont{\raggedright}
+## Area Allocation of Harvest
+The following table shows the recommended ABC apportionment for `r year+1` and `r year+2`. 
+The apportionment percentages are the same as in the last full assessment. 
+Please refer to the 2020 full stock assessment report [@Williams2020] for information regarding the apportionment rationale for GOA northern rockfish.
+
+\begin{center}
+\begin{tabular}{ lcccc}
+\hline
+
+ & Western & Central & Eastern & Total \\
+ Area Apportionment & 37.76\% & 62.22 \% & 0.02\% & 100\% \\
+ \hline
+ 2022 Area ABC (t) & 1,944  & 3,202 & 1 & 5,147 \\
+ 2022 OFL (t)      &        &       &   & 6,143 \\
+ 2023 Area ABC (t) & 1,859  & 3,061 & 1 & 4,921 \\
+ 2023 OFL (t)      &        &       &   & 5,874 \\
+\hline
+\multicolumn{5}{l}{\footnotesize *For management purposes the small ABC in the Eastern area is combined} \\
+\multicolumn{5}{l}{\footnotesize with the Other Rockfish complex} \\
+\end{tabular}
+\end{center}
+
+\allsectionsfont{\raggedright}
+## Summaries for Plan Team
+
+\begin{center}
+\begin{tabular}{lcccccc}
+\hline
+
+Stock & Year & Biomass$^1$ & OFL & ABC & TAC & Catch \\
+\hline
+
+         & 2020 & 85,057  & 5,143 & 4,311 & 4,311 & 2,385\\
+Northern & 2021 & 102,715 & 6,396 & 5,357 & 5,357 & 2,365$^2$\\
+Rockfish & 2022 & 100,371 & 6,143 & 5,147 & & \\
+         & 2023 & 96,045  & 5,874 & 4,921 & & \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{lr|rrrr|rr|rr}
+\hline
+          &           & \multicolumn{4}{c}{2021} & \multicolumn{2}{|c}{2022} & \multicolumn{2}{|c}{2023}  \\ 
+Stock     & Area      & OFL   & ABC   & TAC   & Catch$^2$ & OFL   & ABC   & OFL    & ABC   \\
+\hline
+          & W         &       & 2,023 & 2,023  & 698       &       & 1,944 &        & 1,859 \\
+Northern  & C         &       & 3,334 & 3,334  & 1,667     &       & 3,202 &        & 3,061 \\
+Rockfish  & E*        &       &       &        &           &       & 1     &        & 1     \\
+          & Total     & 6,396 & 5,357 & 5,357  & 2,365     & 6,143 & 5,147 & 5,874  & 4,921 \\     
+     
+\hline
+\multicolumn{10}{l}{\footnotesize $^1$Total biomass (age 2+) estimates from age-structured model.} \\
+\multicolumn{10}{l}{\footnotesize $^2$Current as of October 16, 2021. Source: NMFS Alaska Regional Office Catch Accounting System} \\
+\multicolumn{10}{l}{\footnotesize via the AKFIN database (http://www.akfin.org).} \\
+\multicolumn{10}{l}{\footnotesize *For management purposes the small ABC in the Eastern area is combined with the Other} \\
+\multicolumn{10}{l}{\footnotesize Rockfish complex} \\
+\end{tabular}
+\end{center}
+

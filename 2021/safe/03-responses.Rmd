@@ -1,0 +1,28 @@
+\allsectionsfont{\raggedright}
+## Responses to SSC and Plan Team Comments on Assessments in General
+
+\begin{quote}
+\emph{…risk tables only need to be produced for groundfish assessments that are in ‘full’ year in the cycle. (SSC, June 2019)}
+\end{quote}
+
+A risk table will be provided in the next full assessment.
+
+\allsectionsfont{\raggedright}
+## Responses to SSC and Plan Team Comments Specific to this Assessment
+
+\begin{quote}
+\emph{The Plan Team recommended the authors examine the high proportion of survey and commercial catch that are being assigned to the plus group age bin and investigate why fits to the fishery plus group are so poor. (November 2020)}
+\end{quote}
+
+\begin{quote}
+\emph{The SSC reiterates its 2018 request for the author to explore alternative binning for the plus group
+used in the assessment. (December 2020)}
+\end{quote}
+
+The authors plan to explore options for plus group changes in the next full assessment.
+
+\begin{quote}
+\emph{The Team recommends evaluating how the definition of the length composition plus group, and alternative data-weighting methods, affect model performance.” (Plan Team, November 2015); “Finally, the SSC notes the increasing proportion of fish in the fishery length composition plus-group and looks forward to seeing the results of the ongoing investigations into alternative length composition bin structures. The SSC also agrees with the high priority placed on improving maturity-at-age information for northern rockfish.” (SSC, December 2018)}
+\end{quote}
+
+The authors plan to explore the length composition plus group and alternative data-weighting methods in the next full assessment.

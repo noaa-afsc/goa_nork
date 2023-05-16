@@ -1,0 +1,134 @@
+# 10. Assessment of the Northern Rockfish stock in the Gulf of Alaska
+
+Benjamin C. Williams, Peter-John Hulson, Chris R. Lunsford  
+
+November 2021
+
+# Executive Summary
+
+
+## Summary of Changes in Assessment Inputs
+*Changes in the input data:* There were no changes made to the assessment model inputs as this was an off-cycle year. New data added to the projection model included updated catch data from 2020 **(2,354 t)** and new estimated catches for 2021-2023. 
+The 2021 catch was estimated by increasing the official catch as of **October 7, 2021** by an expansion factor of **1.077**, which accounts for the average fraction of catch taken after **October 7** in the last three complete years (2018-2020). 
+This expansion factor **decreased** from last year’s expansion factor of **1.094** and resulted in an estimated catch for 2021 of **2,561 t**. 
+To estimate future catches, we updated the yield ratio to **0.66**, which was the average of the ratio of catch to ABC for the last three complete catch years (2018-2020). 
+This yield ratio was multiplied by the projected ABCs from the updated projection model to generate catches of **2,850 t** in 2021 and **2,660 t** in 22. 
+The yield ratio was **lower** than last year’s ratio of **0.71.**
+
+*Changes in assessment methodology:* There were no changes from the 2020 assessment (Williams et al. 2020) since this was an off-cycle year.
+
+## Summary of Results
+*ABC recommendation*
+For the 2021 fishery, we recommend the maximum allowable ABC of **4,312 t** from the updated projection model. 
+This ABC is **4.8% less** than last year’s ABC of **4,529 t** but **larger** than last year’s 2021 projected ABC of **4,270 t**. 
+Recommended area apportionments of ABC are **1,133** t for the Western area, **3,178** t for the Central area, and 1 t for the Eastern area. 
+The 2021 Gulf-wide OFL for northern rockfish is **5,143** t. 
+
+Reference values for northern rockfish are summarized in the following table, with the recommended ABC and OFL values in bold. 
+
+```{r, echo = F, message = F, warning = F}
+year = 2021
+library(flextable)
+library(tidyverse)
+
+data.frame(
+  years = c(as.character(year), as.character(year + 1), as.character(year + 1), as.character(year + 2)),
+  m = rep(0.059,4),
+  tier = rep("3a", 4),
+  proj_bio = c(85057, 83108, 102715, 99597),
+  proj_ssb = c(34410, 32435, 42791, 40762),
+  b100 = c(76199, 76199, 84832, 84832),
+  b40 = c(30480, 30480, 33933, 33933),
+  b35 = c(26670, 26670, 29691 , 29691),
+  fofl = rep(0.073, 4),
+  maxfabc = rep(0.061, 4),
+  fabc = rep(0.061, 4),
+  ofl = c(5143, 4898, 6396, 6088),
+  maxabc = c(4312, 4107, 5358, 5100),
+  abc = c(4312, 4107, 5358, 5100),
+  status = c("As determined last year for:", "As determined this year for:"),
+  status2 = c(year-2, year-1, year-1, year),
+  overfishing = c("No", "n/a", "No", "n/a"),
+  overfished = c("n/a", "No", "n/a", "No"),
+  approach = c("n/a", "No", "n/a", "No")) -> df
+
+t(df) %>% 
+  as.data.frame() %>% 
+  mutate(Quantity = c("",
+                      "M (natural mortality)",
+                      "Tier",
+                      "Projected total (ages 2+) biomass t",
+                      "Projected female spawning biomass t",
+                      "B100%",
+                      "B40%",
+                      "B35%",
+                      "FOFL",
+                      "maxFABC",
+                      "FABC",
+                      "OFL (t)",
+                      "maxABC (t)",
+                      "ABC (t)",
+                      "Status",
+                      "Status",
+                      "Overfishing",
+                      "Overfished",
+                      "Approaching overfished")) %>%
+  dplyr::select(Quantity, V1, V2, V3, V4) %>%
+  flextable() %>% 
+  set_header_labels(V1 = paste("As estimated or specified last year for:"),
+                    V2 = paste("As estimated or specified last year for:"),
+                    V3 = paste("As estimated or specified this year for:"),
+                    V4 = paste("As estimated or specified this year for:")) %>% 
+  border_remove() %>% 
+  merge_at(i = 1, j = 2:3, part = "header") %>% 
+  merge_at(i = 1, j = 4:5, part = "header") %>% 
+  merge_at(i = 15, j = 2:3, part = "body") %>% 
+  merge_at(i = 15, j = 4:5, part = "body") %>% 
+  merge_at(i = 15:16, j = 1, part = "body") %>% 
+  font(fontname = "Times", part = "all") %>% 
+  fontsize(size = 10) %>% 
+  width(j = ~ Quantity, width = 2.1) %>% 
+  align(align = "justify", part = "header")
+  
+```
+
+The stock is not being subject to overfishing, is not currently overfished, nor is it approaching a condition of being overfished. 
+The tests for evaluating these three statements on status determination require examining the official total catch from the most recent complete year and the current model projections of spawning biomass relative to $B_{35%}$ for 2020 and 2022. 
+The official total catch for 2020 is **2,354** t, which is **less** than the 2020 OFL of **4,380** t; therefore, the stock is not being subjected to overfishing. 
+The estimates of spawning biomass for 2020 and 2022 from the projection model used this year (2020) are **36,512** t and **32,435** t, respectively. 
+Both estimates are above the estimate of $B_{35%}$ at **26,670** t and, therefore, the stock is not currently overfished nor approaching an overfished condition.
+
+*Fishery trends*
+Updated catch data (t) for northern rockfish in the Gulf of Alaska as of **October 7, 2021** (NMFS Alaska Regional Office Catch Accounting System via the Alaska Fisheries Information Network (AKFIN) database, http://www.akfin.org) are summarized in the following table.
+
+
+Catch of northern rockfish in the Gulf of Alaska through **October 7, 2021** of **2,377** t is significantly below the 2021 gulf-wide TAC of **4,528** t and remains so even after accounting for the **7.7%** of northern rockfish catch usually occurring after **October 7**. 
+**The majority of Gulf of Alaska northern rockfish catch remains in the Central region, although, the catch in the Western region increased in 2020 based upon the TAC increasing in this area.**
+
+The northern rockfish catch/biomass ratio has ranged from **0.017-0.041** between 1991 and 2020 (Figure 10.1). 
+The 2020 projected catch/biomass ratio of **0.029 is 11% larger** than that observed in 2019 (**0.026**). 
+For the catch/biomass ratio, catch data for 2020 are projected based on observed catch through **October 7, 2021** using the **1.077** expansion factor. 
+Biomass from 1991-2020 are estimates of total biomass from the 2020 full stock assessment (age 2+) and estimates for 2021 are from the projection model. 
+The approximate 95% confidence interval values are calculated assuming a normal distribution with standard errors estimated in the 2020 full stock assessment for 1991-2020 and a coefficient of variation in 2021 that is assumed the same as estimated in the terminal year of the full assessment (2020).
+
+
+
+*Survey trends*
+For informational purposes, updated trends from the 2021 bottom trawl survey are presented here. 
+A geostatistical model was approved for use in the northern rockfish assessment model in 2018 for estimating survey biomass. 
+This geostatistical model estimates a **XX% increase/decrease** in biomass from the 2019 survey (Figure 10-) and is **above/below** the long term mean.
+
+## Area Allocation of Harvest
+The apportionment percentages are the same as in the 2020 full assessment. 
+The following table shows the recommended apportionment of ABC and TAC for 2021 and 2022. 
+Please refer to the 2020 full stock assessment report (Williams et al. 2020) for information regarding the apportionment rationale for northern rockfish.
+
+## Summaries for Plan Team
+
+## SSC and Plan Team Comments on Assessments in General
+
+## SSC and Plan Team Comments Specific to this Assessment
+
+## Tables
+
+## Figures

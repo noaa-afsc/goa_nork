@@ -1,0 +1,52 @@
+---
+title: "GOA Northern Rockfish - Partial assessment"
+author: "Ben Williams"
+date: ""
+output: powerpoint_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+```
+
+## Northern Rockfish
+
+- Tier 3a species
+  - Only catches updated for projection model
+- Catch update
+  - Final 2020 catch (2,385 t)
+  - Estimated catches for 2021-2023
+- Recommended 2021 ABC: 5,147 t
+  - Lower than 2020 ABC: 5,358 t 
+
+
+## Northern Rockfish - Exploitation rate
+
+```{r fig1}
+
+knitr::include_graphics(here::here("2021", "figs", "catch_bio_pres.png"))
+```
+
+
+## Northern Rockfish - Apportionment
+
+
+```{r, results='asis'}
+options(knitr.kable.NA = '')
+data.frame(Year = rep(c(2022, 2023), each = 2), 
+           Measure = rep(c("ABC", "OFL"), 2),
+           Western = scales::comma(c(1944, NA, 1859, NA)),
+           Central = scales::comma(c(3202, NA, 3061, NA)),
+           Eastern = c(1, "", 1, ""),
+           Total = scales::comma(c(5141, 6143, 4921, 5874))) %>% 
+  knitr::kable(align = "lccccc")
+
+```
+
+## 2021 Survey
+
+```{r fig2}
+
+knitr::include_graphics(here::here("2021", "figs", "ts_biomass_pres.png"))
+```
