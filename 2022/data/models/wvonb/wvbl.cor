@@ -1,0 +1,5 @@
+ The logarithm of the determinant of the hessian = 2.89694
+ index   name    value      std.dev       1       2       3   
+     1   Winf  1.0810e+03 4.3608e+01   1.0000
+     2   k     1.6918e-01 2.2542e-02  -0.6060  1.0000
+     3   t0   -1.6675e-01 7.3123e-01  -0.3982  0.8937  1.0000
