@@ -1,0 +1,64 @@
+```{r}
+library(flextable)
+library(tidyverse)
+
+data.frame(
+  years = c(as.character(year), as.character(year + 1), as.character(year + 1), as.character(year + 2)),
+  m = rep(0.059,4),
+  tier = rep("3a", 4),
+  proj_bio = c(85057, 83108, 102715, 99597),
+  proj_ssb = c(34410, 32435, 42791, 40762),
+  b100 = c(76199, 76199, 84832, 84832),
+  b40 = c(30480, 30480, 33933, 33933),
+  b35 = c(26670, 26670, 29691 , 29691),
+  fofl = rep(0.073, 4),
+  maxfabc = rep(0.061, 4),
+  fabc = rep(0.061, 4),
+  ofl = c(5143, 4898, 6396, 6088),
+  maxabc = c(4312, 4107, 5358, 5100),
+  abc = c(4312, 4107, 5358, 5100),
+  status = c("As determined last year for:", "As determined this year for:"),
+  status2 = c(year - 2, year - 1, year -1, year),
+  overfishing = c("No", "n/a", "No", "n/a"),
+  overfished = c("n/a", "No", "n/a", "No"),
+  approach = c("n/a", "No", "n/a", "No")) -> df
+
+t(df) %>% 
+  as.data.frame() %>% 
+  mutate(Quantity = c("",
+                      "M (natural mortality)",
+                      "Tier",
+                      "Projected total (ages 2+) biomass t",
+                      "Projected female spawning biomass t",
+                      "B100%",
+                      "B40%",
+                      "B35%",
+                      "FOFL",
+                      "maxFABC",
+                      "FABC",
+                      "OFL (t)",
+                      "maxABC (t)",
+                      "ABC (t)",
+                      "Status",
+                      "Status",
+                      "Overfishing",
+                      "Overfished",
+                      "Approaching overfished")) %>%
+  dplyr::select(Quantity, V1, V2, V3, V4) %>%
+  flextable() %>% 
+  set_header_labels(V1 = paste("As estimated or specified last year for:"),
+                    V2 = paste("As estimated or specified last year for:"),
+                    V3 = paste("As estimated or specified this year for:"),
+                    V4 = paste("As estimated or specified this year for:")) %>% 
+  border_remove() %>% 
+  merge_at(i = 1, j = 2:3, part = "header") %>% 
+  merge_at(i = 1, j = 4:5, part = "header") %>% 
+  merge_at(i = 15, j = 2:3, part = "body") %>% 
+  merge_at(i = 15, j = 4:5, part = "body") %>% 
+  merge_at(i = 15:16, j = 1, part = "body") %>% 
+  font(fontname = "Times", part = "all") %>% 
+  fontsize(size = 10) %>% 
+  width(j = ~ Quantity, width = 2.1) %>% 
+  align(align = "justify", part = "header")
+  
+```

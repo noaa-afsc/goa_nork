@@ -1,0 +1,52 @@
+# Executive summary
+
+We use a statistical age-structured model as the primary assessment tool for GOA northern rockfish stock which qualifies as a Tier 3 stock. 
+This assessment consists of a population model, which uses survey and fishery data to generate a historical time series of population estimates, and a projection model, which uses results from the population model to predict future population estimates and recommended harvest levels. 
+The data sets used in this assessment include total catch biomass, fishery age and size compositions, trawl survey abundance estimates, and trawl survey age compositions. 
+For a partial assessment, we do not re-run the assessment model, but do update the projection model with new catch information. 
+This incorporates the most current catch information without re-estimating model parameters and biological reference points.
+Full assessments for northern rockfish are conducted in even years and partial assessments in odd years. 
+For Gulf of Alaska northern rockfish in `r year`, we present a full assessment with updated assessment and projection model results to recommend harvest levels for the next two years. 
+
+## Summary of Changes in Assessment Inputs
+
+*Changes in input data*: The input data were updated to include survey biomass estimates for 2019, survey age compositions for 2019, final catch for 2018 and 2019, preliminary catch for 2020, fishery age compositions for 2018, and fishery size compositions for 2019. 
+
+*Changes in assessment methodology*: The survey biomass estimate is now based upon the Groundfish Assessment Program's Vector Autoregressive Spatio-temporal (VAST) model for the GOA.
+The aging error matrix was updated with data through 2017, the previous matrix had data through 2008.
+
+## Summary of Results
+
+The `r year + 1` projected age 2+ total biomass is **102,715 t**. 
+The recommended ABC for `r year + 1` is **5,358 t**, the maximum allowable ABC under Tier 3a. 
+This ABC is a **23%** increase compared to the `r year` ABC of **3,685 t** and a **35%** increase from the projected `r year + 1` ABC from last year. 
+The `r year + 1` GOA-wide OFL for northern rockfish is **6,396 t**. 
+Reference values for northern rockfish are summarized in the following table.
+
+Reference values for northern rockfish are summarized in the following table, with the recommended ABC and OFL values in bold.
+
+
+```{r, child=c("02-table.Rmd")}
+
+```
+* Projections are based upon an estimated catch of x and y t used in place of maximum permissable ABC for 2021 and 2022.
+
+
+```{r}
+
+# apportionment 
+# wg  cg  eg
+# 37.76%  62.22%  0.02%
+# 2023  3334  1
+```
+
+The stock is not being subject to overfishing, is not currently overfished, nor is it approaching a condition of being overfished. 
+The tests for evaluating these three statements on status determination require examining the official total catch from the most recent complete year and the current model projections of spawning biomass relative to B35% for 2019 and 2021. 
+The official total catch for 2018 is 2,354 t, which is less than the 2018 OFL of 4,380 t; therefore, the stock is not being subjected to overfishing. 
+The estimates of spawning biomass for 2019 and 2021 from the projection model used this year (2019) are 36,512 t and 32,435 t, respectively. 
+Both estimates are above the estimate of B35% at 26,670 t and, therefore, the stock is not currently overfished nor approaching an overfished condition.
+
+Apportionment is based on the random effects model developed by Plan Team survey averaging working group, which was fit to area-specific design-based biomass indices through 2019 from the bottom trawl survey. 
+The 2020 ABC apportionment to the WGOA **increases to 26.3%** from the **2016-18** apportionment percentage of **11.4%**, and apportionment to the CGOA decreases from **88.5% to 73.7%**. 
+However, these proportions are consistent with **2014-2015** apportionments adopted following the **2013** survey. 
+Similar to other rockfish species, the proportion of survey biomass can often change across management regions due to large influential survey hauls impacting the biomass estimates across space.

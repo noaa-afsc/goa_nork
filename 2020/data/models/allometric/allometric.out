@@ -1,0 +1,28 @@
+
+Initial statistics: 2 variables; iteration 0; function evaluation 0; phase 1
+Function value   6.8540325e+03; maximum gradient component mag   1.1039e+06
+Var   Value    Gradient   |Var   Value    Gradient   |Var   Value    Gradient
+  1 -0.98727   1.1039e+06 |  2  3.00000   3.9858e+04 |
+
+Intermediate statistics: 2 variables; iteration 10; function evaluation 17; phase 1
+Function value   1.7200185e+02; maximum gradient component mag   2.3505e+04
+Var   Value    Gradient   |Var   Value    Gradient   |Var   Value    Gradient
+  1 -1.00579   2.3505e+04 |  2  2.93931  -4.3366e+02 |
+2 variables; iteration 20; function evaluation 27; phase 1
+Function value   1.6893165e+02; maximum gradient component mag  -9.9287e+00
+Var   Value    Gradient   |Var   Value    Gradient   |Var   Value    Gradient
+  1 -1.00437  -9.9287e+00 |  2  3.04185   8.2321e-02 |
+  ic > imax  in fminim is answer attained ?
+Var   Value    Gradient   |Var   Value    Gradient   |Var   Value    Gradient
+  1 -1.00437  -2.6311e-03 |  2  3.04194   3.4670e-05 |
+Function minimizer not making progress ... is minimum attained?
+Minimprove criterion =   0.0000e+00
+
+ - final statistics:
+2 variables; iteration 24; function evaluation 60
+Function value   1.6893e+02; maximum gradient component mag  -2.6311e-03
+Exit code = 1;  converg criter   1.0000e-04
+Var   Value    Gradient   |Var   Value    Gradient   |Var   Value    Gradient
+  1 -1.00437  -2.6311e-03 |  2  3.04194   3.4670e-05 |
+Estimating row 1 out of 2 for hessian
+Estimating row 2 out of 2 for hessian

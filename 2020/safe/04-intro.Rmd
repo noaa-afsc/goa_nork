@@ -1,0 +1,71 @@
+# Introduction
+
+## Biology and distribution
+The northern rockfish, *Sebastes polyspinis*, is a locally abundant and commercially valuable member of its genus in Alaskan waters. 
+As implied by its common name, northern rockfish has one of the most northerly distributions among the 60+ species of *Sebastes* in the North Pacific Ocean. 
+It ranges from extreme northern British Columbia around the northern Pacific Rim to eastern Kamchatka and the northern Kuril Islands and also north into the eastern Bering Sea [@Allen1988]. 
+Within this range, northern rockfish are most abundant in Alaska waters, from the western end of the Aleutian Islands to Portlock Bank in the central Gulf of Alaska [@Clausen2002].
+
+Little is known about the life history of northern rockfish. Like other Sebastes species, northern rockfish are presumed to be ovoviviparous with internal fertilization. 
+There have been no studies on fecundity of northern rockfish. Observations during research surveys in the Gulf of Alaska indicate that parturition (larval release) occurs in the spring and is completed by summer. 
+Larval northern rockfish cannot be unequivocally identified to species at this time, even using genetic techniques, so information on larval distribution and length of the larval stage is unknown. 
+The larvae metamorphose to a pelagic juvenile stage, but there is no information on when these juveniles become demersal.
+
+Little information is available on the habitat of juvenile northern rockfish. 
+Studies in the eastern Gulf of Alaska and Southeast Alaska using trawls and submersibles have indicated that several species of juvenile (< 20 cm) red rockfish (Sebastes spp.) associate with benthic nearshore living and non-living structure and appear to use the structure as a refuge [@Carlson1981; @Krieger1993]. 
+Freese and Wing (2003) also identified juvenile (5 to 10 cm) red rockfish (*Sebastes spp*.) associated with sponges (primarily *Aphrocallistes spp.*) attached to boulders 50 km offshore in the GOA at 148 m depth over a substrate that was primarily a sand and silt mixture. 
+Only boulders with sponges harbored juvenile rockfish, and the juvenile red rockfish appeared to be using the sponges as shelter (Freese and Wing 2003). 
+Although these studies did not specifically observe northern rockfish, it is likely that juvenile northern rockfish also utilize similar habitats. 
+Length frequencies of northern rockfish captured in NMFS bottom trawl surveys and observed in commercial fishery bottom trawl catches indicate that older juveniles (>20 cm) are found on the continental shelf, generally at locations inshore of the adult habitat (Pers. comm. Dave Clausen).
+
+Northern rockfish are generally planktivorous. 
+They eat mainly euphausiids and calanoid copepods in both the GOA and the Aleutian Islands [@Yang1993; @Yang1996; @Yang2000]. 
+There is no indication of a shift in diet over time or a difference in diet between the GOA and AI [@Yang1996, @Yang2000]. 
+In the Aleutian Islands, calanoid copepods were the most important food of smaller-sized northern rockfish (< 25 cm), while euphausiids were the main food of larger sized fish (> 25 cm) [@Yang1996]. 
+The largest size group also consumed myctophids and squids [@Yang2000]. 
+Arrow worms, hermit crabs, and shrimp have also been noted as prey items in much smaller quantities [@Yang1993, @Yang1996]. 
+Large offshore euphausiids are not directly associated with the bottom, but rather, are thought to be advected onshore near bottom at the upstream ends of underwater canyons where they become easy prey for planktivorous fishes @Brodeur2001].
+Predators of northern rockfish are not well documented, but likely include larger fish, such as Pacific halibut, that are known to prey on other rockfish species.
+
+Trawl surveys and commercial fishing data indicate that the preferred habitat of adult northern rockfish in the Gulf of Alaska is relatively shallow rises or banks on the outer continental shelf at depths of about 75-150 m [@Clausen2002]. 
+The highest concentrations of northern rockfish from NMFS trawl survey catches appear to be associated with relatively rough (variously defined as hard, steep, rocky or uneven) bottom on these banks [@Clausen2002]. 
+@Heifetz2002 identified rockfish as among the most common commercial fish captured with gorgonian corals (primarily *Callogorgia*, *Primnoa*, *Paragorgia*, *Fanellia*, *Thouarella*, and *Arthrogorgia*) in NMFS trawl surveys of Gulf of Alaska and Aleutian waters. 
+@Krieger2002 identified six rockfish species associated with gorgonian coral (*Primnoa spp*.) from a manned submersible in the eastern Gulf of Alaska. 
+Research focusing on non-trawlable habitats found rockfish species often associate with biogenic structure [@DuPreez2011; @Laman2015]. 
+However, most of these studies did not specifically observe northern rockfish, and more research is required to determine if northern rockfish are associated with living structure, including corals, in the Gulf of Alaska, and the nature of those associations if they exist.
+Recent work on black rockfish (Sebastes melanops) has shown that larval survival may be higher from older female spawners [@Berkeley2004]. 
+The black rockfish population has shown a distinct reduction in the proportion of older fish in recent fishery samples off the West Coast of North America, raising concerns if larval survival diminishes with spawner age. 
+@DeBruin2004 examined Pacific ocean perch (*S. alutus*) and rougheye rockfish (*S. aleutianus*) for senescence in reproductive activity of older fish and found that oogenesis continues at advanced ages. 
+@Leaman1991 showed that older individuals have slightly higher egg dry weight than their middle-aged counterparts. 
+Some literature suggests that environmental factors may affect the condition of female rockfish that contributes to reproductive success [@Hannah2007; @Rodgveller2012; @Beyer2015]. 
+However, relationships on fecundity or larval survival at age have not yet been evaluated for northern rockfish or other rockfish in Alaska. 
+Stock assessments for Alaska groundfish have assumed that the reproductive success of mature fish is independent of age.
+
+## Stock structure
+
+Gulf of Alaska northern rockfish grow significantly faster and reach a larger maximum length than Aleutian Islands northern rockfish [@Clausen2002]. 
+Also, Aleutian Islands northern rockfish are slightly older (maximum age 72) than Gulf of Alaska northern rockfish (maximum age 67), the difference in age could be due to sampling variability. 
+There have been two studies on the genetic stock structure of northern rockfish. 
+One study of northern rockfish provided no evidence for genetically distinct stock structure when comparing samples from near the western Aleutian Islands, the western Gulf of Alaska, and Kodiak Island [@Gharrett2003]. 
+The results from that study were considered preliminary, and sample sizes were small. 
+Consequently, the lack of evidence for stock structure did not necessarily confirm stock homogeneity. 
+A more recent study did find spatial structure on a relatively small scale for northern rockfish sampled from several locations in the Aleutian Islands and Bering Sea [@Gharrett2012].
+
+Results of an analysis of localized depletion based on Leslie depletion estimators on targeted rockfish catches detected relatively few localized depletions for northern rockfish [@Hanselman2007]. 
+Several significant depletions occurred in the early 1990s for northern rockfish, but were not detected again by the depletion analysis. 
+However, when fishery and survey CPUEs were plotted over time for a geographic block of high rockfish fishing intensity that contained the “Snakehead” area, the results indicated there were year-after-year drops in both fishery and survey CPUE for northern rockfish. 
+The significance of these observations depends on the migratory and stock structure patterns of northern rockfish. 
+If fine-scale stock structure is determined in northern rockfish, or if the area is essential to northern rockfish reproductive success, then these results would suggest that current apportionment of ABC may not be sufficient to protect northern rockfish from localized depletion. 
+Provisions to guard against serial depletion in northern rockfish should be examined in the Gulf of Alaska rockfish rationalization plan. 
+The extension of the fishing season that has been implemented may spread out the fishery in time and space and reduce the risk of localized serial depletion on the “Snakehead” and other relatively shallow (75 – 150 m) offshore banks on the outer continental shelf where northern rockfish are concentrated.
+
+If there is relatively small scale stock structure (120 km) in Gulf of Alaska northern rockfish, then recovery from localized depletion, as indicated above for a region known as the “Snakehead,” could be slow. 
+Analysis of otolith microchemistry may provide a useful tool, in addition to genetic analysis, for identifying small scale (120 km) stock structure of northern rockfish relative to their overall range. 
+@Berkeley2004 suggests that, in addition to the maintenance of age structure, the maintenance of spatial distribution of recruitment is essential for long-term sustainability of exploited rockfish populations. 
+In particular, @Berkeley2004 outline Hedgecock's “sweepstakes hypothesis” to explain small-scale genetic heterogeneity observed in some widely distributed marine populations. 
+According to @Berkeley2004, “most spawners fail to produce surviving offspring because their reproductive activity is not matched in space and time to favorable oceanographic conditions for larval survival during a given season. 
+As a result of this mismatch the surviving year class of new recruits is produced by only a small minority of adults that spawned within those restricted temporal and spatial oceanographic windows that offered good conditions for larval survival and subsequent recruitment”. 
+However, Miller and Shanks (2004) found limited larval dispersal (120 km) in black rockfish off the Pacific coast with an analysis of otolith microchemistry. 
+In particular, these results suggest that black rockfish exhibit some degree of stock structure at very small scales (120 km) relative to their overall range. 
+Localized genetic stocks of Pacific ocean perch have also been found in northern B.C. [@Withler2001], and [@Kamin2013] concluded that fine-scale genetic heterogeneity for Pacific ocean perch in Alaska was not the influence of a sweepstakes effect. 
+Limited larval dispersal contradicts Hedgecock's hypothesis and suggests that genetic heterogeneity in rockfish may be the result of stock structure rather than the result of the sweepstakes hypothesis.

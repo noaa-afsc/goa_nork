@@ -1,0 +1,73 @@
+## Responses to SSC and Plan Team Comments on Assessments in General
+
+#### Risk Tables 
+
+“*The SSC requests that all authors fill out the risk table in 2019…*” (SSC December 2018)  
+
+“*…risk tables only need to be produced for goundfish assessments that are in ‘full’ year in the cycle.*” (SSC, June 2019)
+
+“*The Teams recommended that authors continue to fill out the risk tables for full assessments.* 
+*The Teams recommended that adjustment of ABC in response to levels of concern should be left to the discretion of the author, the Team(s), and/or the SSC, but should not be mandated by the inclusion of a >1 level in any particular category.*
+*The Teams request clarification and guidance from the SSC regarding the previously noted issues associated with completing the risk table, along with any issues noted by the assessment authors. The Teams plan to discuss the risk table process at the September meeting.*” (Plan Team Nov 2019).
+
+"*The SSC requests the the GPTs, as time allows, update the risk tables for the 2020 full assessments.*” (Dec 2019)
+
+“*The SSC provided direct responses to 10 specific requests raised by the Teams:* 
+
+*1.	Whether an overall elevated risk level (>1) mandates a reduction in ABC, and, more generally, the relationship of the risk level to the amount of reduction (if any);* 
+*No. The intention was to organize, report and clarify risks that are not addressed in the assessment or the Tier system to promote transparency and consistency among assessments. The GPT minutes and the risk tables in this year’s SAFE report suggest this is happening. As the SSC outlined in the December 2018 report, the risk tables are intended to be informative rather than prescriptive regarding potential reductions from maximum ABC.* 
+*2.	How to document changes that may not warrant higher levels of precaution, specifically when an overall elevated level of risk (>1) does not lead to a reduction in ABC (e.g., BSAI northern rockfish, GOA POP, GOA arrowtooth flounder); *
+*Notation in the table along with associated explanation of the rationale in the SAFE reports is sufficient. *
+*3.	The appropriateness of the overall level of risk being based on the maximum value across the categories, such that scores of 4, 4, 4, and 4 would be the same as a score of 1, 1, 1 and 4;* 
+*This approach is consistent with between-category variability in risk meaning and serves to elevate stocks with any risk concerns for further review (but see comments below regarding the overall rating). *
+*4.	Whether to state a default level of no risk (=1) or an unknown level of risk when there is no information to evaluate the risk level for a given category (this was of particular concern for Tier 5 and 6 stocks);* 
+*“No risk” versus “no information” determinations are different and should be specified (GOA Atka mackerel and BSAI Alaska plaice provide good examples).* 
+*Further, a rating of 1 does not necessarily mean no risk, but instead may reflect that the risks are dealt with in the assessment directly or via the Tier system and that no additional, unaccounted for risk was identified.* 
+*5.	How to determine the relative influence of stock-specific versus indirect ecosystem indicators for setting the risk level (e.g., EBS Pacific cod, BSAI northern rockfish);* 
+*This is at the discretion of the author/team.* 
+*No between-category “influence” is likely to be consistent between assessments and attempts to establish category weights is likely to cause as many issues as it might address.* 
+*6.	How many direct or indirect ecosystem indicators would constitute an elevated concern;* 
+*This is left to the judgement of the assessment author and the team on a case-by-case basis*. 
+*7.	How evaluations of fishery performance indicators determine risk to stock productivity;*
+*As indicated in the SSC’s December 2018 report, this additional column should include indications of fishery concern, such as inability to catch the TAC, large changes in CPUE (when not accounted for in the model), or dramatic changes in spatial or temporal distribution that could indicate anomalous biological conditions. If, and how, these indicators are developed is left up to the assessment author and GPT on a case-by-case basis.* 
+*8.	Delineating issues that fall under more than one category;*
+*This is at the discretion of the author and GPT. Categories are not mutually exclusive, and risks can be attributed as deemed most appropriate by the author/GPT.* 
+*9.	Whether every item, positive or negative, listed in the context of the risk table necessarily constitutes a “concern” (e.g., for Alaska sablefish, is an unusually large year class necessarily a “concern” simply because it is unusual?);* 
+*No. The tables are intended to promote transparency and prompt further discussion as appropriate. Whether or not an unusual event (e.g. large year class) merits notation in the table is at the discretion of the assessment author and the GPT.* 
+*10.	The Teams noted that risk table discussions were time consuming and could be simplified if the process to determine levels of risk was decoupled from the decision to propose a reduction and the associated amount.* 
+*As stated in our December 2018 report, it is the intention of the SSC that these be decoupled but developed in concert: The SSC endorsed the Teams’ request that the authors continue to fill out the risk tables for full assessments and affirmed the Teams’ recommendation that adjustment from maxABC in response to levels of concern should be left to the discretion of the author, the Team(s), and/or the SSC, but should not be mandated by the inclusion of a >1 level in any particular category. The SSC encourages authors or Teams to provide recommendations on reductions and rationale for those reductions when appropriate. The SSC also requests authors to note changes in risk scoring from one assessment to the next, along with the rationale. The SSC reminds the authors that the tables are intended to capture risks and uncertainties that are NOT addressed in assessment and/or the application of the Tier system. In cases where these concerns are partially addressed, the SSC requests that the authors clearly articulate the extent to which the listed items are not already addressed by the assessment and/or the Tier system.*
+*...The SSC recommends dropping the overall risk scores in the tables.*
+*...The SSC requests that the table explanations be included in all the assessments which include a risk table for completeness.*
+*...The SSC notes that the risk tables provide important information beyond ABC-setting which may be useful for both the AP and the Council and welcomes feedback to improve this tool going forward.*” (SSC December 2019)
+*The process of developing the risk tables, as expected, requires some back and forth and questions continue to arise. The authors appreciate the clarifications the above questions, and as a result of, the flexibilities to fill in the risk table as most appropriate for the assessment. As requested, the overall risk score have been removed and the table explanations added to the stock assessment guidelines. All full assessments have included or updated existing risk tables.*
+*Completing the risk table for complexes raises questions. In the case when one or more of the species in a complex have different risk scores from the bulk of the complex, should the complex risk score be based on the bulk of the complex, or highest level of concern? For example, in the GOA shark complex, three of the four species would be level 1 in all categories, but one species has level 2 risk in at least one category.*  
+*In response to the above risk table comments, we provide a risk table as recommended by the SSC (above in the Summary of Results section, and with more detail in the Harvest Recommendations section below). After completing this exercise, we do not recommend ABC be reduced below maximum permissible ABC.* 
+*The comments that pertain to the risk table have been grouped together. We provide a risk table for the second time in 2020, as recommended by the SSC. Following the completion of this exercise, the highest score for this stock is a Level 3 and the authors provide susbtantial rationale for an ABC be reduced below maximum permissible ABC. Please see the Additional ABC/ACL Considerations section for further details for each category of this risk table.* 
+
+A risk table has been included in this assessment as recommended by the SSC. Following completion of this exercise the highest score for this stock is Level 1. 
+The authors provide rationale for not reducing the ABC below the maximum possible.
+
+## Responses to SSC and Plan Team Comments Specific to this Assessment
+
+*"For this cycle, the SSC also agrees with the author’s justification for the adjustment of the likelihood weight of the survey index to utilize this new time series more appropriately.* 
+*Comparisons between the two models (Model 18.1 and 18.2) suggest relative insensitivity to the alternate weighting schemes.* 
+*However, the SSC questioned whether this rescaling is the most appropriate method to address the reduction in variability resulting from the use of the VAST model in estimating biomass.* 
+*The SSC suggested that this be a topic of discussion for the Joint PT, given the number of stocks that are currently using or planning to implement this methodology, and notes that there is an upcoming CIE review that will include discussions of the VAST model application for both northern and dusky rockfish that may provide some guidance as well.* 
+*The PT suggested that the author could examine the approach by survey strata, though given the large number of potential strata, the SSC suggests that the use of depth and management areas as density covariates might be another approach.*" (SSC December 2018)
+
+
+
+
+
+*"Area apportionments for each of the three GOA management regions are produced by the random effects model fit to the design-based survey biomass estimates, which represents a change in apportionment methodology.* 
+*Previous assessments have used the average area-specific proportion from the three most recent GOA trawl surveys.* 
+*The SSC agrees with the recommendation to use the random effects model for area apportionment and supports the new apportionments, noting that the eastern GOA apportionment for northern rockfish is included in the West Yakutat ABC for “other slope rockfish”, as has occurred since 1999."* (SSC December 2018)
+
+The random effects model was used for apportionment for the current assessment.
+
+*"Finally, the SSC notes the increasing proportion of fish in the fishery length composition plus-group and looks forward to seeing the results of the ongoing investigations into alternative length composition bin structures.* 
+*The SSC also agrees with the high priority placed on improving maturity-at-age information for northern rockfish.*" (SSC December 2018)
+
+Due to a request for limited model changes the fishery length composition plus-group was not examined this assessment cycle. 
+It is anticipated that alternative length composition binning will be explored for the next assessment cycle. 
+Maturity at age information remains a high priority data gap for northern rockfish.

@@ -1,0 +1,42 @@
+library(datacall)
+afsc_user = "WILLIAMSB"
+afsc_pwd = "WiPpJa$3EqF671$2"
+akfin_user = "bwilliams"
+akfin_pwd = "jnu$6350"
+species = "NORK"
+year = 2020
+admb_home = "C:/Program Files (x86)/ADMB-12.1"
+recage = 2
+plus_age = 45
+
+# create folders
+modeldir(year)
+# query databases
+raw_data(species, year, afsc_user, afsc_pwd, akfin_user, akfin_pwd)
+# ageing error model
+ageage(year = year,
+       species = species, 
+       admb_home = admb_home, 
+       recage = recage) 
+
+# weight-at-age
+allometric(year, admb_home, recage, plus_age)
+
+# size-at-age matrix
+weight_length(year, admb_home, recage, plus_age)
+
+# catch data
+clean_catch(year, TAC = c(3786,3681,4528), old_catch = "catch_1961-1992.csv")
+
+# survey biomass
+survey_biomass(year, "VAST_estimates.csv")
+
+# comps
+fish_size_comp(year, recage)
+fish_age_comp(year, recage, plus_age)
+survey_size_comp(year)
+survey_age_comp(year, recage, plus_age)
+
+# ---------------------------------------------------------
+detach("package:datacall", unload=TRUE)
+library(datacall)

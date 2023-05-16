@@ -1,0 +1,40 @@
+# Ecosystem Considerations
+
+## Ecosystem Effects on the Stock
+
+1. Predator population trends (historically, in the present, and in the foreseeable future).  These trends could affect stock mortality rates over time. 
+2. Changes in habitat quality (historically, in the present, and in the foreseeable future).  Changes in the physical environment such as temperature, currents, or ice distribution could affect stock migration and distribution patterns, recruitment success, or direct effects of temperature on growth.
+
+
+## Fishery Effects on the Ecosystem 
+
+
+1. Fishery-specific contribution to bycatch of prohibited species, forage (including herring and juvenile pollock), HAPC biota (in particular, species common to the target fishery), marine mammals, birds, and other sensitive non-target species (including top predators such as sharks, expressed as a percentage of the total bycatch of that species. 
+2. Fishery-specific concentration of target catch in space and time relative to predator needs in space and time (if known) and relative to spawning components. 
+3. Fishery-specific effects on amount of large-size target fish. 
+4. Fishery-specific contribution to discards and offal production. 
+5. Fishery-specific effects on age at maturity and fecundity of the target species. 
+6. Fishery-specific effects on EFH non-living substrate (using gear specific fishing effort as a proxy for amount of possible substrate disturbance). 
+
+
+
+In general, a determination of ecosystem considerations for Gulf of Alaska (GOA) northern rockfish is hampered by a lack of biological and habitat information. Northern rockfish do not appear to respond to temperature fluctuations by adjusting depth or distribution to maintain constant temperature. 
+Recent examinations show northern rockfish body condition at the lowest levels on record. 
+YOY rockfish abundance was low in 2017 compared to previous years with a potentially northerly distribution shift based on the center of gravity estimates as well as some range expansion. Unfortunately, there is no information on the food habits of larval or post-larval rockfish to help determine possible relationships between prey availability and year-class strength. 
+Moreover, identification to the species level for field collected larval slope rockfish is difficult. Visual identification is not possible, though genetic techniques allow identification to species level for larval slope rockfish. Some juvenile rockfish found in inshore habitat feed on shrimp, amphipods, and other crustaceans, as well as some mollusk and fish. Adult northern rockfish feed on euphausiids. 
+Euphausiids are also a major item in the diet of walleye pollock. Changes in the abundance of walleye pollock could lead to a corollary change in the availability of euphausiids, which could then impact northern rockfish.
+The limited information available on temperature and zooplankton indicate average foraging and growing conditions for the zooplanktivorous northern rockfish during 2020. Heat wave conditions occurred during 2020 but were not as severe as 2019 during the summer and fall in the GOA [@Barbeaux2020]. 
+Sea surface temperatures were about 1°C above normal in the western GOA and average in the eastern GOA during the 2020 summer (Alaska Center for Climate Assessment & Policy ACCAP, Thoman personal communication). 
+Inside waters of the GOA were slightly more anomalously warm than offshore temperatures (ACCAP). Offshore of Kodiak, waters above the continental shelf along the GAK line remained anomalously warm (0.5°C) at 200-250 m depth in 2020 but cooler than 2019 [@Danielson2020]. 
+Along the GOA slope, the AFSC Longline Survey Subsurface Temperature Index indicates above average temperatures at the surface and at depth (250 m) in 2020 relative to the 2005-2019 time series and cooler temperatures in 2020 relative to 2019 (Siwicke personal communication). In the inside waters, Prince William Sound has remained warm since 2014 (Danielson 2020). 
+However, for the inside waters of the eastern GOA, the top 20 m temperatures of Icy Strait in northern southeast Alaska during summer were slightly below average (8.8°C) in 2020 relative to the 23 year time series (1997-2019) [@Fergusson2020]. 
+A recent study published in the U.S. West Coast suggests that the warming that occurred during 2014-2016 may have been beneficial for rockfish recruitment [@Morgan2019].
+
+The primary prey of the adult northern rockfish are euphausiids. 
+Warm conditions tend to be associated with zooplankton communities that are dominated by smaller and less lipid rich species in the GOA (Kimmel et al. 2019). There was limited information on zooplankton in 2020.In the inside waters of Icy Strait, northern southeast Alaska, total zooplankton densities were at the 24 year mean and the lipid content of all zooplankton taxa combined examined during 2020 was average for the time series (1997-2020) and similar to 2019 [@Fergusson2020]. 
+By taxa, lipid content was above average for the large calanoid copepods, average for hyperiid amphipods, but lower than average for euphausiids, small copepods and gastropods indicating average nutritional quality of the prey field possibly utilized by larval, juvenile, and adult rockfish (Fergusson and Rogers 2020). In the western GOA, the mean biomass of large calanoids and euphausiids averaged over the top 100m south of Seward Alaska during May were about average in 2020 relative to the time series, 1998-2019 [@Hopcroft2020]. 
+
+Environmental mechanisms for changes in survival remain unknown, though changes in water temperature and currents could have effects on prey abundance and success of transition of rockfish from pelagic to demersal stage.
+Additionally, changes in bottom habitat due to natural or anthropogenic causes could alter survival rates by altering available shelter, prey, or other functions. 
+Predator effects would likely be more important on larval, post-larval, and small juvenile slope rockfish, but there is insufficient information on these life stages and their predators to inform a conclusion. 
+Given the continued lack of biological and habitat information for northern rockfish, we scored this category as level 1, as the level of concern has not changed.

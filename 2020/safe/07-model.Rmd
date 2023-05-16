@@ -1,0 +1,74 @@
+# Analytical approach
+
+## General Model Structure
+
+The basic model for Gulf of Alaska northern rockfish is described as a separable age-structured model (Box 1) and was implemented using AD Model Builder software [@Fournier2012]. 
+The assessment model is based on a generic rockfish model developed in a workshop held in February 2001 [@Courtney2007] and follows closely the GOA Pacific ocean perch model. 
+The northern rockfish model is fit to time series extending from 1961-`r year`. 
+As with other rockfish age-structured models, this model does not attempt to fit a stock-recruitment relationship but estimates a mean recruitment, which is adjusted by estimated recruitment deviations for each year. 
+The parameters, population dynamics, and equations of the model are shown in Box 1.
+
+
+This assessment is based on a statistical age-structured model with the catch equation and population
+dynamics model as described in Fournier and Archibald (1982) and elsewhere
+(e.g., Hilborn and Walters 1992, Schnute and Richards 1995, McAllister and Ianelli
+1997). The catch in numbers at age in year $t (C_{t,a})$ and total catch biomass $(Y_t)$
+can be described as:
+
+\begin{align}
+    C_{t,a}     &= \frac{F_{t,a}}{Z_{t,a}} \left(1 - e^{-Z_{t,a}}\right) N_{t,a}, &1 \le t \le T, 1 \le a \le A \\
+    N_{t+1,a+1} &= N_{t,a-1} e^{-Z_{t,a-1}}                                       &1 \le t \le T, 1 \le a < A   \\
+    N_{t+1,A}   &= N_{t,A-1} e^{-Z_{t,A-1}} + N_{t,A} e^{-Z_{t,A}} ,              &1 \le t \le T                \\
+    Z_{t,a}     &= F_{t,a} + M_{t,a}                                                                            \\
+    C_{t,.}     &= \sum_{a=1}^A{C_{t,a}}                                                                        \\
+    p_{t,a}     &= \frac{C_{t,a} } {C_{t,.} }                                                                   \\
+    Y_{t}       &= \sum_{a=1}^A{w_{t,a}C_{t,a}}                                                                 \\
+\end{align}
+
+where
+\begin{tabular}{ll}
+$T$       & is the number of years, \\
+$A$       & is the number of age classes in the population, \\
+$N_{t,a}$ & is the number of fish age $a$ in year $t$, \\
+$C_{t,a}$ & is the catch of age class $a$ in year $t$, \\
+$p_{t,a}$ & is the proportion of the total catch in year $t$, that is in age class $a$, \\
+$C_{t}$   & is the total catch in year $t$, \\
+$w_{a}$   & is the mean body weight (kg) of fish in age class $a$, \\
+$Y_{t}$   & is the total yield biomass in year $t$, \\
+$F_{t,a}$ & is the instantaneous fishing mortality for age class $a$, in year $t$, \\
+$M_{t,a}$ & is the instantaneous natural mortality in year $t$ for age class $a$, and \\
+$Z_{t,a}$ & is the instantaneous total mortality for age class $a$, in year $t$. 
+\end{tabular}
+
+
+
+## Description of Alternative Models
+Three models were examined for the 2020 assessment all of which build incrementally upon the 2018 accpted Model 18.2 [@Cunningham2018].
+
+Two changes to input data and model configuration were considered for the 2020 assessment based upon the accepted 2018 model (M18.2).
+Model M18.2 (2020) is equivalent in structure to the 
+
+
+## Parameters Estimated Outside the Assessment Model
+A von Bertalanffy growth curve was fitted to survey size at age data, for both sexes combined, from 1984-2019 using length-stratified methods [@Quinn1999; @Bettoli2001]. 
+An age to size conversion matrix was then constructed by adding normal error with a standard deviation equal to the survey data for the probability of different sizes for each age class. Previous parameters are available from Heifetz and Clausen (1991), Courtney et al. (1999), and Malecha et al. (2007). The estimated parameters for the growth curve from length-stratified methods are shown below:
+L∞ = 41.32 cm	κ = 0.17    t0 = -0.21
+Weight-at-age was constructed with weight at age data from the same data set as the length at age. Mean weight-at-age is approximated by the equation: W_a=W_∞ (1-e^(-k(a-t_0 ) ) )^b. The estimated growth parameters from length-stratified methods are shown below.
+W∞ = 1047 g	k = 0.18		t0 = -0.001		b = 3.04
+Aging error matrices were constructed by assuming that the break-and-burn ages were unbiased but had a given amount of normal error around each age based on between-reader percent agreement tests conducted at the AFSC Age and Growth lab. We fix the variability of recruitment deviations (σr) at 1.5 which allows highly variable recruitment.
+
+
+## Parameters Estimated Inside the Assessment Model
+The estimates of natural mortality (*M*) and catchability (*q*) are estimated with the use of lognormal prior distributions as penalties that are added to the overall objective function in order to constrain parameter estimates to reasonable values and to speed model convergence.
+Arithmetic means and standard errors ($\mu, \sigma$) for the lognormal distributions were provided as inputs to the model. 
+The standard errors for selected model parameters were estimated based on multivariate normal approximation of the covariance matrix. 
+The prior mean for natural mortality of 0.06 is based on the estimate provided by @Heifetz1991 using the method of @Alverson1975. 
+Natural mortality is notoriously difficult to estimate within the model so we assign a “tight” prior CV of 5%. 
+Catchability is a parameter that is somewhat unknown for rockfish, so while we assign it a prior mean of 1 (assuming all fish in the area swept are captured and there is no herding of fish from outside the area swept, and that there is no effect of untrawlable grounds), we assign it a less precise CV of 45%. 
+This allows the parameter more freedom than that allowed to natural mortality. 
+This is identical to that used in the GOA Pacific ocean perch and GOA dusky rockfish assessments.
+Maturity-at-age is modeled with the logistic function, similar to selectivity-at-age for the survey and fishery. 
+The fit to the two studies that have provided maturity data for northern rockfish from the model is shown in Figure 10-10. 
+The number of estimated parameters from the model are shown below. 
+Given that we are using Bayesian estimation, a recruitment bias-correction algorithm is not needed (e.g., @Methot2011).
+

@@ -1,0 +1,44 @@
+
+Initial statistics: 1 variables; iteration 0; function evaluation 0; phase 1
+Function value   3.2531187e+02; maximum gradient component mag   4.6147e+01
+Var   Value    Gradient   |Var   Value    Gradient   |Var   Value    Gradient
+  1 50.00000   4.6147e+01 |
+
+ - final statistics:
+1 variables; iteration 5; function evaluation 9
+Function value   1.8931e+02; maximum gradient component mag  -2.2042e-08
+Exit code = 1;  converg criter   1.0000e-04
+Var   Value    Gradient   |Var   Value    Gradient   |Var   Value    Gradient
+  1 44.43983  -2.2042e-08 |
+
+Initial statistics: 2 variables; iteration 0; function evaluation 0; phase 2
+Function value   1.8930829e+02; maximum gradient component mag  -3.6685e+03
+Var   Value    Gradient   |Var   Value    Gradient   |Var   Value    Gradient
+  1 44.43983  -2.2042e-08 |  2  0.10000  -3.6685e+03 |
+
+Intermediate statistics: 2 variables; iteration 10; function evaluation 13; phase 2
+Function value   9.9223042e+01; maximum gradient component mag  -1.1826e-04
+Var   Value    Gradient   |Var   Value    Gradient   |Var   Value    Gradient
+  1 41.26137  -1.9301e-06 |  2  0.17672  -1.1826e-04 |
+
+ - final statistics:
+2 variables; iteration 11; function evaluation 14
+Function value   9.9223e+01; maximum gradient component mag  -3.6747e-07
+Exit code = 1;  converg criter   1.0000e-04
+Var   Value    Gradient   |Var   Value    Gradient   |Var   Value    Gradient
+  1 41.26137  -4.3347e-09 |  2  0.17672  -3.6747e-07 |
+
+Initial statistics: 3 variables; iteration 0; function evaluation 0; phase 3
+Function value   9.9223042e+01; maximum gradient component mag   1.2582e+00
+Var   Value    Gradient   |Var   Value    Gradient   |Var   Value    Gradient
+  1 41.26137  -4.3347e-09 |  2  0.17672  -3.6747e-07 |  3  0.10000   1.2582e+00
+
+ - final statistics:
+3 variables; iteration 9; function evaluation 9
+Function value   9.9039e+01; maximum gradient component mag  -9.0332e-07
+Exit code = 1;  converg criter   1.0000e-04
+Var   Value    Gradient   |Var   Value    Gradient   |Var   Value    Gradient
+  1 41.32245  -1.1311e-07 |  2  0.16813  -9.0332e-07 |  3 -0.21439  -1.0907e-08
+Estimating row 1 out of 3 for hessian
+Estimating row 2 out of 3 for hessian
+Estimating row 3 out of 3 for hessian

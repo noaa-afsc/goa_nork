@@ -1,0 +1,141 @@
+```{r}
+library(knitr)
+library(dplyr)
+library(flextable)
+library(kableExtra)
+```
+
+# Tables
+
+```{r tab1}
+knitr::kable(data.frame(year = 1999:2000,
+                 catch = 1:2), 
+             caption = "Summary of key management measures and the time series of catch, ABC, and TAC for northern rockfish in the Gulf of Alaska",
+             booktabs = TRUE)
+```
+
+\pagebreak
+
+```{r tab2}
+regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      set_caption("Commercial catch (t) and management action for northern rockfish in the Gulf of Alaska, 1961-present. The *Description of the catch time series* Section describes procedures use to estimate catch during 1961-1993. Ctach estimates for 1993-2019 are from NMFS Observer Program and Alaska Regional Office updated through October XX, 2020.")
+```
+
+\pagebreak
+
+```{r tab3}
+regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      set_caption("Incidental catch of FMP groundfish species caught in rockfish targeted fisheries in the Gulf of Alaska for 2015-2020. Conf = Confidential data as the number of vessels or processors was <= two. Source: NMFS AKRO Blend/Catch Accounting System via AKFIN Oct XX, 2020")
+```
+
+\pagebreak
+
+```{r tab4}
+regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      set_caption("Non-FMP species bycatch estimates in tons for Gulf of Alaska rockfish targeted fisheries 2015-2020. Conf = Confidential data as the number of vessels or processors was <= two. Note that birds are estimated in numbers. Source: NMFS AKRO Blend/Catch Accounting System via AKFIN Oct XX, 2020")
+```
+
+\pagebreak
+
+```{r tab5}
+regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      set_caption("Prohibited species Catch (PSC) estimates (t) for Pacific halibut, Pacific herring and thousands of animals for crab and salmon, by year, for the Gulf of Alaska rockfish fishery for 2015-2020. Source: NMFS AKRO Blend/Catch Accounting System via AKFIN Oct XX, 2020")
+```
+
+\pagebreak
+
+```{r tab6, eval = T}
+  read.csv(here::here(year, model, "tables", "tbl_10_06.csv")) %>% 
+  dplyr::rename_all(~stringr::str_replace(., "X", "")) %>% 
+  knitr::kable(caption = "Fishery length compositions used in the assessment model for northern rockfish in the Gulf of Alaska (at-sea and port samples combined).") 
+```
+
+\pagebreak
+
+```{r tab7}
+  read.csv(here::here(year, model, "tables", "tbl_10_07.csv")) %>% 
+  dplyr::rename_all(~stringr::str_replace(., "X", "")) %>% 
+ kable(caption = "Fishery age compositions for northern rockfish in the Gulf of Alaska. All age compositions are based on 'break and burn' reading of otoliths.")
+```
+
+\pagebreak
+
+```{r tab8}
+data.frame(year = 1999:2000,
+                 catch = 1:2) %>% 
+  kable(caption = "Biomass estimates (t), by statistical area, for northern rockfish in the Gulf of Alaska based on triennial and biennial trawl surveys. Gulfwide CV’s are also listed. Design-based estimates are presented.")
+```
+
+\pagebreak
+
+```{r tab9}
+  read.csv(here::here(year, model, "tables", "tbl_10_09.csv")) %>% 
+  dplyr::rename_all(~stringr::str_replace(., "X", "")) %>% 
+  kable(caption = "Survey age compositions for northern rockfish in the Gulf of Alaska. All age compositions are based on 'break and burn' reading of otoliths.") 
+```
+
+\pagebreak
+
+```{r tab10}
+  read.csv(here::here(year, model, "tables", "tbl_10_10.csv")) %>% 
+  dplyr::rename_all(~stringr::str_replace(., "X", "")) %>% 
+  kable(caption = "Survey length compositions for northern rockfish in the Gulf of Alaska. All age compositions are based on 'break and burn' reading of otoliths.") 
+```
+\pagebreak
+
+```{r tab11}
+  read.csv(here::here(year, "base", "tables", "tbl_10_11.csv")) %>% 
+  dplyr::left_join(read.csv(here::here(year, "m18.2", "tables", "tbl_10_11.csv"))) %>% 
+  dplyr::left_join(read.csv(here::here(year, "m18.2a", "tables", "tbl_10_11.csv"))) %>% 
+  dplyr::left_join(read.csv(here::here(year, "m18.2b", "tables", "tbl_10_11.csv"))) %>% 
+  dplyr::rename_all(~stringr::str_replace(., "X", "")) %>% 
+  flextable::regulartable() %>% 
+  flextable::set_caption("Summary of results (including likelihood and key parameter estimates) from the 2020 model cases investigated compared with 2018 results.") %>% 
+  flextable::set_formatter_type(fmt_double = "%.02f")
+```
+
+\pagebreak
+
+```{r tab12}
+  data.frame(year = 1999:2000,
+                 catch = 1:2) %>% 
+   knitr::kable(caption = "Estimated numbers (thousands), fishery selectivity, and survey selectivity of northern rockfish in the Gulf of Alaska based on the preferred model. Also shown are schedules of age specific weight and female maturity.")
+```
+
+\pagebreak
+
+```{r tab13}
+  data.frame(year = 1999:2000,
+                 catch = 1:2) %>% 
+   knitr::kable(caption = "Comparison of 2020 estimated time series of female spawning biomass, 6+ biomass (age 6 and greater), catch/(6+ biomass), and the number of age two recruits for northern rockfish in the Gulf of Alaska compared with 2018 estimates.")
+```
+
+\pagebreak
+
+```{r tab14}
+  read.csv(here::here(year, model, "tables", "tbl_10_14.csv")) %>% 
+  dplyr::rename_all(~stringr::str_replace(., "X", "")) %>% 
+   knitr::kable(caption = "Estimated time series of number at age 2 recruits (thousands), total biomass, and female biomass with 95% confidence bounds for northern rockfish in the Gulf of Alaska, from this year's model MCMC results") 
+```
+
+\pagebreak
+
+```{r tab15}
+  read.csv(here::here(year, model, "tables", "tbl_10_15.csv")) %>% 
+  dplyr::rename_all(~stringr::str_replace(., "X", "")) %>% 
+  knitr::kable(caption = "Estimates of key parameters with Hessian estimates of standard deviation $\\sigma$, MCMC standard deviations $\\sigma_{MCMC}$, and 95% Bayesian credible intervals (BCI) derived from MCMC.") 
+```
+
+\pagebreak
+
+```{r tab16}
+  data.frame(year = 1999:2000,
+                 catch = 1:2) %>% 
+  regulartable() %>% 
+  set_caption("Set of projections of spawning biomass and yield for northern rockfish in the Gulf of Alaska. This set of projections encompasses six harvest scenarios designed to satisfy the requirements of Amendment 56, the National Environmental Protection Act, and the Magnuson-Stevens Fishery Conservation and Management Act (MSFCMA). For a description of scenarios see Projections and Harvest Alternatives. All units in t. B40% = 30,480 t, B35% = 26,670 t, F40% = 0.061, and F35% = 0.073.")
+```
+

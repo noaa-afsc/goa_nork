@@ -1,0 +1,91 @@
+# Figures
+
+```{r fig1, fig.cap="Estimated and observed long-term and recent commercial catch of northern rockfish in the Gulf of Alaska."}
+
+knitr::include_graphics(here::here(year, model, "figs", "catch.png"))
+```
+
+```{r fig2, fig.cap="Fishery length compositions for GOA northern rockfish. Observed = bars, lines are the predicted lengths from author recommended model."}
+
+knitr::include_graphics(here::here(year, model, "figs", "fishery_length_comp.png"))
+```
+
+```{r fig3, fig.cap="Fishery age compositions for GOA northern rockfish. Observed = bars, lines are the predicted lengths from author recommended model."}
+
+knitr::include_graphics(here::here(year, model, "figs", "fishery_age_comp.png"))
+```
+
+```{r fig4, fig.cap="Observed and predicted GOA northern rockfish trawl survey VAST model-based index of biomass."}
+
+knitr::include_graphics(here::here(year, model, "figs", "srv1_biomass.png"))
+```
+
+```{r fig5, fig.cap="Spatial distribution of trawl survey catch for northern rockfish in the Gulf of Alaska .", eval = T}
+
+knitr::include_graphics(here::here(year, model, "figs", "survey_catch.jpg"))
+```
+
+```{r fig6, fig.cap="Trawl survey age composition by year for GOA northern rockfish. Observed = bars, predicted from author recommended model = line with circles."}
+
+knitr::include_graphics(here::here(year, model, "figs", "survey_age_comp.png"))
+```
+
+```{r fig7, fig.cap="Trawl survey length composition by year for GOA northern rockfish. Survey length composition is not used in the model as age composition is available for these years."}
+
+knitr::include_graphics(here::here(year, model, "figs", "survey_length_comp.png"))
+```
+
+```{r fig8, fig.cap="Model fit to combined female northern rockfish maturity data.", eval = T}
+
+knitr::include_graphics(here::here(year, model, "figs", "maturity.png"))
+```
+
+```{r fig9, fig.cap="Model estimated total biomass and spawning biomass with 95\\% credible intervals determined by MCMC (shaded) for Gulf of Alaska northern rockfish."}
+
+knitr::include_graphics(here::here(year, model, "figs", "est_biomass.png"))
+```
+
+```{r fig10, fig.cap="Time series of northern rockfish estimated spawning biomass (SSB) relative to $B_{35\\%}$ and fishing mortality ($F$) relative to $F_{35\\%}$ for author recommended model."}
+
+knitr::include_graphics(here::here(year, model, "figs", "phase_plane.png"))
+```
+
+```{r fig11, fig.cap="Fishery and survey estimates of selectivity for GOA northern rockfish based on the authors recommended model."}
+
+knitr::include_graphics(here::here(year, model, "figs", "selex.png"))
+```
+
+```{r fig12, fig.cap="Estimates of age-2 recruitment with 95\\% credible intervals for GOA northern rockfish."}
+
+knitr::include_graphics(here::here(year, model, "figs", "recruits.png"))
+```
+
+```{r fig13, fig.cap="Female spawning stock biomass (SSB) and recruitment (by year class) for GOA northern rockfish."}
+
+knitr::include_graphics(here::here(year, model, "figs", "recr-ssb.png"))
+```
+
+
+```{r fig14, fig.cap="Histograms of estimated posterior distributions for key parameters derived from the MCMC for GOA northern rockfish. Vertical lines represent the maximum likelihood estimate for comparison with the MCMC results."}
+
+knitr::include_graphics(here::here(year, model, "figs", "hists.png"))
+```
+
+```{r fig15, fig.cap=paste0("Median spawning stock biomass from MCMC simulations with Bayesian credible intervals including projections through ", end_proj," , when managing under Scenario 2. Assumes the same average yield ratio forward in time. Dotted horizontal line is $B_{40\\%}$ and solid horizontal line is $B_{35\\%}$ based on recruitments from 1977-", year-2, ". Each shade is 5\\% of the posterior distribution.")}
+
+knitr::include_graphics(here::here(year, model, "figs", "swath.png"))
+```
+
+
+
+```{r fig16, fig.cap="Retrospective peels of estimated female spawning biomass for the past 10 years from the recommended model with 95\\% credible intervals derived from MCMC (top), and the percent difference in female spawning biomass from the recommended model in the terminal year with 95\\% credible intervals from MCMC."}
+
+knitr::include_graphics(here::here(year, model, "figs", "retro.png"))
+```
+
+```{r fig17, fig.cap="Random effects model fit (black line with 95% confidence intervals in light grey) to regional bottom trawl survey biomass (gray points and bar showing 95% sampling error confidence intervals)."}
+
+knitr::include_graphics(here::here(year, model, "figs", "random_effect.png"))
+```
+
+
