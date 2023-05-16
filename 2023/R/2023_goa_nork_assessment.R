@@ -10,7 +10,7 @@ region = "goa"
 
 # setup 
 setup_folders(year)
+accepted_model(2022, "m22.1", 2023)
 
 # query data ----
-akfin <- connect()
 goa_dusk(year, off_yr = TRUE)
