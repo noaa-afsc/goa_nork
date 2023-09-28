@@ -68,16 +68,21 @@ df %>%
 dev.off()
 
 # plot survey results ----
-vast <- vroom::vroom(here::here(year, "data", "output", "goa_total_bts_biomass_vast.csv"))
+vast <- vroom::vroom(here::here(year, "data", "user_input", "2023_vast_default.csv"))
+logvast <- vroom::vroom(here::here(year, "data", "user_input", "2023_vast_lognormal.csv"))
 sb <- vroom::vroom(here::here(year, "data", "output",  "goa_total_bts_biomass.csv"))
 
 png(filename=here::here(year, "figs", "bts_biomass.png"), width = 6.5, height = 6.5,
     units = "in", type ="cairo", res = 200)
 
-vast  %>%
-  dplyr::mutate(t = biomass,
-                Model = "VAST")  %>%
-  dplyr::select(-biomass) %>%
+vast %>%
+  mutate(Model = "VAST") %>% 
+  bind_rows(logvast %>% 
+              mutate(Model = "VAST-lognormal")) %>% 
+  dplyr::mutate(t = biomass/1000,
+                lci = t - sd/1000 * 1.96,
+                uci = t + sd/1000 * 1.96)  %>%
+  dplyr::select(-biomass, -sd) %>%
   dplyr::bind_rows(sb %>%
                      dplyr::rename(t = biomass) %>%
                      dplyr::mutate(Model = "Design-based") %>%
@@ -94,11 +99,11 @@ vast  %>%
   ggplot2::ylab("Survey biomass (t)\n") +
   ggplot2::xlab("\nYear") +
   ggplot2::expand_limits(y = 0) +
-  scico::scale_fill_scico_d(palette = "roma", begin = 0.2) +
-  scico::scale_color_scico_d(palette = "roma", begin = 0.2) +
+  scico::scale_fill_scico_d(palette = "roma", begin = 0.25) +
+  scico::scale_color_scico_d(palette = "roma", begin = 0.25) +
   ggplot2::geom_line(ggplot2::aes(y = mean), lty = 3) +
   afscassess::theme_report() +
-  ggplot2::theme(legend.position = c(0.2, 0.8))
+  ggplot2::theme(legend.position = c(0.2, 0.8)) 
 
 dev.off()
 

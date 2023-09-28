@@ -1,14 +1,16 @@
 # Figures
 
-```{r, fig.cap = "pressure"}
-plot(pressure)
+```{r fig1, fig.cap = "Gulf of Alaska northern rockfish catch/age 2+ biomass ratio with approximate 95\\% confidence intervals. Observed catch values were used for 1991-2022, the 2023 catch values were estimated using an expansion factor. The horizontal dashed line is the mean value for the entire dataset."}
+
+knitr::include_graphics(here::here(year, "figs", "catch_bio.png"))
 ```
 
-```{r fig1, fig.cap="Estimated and observed long-term and recent commercial catch of northern rockfish in the Gulf of Alaska.", eval = F}
+```{r fig2, fig.cap = "Line plot of geostatistical and design-based model estimates of abundance for Gulf of Alaska trawl surveys. Geostatistical model (VAST) and design-based model estimates of trawl survey abundance for northern rockfish in the Gulf of Alaska. Shaded areas are 95\\% confidence intervals, the dashed lines are the data means."}
 
-knitr::include_graphics(here::here(year, model, "figs", "catch.png"))
+knitr::include_graphics(here::here(year, "figs", "bts_biomass.png"))
 ```
 
-```{r fig2, fig.cap="Fishery length compositions for GOA northern rockfish. Observed = bars, lines are the predicted lengths from author recommended model.", eval = F}
+```{r fig3, fig.cap="Survey biomass (design-based) and random effects model output for GOA dusky rockfish by management region. 95\\% confidence intervals are shown for the survey biomass (error bars) and for the random effects estimates of survey biomass (shaded area).", eval = FALSE}
 
-knitr::include_graphics(here::here(year, model, "figs", "fishery_length_comp.png"))
+knitr::include_graphics(here::here(year, "figs", "apportion.png"))
+```
