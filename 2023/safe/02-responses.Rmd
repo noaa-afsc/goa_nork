@@ -6,6 +6,21 @@ A risk table has been included in this assessment.
 
 ## Responses to SSC and Plan Team Comments Specific to this Assessment
 
-> "For this cycle, the SSC also agrees with the author’s justification for the adjustment of the likelihood weight of the survey index to utilize this new time series more appropriately."
+> "The SSC supports the GOA GPT recommendations to investigate potential mechanisms for the
+underlying pattern [to the fishery length composition] and recommends the authors consider whether a selectivity time block, to account for changes in the fishery (i.e., POP rebuilding), is appropriate and improves fit to the compositional information." (SSC December 2022)  
 
-The likelihood weighting has remained consistent with the weights found in the last full assessment.
+> "The SSC notes the MCMC on the estimates of q include a long right tail with unrealistic values of q. The
+SSC requests the authors investigate a model run with a fixed M." (SSC December 2022) 
+
+
+> "The SSC also requests the following for future assessments: bubble plots of Pearson residuals for all age
+and length data, including the sign and scale of residuals; and inclusion of a figure showing changes in
+previous VAST estimates due to updating with new survey information." (SSC December 2022)
+
+Model runs addressing the above requests will be examined in the next full assessment.
+
+> "The SSC reiterates its past support of empirical
+research projects on maturity and skip spawning, perhaps with industry partnership."(SSC December 2022)  
+
+Examinations of maturity and skip spawning are ongoing.
+

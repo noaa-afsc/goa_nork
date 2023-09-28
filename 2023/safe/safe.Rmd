@@ -6,8 +6,8 @@ params:
   area: "Gulf of Alaska"
   tier: 3
 
-author: "Benjamin C. Williams, Peter-John F. Hulson, Chris R. Lunsford"
-date: "November 2022"
+author: "Benjamin C. Williams, Peter-John F. Hulson, and Chris R. Lunsford"
+date: "November 2023"
 
 # don't do anything below this line unless you are cool with the consequences
 output:
