@@ -1,8 +1,9 @@
 ## Responses to SSC and Plan Team Comments on Assessments in General
+> “The SSC supports the JGPT’s recommendation that stock assessment authors transition from the ADMB RE variants to the rema framework, which implements the same model variants in a single framework with several improvements.”(SSC, Oct 2022)  
 
-> "The SSC requests that all authors fill out the risk table in 2019…" (SSC December 2018)  
-
-A risk table has been included in this assessment.
+This model current implements the rema framework for apportionment. 
+However, the current rema model uses the design-based survey biomass estimates as inputs. 
+As this model uses VAST instead of design-based survey biomass examinations of changing to regional VAST data estimates will be explored in the next full assessment.
 
 ## Responses to SSC and Plan Team Comments Specific to this Assessment
 
