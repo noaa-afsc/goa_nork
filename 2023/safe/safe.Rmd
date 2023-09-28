@@ -56,19 +56,52 @@ title: `r title`
 # load
 library(safe)
 # globals
-species = params$species
-year = 2022
-date = 'October 22, 2022'
-model = "base"
-end_proj = year + 15
-best_f = 0.0641 # from the best_f function in groundfishr package
-ofl = 8000 # placeholder while i figure things out
+# utility function
 
-# todo: read from proj output
-c1 = 2842 # estimated catch in current year
-c2 = 3489 # proj catch year + 1
-c3 = 2884 # proj catch year + 2
-# todo: build a function/switch to auto run the tier(a/b) - also for overfishing/overfished
+folder = "update"
+species = params$species
+year = yr = 2023
+data_pull = read.table(here::here(year, "data", "raw", "data_called.txt"))[2,1]
+data_pull2 = stringr::str_sub(data_pull, 6, 10)
+
+catch = vroom::vroom(here::here(year, "data", "output", "fsh_catch.csv"))
+yld = vroom::vroom(here::here(year, "data", "output", "yld_rat.csv"))
+prj = readLines(here::here(year, folder, "proj", "model", "data", "dusky_spcat.dat"))
+
+c0 = comma(dplyr::filter(catch, year==yr-1)$catch)
+c1 = comma(round(yld$proj_catch)) # estimated catch in current year
+c2 = comma(stringr::str_sub(prj[grep(year+1, prj)], 6, 10)) # proj catch year + 1
+c3 = comma(stringr::str_sub(prj[grep(year+2, prj)], 6, 10)) # proj catch yera + 2
+
+exec_summ <- vroom::vroom(here::here(year, folder, "processed", "exec_summ.csv"))
+
+tier = exec_summ[2,4]
+tot = comma(exec_summ[3,4])
+
+ofl = comma(exec_summ[11,4])
+ofl0 = comma(exec_summ[11,3])
+sb1 = comma(exec_summ[4,4])
+sb2 = comma(exec_summ[4,5])
+b35 = comma(exec_summ[7,4])
+b40 = comma(exec_summ[6,4])
+b100 = comma(exec_summ[5,4])
+
+f40 = exec_summ[8,4]
+f35 = exec_summ[10,4]
+
+# bring in as numeric
+abc = as.numeric(exec_summ[13,4])
+abc0 = as.numeric(exec_summ[13,2])
+abc01 = as.numeric(exec_summ[13,3])
+
+# calculate percents
+perc = round((abc-abc0)/abc0 * 100)
+perc1 = round((abc-abc01)/abc01 * 100)
+
+# change to text
+
+abc = comma(abc)
+abc0 = comma(abc0)
 ```
 
 ```{r, child="01-summary.Rmd", eval = T}

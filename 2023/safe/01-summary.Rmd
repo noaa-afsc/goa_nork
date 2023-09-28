@@ -13,12 +13,13 @@ The data used in this assessment includes total catch biomass, fishery age and s
 ## Summary of Changes in Assessment Inputs
 
 *Changes in the input data:* There were no changes made to the assessment model inputs as this is an off-cycle year. 
-New data added to the projection model included updated catch data from `r year-1` (`r filter(catch, Year == year-1) %>% pull(Catch) %>% prettyNum(., big.mark = ",", digits = 0)` t) and new estimated catches for `r year`-`r year + 2`. 
+New data added to the projection model included updated catch data from `r year-1` (`r c0` t) and new estimated catches for `r year`-`r year + 2`. 
 Catch data were queried on `r data_pull`. 
-The `r year` catch was estimated by increasing the observed catch by an expansion factor of `r yld %>% pull(catch_rat) %>% round(., 3)`, which accounts for the average fraction of catch taken after `r data_pull2` in the last three complete years (`r year - 3`-`r year-1`). 
-This expansion factor results in an estimated catch for `r year` of `r filter(catch, Year == year) %>% pull(Catch) %>% prettyNum(., big.mark = ",", digits = 0)` t. 
-To estimate future catches, we updated the yield ratio to `r yld %>% pull(yld) %>% round(., 2)`, which was the average ratio of catch to ABC for the last three complete catch years (`r year - 3`-`r year-1`). 
-This yield ratio was multiplied by the projected ABCs from the updated projection model to generate catches of **3,089** t in `r year + 1` and **2,884** t in `r year + 2`.
+The `r year` catch was estimated by increasing the observed catch by an expansion factor of `r round(yld$ratio, 3)`, which accounts for the average fraction of catch taken after `r data_pull2` in the last three complete years (`r year - 3`-`r year-1`). 
+This expansion factor increased from last year’s expansion factor of 1.036 and resulted in an estimated catch for `r year` of `r c1` t. 
+To estimate future catches, we updated the yield ratio to `r round(yld$yld, 2)`, which was the average ratio of catch to ABC for the last three complete catch years. 
+This yield ratio was multiplied by the projected ABCs from the updated projection model to generate catches of `r c2` t in `r year + 1` and `r c3` t in `r year + 2`.
+
 
 *Changes in assessment methodology:* There were no changes from the `r year-1` assessment [@Williams2022] since this is an off-cycle year.
 
@@ -26,35 +27,27 @@ This yield ratio was multiplied by the projected ABCs from the updated projectio
 ## Summary of Results
 
 *ABC recommendation*  
-For the `r year + 1` fishery, we recommend maximum allowable ABC of **5,147** t from the updated projection model. 
-This ABC is a **minor increase** over the `r year+1` projected ABC of **5,100** t from the 2022 full assessment. 
-The 2022 GOA-wide OFL is 6,143 t.
-
+The projected total biomass for `r year+1` is `r tot` t. 
+The recommend ABC for `r year+1` is `r abc` t, the maximum allowable ABC under Tier `r tier`. 
+This ABC is a `r perc`% decrease compared to the `r year` ABC of `r abc0` and a 1% increase from the projected 2024 ABC from the last full  assessment.
+The 2024 GOA-wide OFL for `r species` is `r ofl` t.
 The stock is not being subject to overfishing, is not currently overfished, nor is it approaching a condition of being overfished. 
-The test for determining whether overfishing is occurring is based on the `r year -1` catch compared to OFL. 
-The official total catch for `r year-1` is `r filter(catch, Year == year-1) %>% pull(Catch) %>% prettyNum(., big.mark = ",", digits = 0)` t which is less than the `r year -1` OFL of 6,396 t; therefore, the stock is not being subjected to overfishing. 
-The tests for evaluating whether a stock is overfished or approaching a condition of being overfished require examining model projections of spawning biomass relative to $B_{35\%}$ for `r year + 1` and `r year + 2`. 
-The estimates of spawning biomass for `r year + 1` and `r year + 2` from the current year projection model are** 40,474** t and **37,408** t, respectively. 
-Both estimates are above the $B_{35\%}$ estimate of **29,691** t and, therefore, the stock is not currently overfished nor approaching an overfished condition.
 
-Reference values for northern rockfish are summarized in the following table, with the recommended ABC and OFL values in bold.
+Reference values for `r species` are summarized in the following table, with the recommended ABC and OFL values in bold.
 
 ```{r, child= "01a-main_table.Rmd", eval = T}
 
 ```
 
 
-Text table of area apportionments (if any) for the recommended one- and two-year ahead ABCs and OFLs, with a brief description of the apportionment methodology.
+The following table shows the recommended ABC apportionment for `r year + 1` and `r year+2`. 
+The apportionment percentages are the same as in the last full assessment. 
+Please refer to the 2022 full stock assessment report [@Williams2022] for information regarding the apportionment rationale for GOA `r species`.
 
 ```{r, child= "01b-apportionment.Rmd", eval = T}
 
 ```
 
 
-If so are so kind as to provide tables for the plan team, place them here
-
-```{r, child= "01c-plan_team.Rmd", eval = T}
-
-```
 
 
