@@ -8,10 +8,10 @@ Please refer to the 2022 full stock assessment report [@Williams2022] for inform
 # apportionment table example
 appo <- data.frame(X = c(NA, 2024, 2024, 2025, 2025),
            X1 = c("", "abc", "ofl", "abc", "ofl"),
-           Western = c(52.65, 2533, NA, 2444, NA),
-           Central = c(47.33, 2277, NA, 2187, NA),
+           Western = c(52.65, 2535, NA, 2446, NA),
+           Central = c(47.33, 2280, NA, 2200, NA),
            Eastern = c(0.02, 1, NA, 1, NA),
-           Total = c(100, 4811, 5743, 4642, 5542))
+           Total = c(100, 4816, 5750, 4647, 5548))
 
 flextable::flextable(appo[-1,]) %>% 
     flextable::add_header_row(values = paste0(appo[1,], "%"), top=FALSE) %>%

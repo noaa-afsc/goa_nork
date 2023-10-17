@@ -5,7 +5,7 @@
 knitr::include_graphics(here::here(year, "figs", "catch_bio.png"))
 ```
 
-```{r fig2, fig.cap = "Line plot of geostatistical and design-based model estimates of abundance for Gulf of Alaska trawl surveys. Geostatistical model (VAST) and design-based model estimates of trawl survey abundance for northern rockfish in the Gulf of Alaska. Shaded areas are 95\\% confidence intervals, the dashed lines are the data means. VAST uses the default Gamma observation error settings, VAST-lognormal uses a lognormal error distribution."}
+```{r fig2, fig.cap = "Line plot of geostatistical and design-based model estimates of abundance for Gulf of Alaska trawl surveys. Geostatistical model (VAST) and design-based model estimates of trawl survey abundance for northern rockfish in the Gulf of Alaska. Shaded areas are 95\\% confidence intervals, the dashed lines are the data means. VAST-2021 uses the default Gamma observation error settings with 500 knots, VAST-lognormal uses a lognormal error distribution and will be brought forward as the preferred survey abundance estimator in the next full assessment."}
 
 knitr::include_graphics(here::here(year, "figs", "bts_biomass.png"))
 ```

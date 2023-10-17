@@ -6,12 +6,12 @@ params:
   area: "Gulf of Alaska"
   tier: 3
 
-author: "Benjamin C. Williams"
+author: "Benjamin C. Williams, Peter-John F. Hulson and Chris R. Lunsford"
 date: "November 2023"
 
 # don't do anything below this line unless you are cool with the consequences
 output:
-  bookdown::html_document2:
+  bookdown::word_document2:
      reference_docx: "template.docx"
      toc: false
      number_sections: false
@@ -103,6 +103,9 @@ perc1 = round((abc-abc01)/abc01 * 100)
 abc = comma(abc)
 abc0 = comma(abc0)
 ```
+
+This report may be cited as:  
+Williams, B.C., Hulson, P-J.F., and Lunsford, C.R. (2023) Assessment of the Northern Rockfish stock in the Gulf of Alaska. In: Stock assessment and fishery evaluation report for the groundfish resources of the Gulf of Alaska. North Pacific Fishery Management Council, Anchorage, AK. Available from https://www.npfmc.org/library/safe-reports/
 
 ```{r, child="01-summary.Rmd", eval = T}
 ```

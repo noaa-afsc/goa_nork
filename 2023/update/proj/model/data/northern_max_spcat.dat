@@ -12,5 +12,5 @@ data/northern.dat
 1
 # TAC model indices (for aggregating)
 1
-2022	1898.5227 # Finalized previous year catch
-2023	1535.79060511641 # Catch for 2023 Estimated from catch thru 2023-09-26
+2022	1898.4714 # Finalized previous year catch
+2023	1440.5173334459 # Catch for 2023 Estimated from catch thru 2023-10-17
