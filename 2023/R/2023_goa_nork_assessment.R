@@ -19,7 +19,7 @@ rec_age = 2
 # accepted_model(2022, "m22.1", 2023)
 
 # query data ----
-goa_dusk(year, off_yr = TRUE)
+goa_nork(year, off_yr = TRUE)
 clean_catch(year, species=species, TAC=TAC)
 bts_biomass(year=year, area=area, rmv_yrs=c(1984,1987)) # design-based
 bts_biomass(year=year, area=area, file="vast_lognormal.csv", id="vast") # 2021 vast model
@@ -76,7 +76,7 @@ png(filename=here::here(year, "figs", "bts_biomass.png"), width = 6.5, height = 
     units = "in", type ="cairo", res = 200)
 
 vast %>%
-  mutate(Model = "VAST") %>% 
+  mutate(Model = "VAST-default") %>% 
   bind_rows(logvast %>% 
               mutate(Model = "VAST-lognormal")) %>% 
   dplyr::mutate(t = biomass/1000,
