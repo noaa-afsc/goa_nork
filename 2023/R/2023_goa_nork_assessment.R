@@ -71,18 +71,22 @@ dev.off()
 vast <- vroom::vroom(here::here(year, "data", "user_input", "2023_vast_default.csv"))
 logvast <- vroom::vroom(here::here(year, "data", "user_input", "2023_vast_lognormal.csv"))
 sb <- vroom::vroom(here::here(year, "data", "output",  "goa_total_bts_biomass.csv"))
+vast0 <- vroom::vroom(here::here("2022", "data", "user_input", "vast_500_base.csv"))
+
 
 png(filename=here::here(year, "figs", "bts_biomass.png"), width = 6.5, height = 6.5,
     units = "in", type ="cairo", res = 200)
 
-vast %>%
-  mutate(Model = "VAST-default") %>% 
+vast0 %>%
+  mutate(Model = "VAST-2021",
+         sd = se * 1000,
+         biomass = biomass * 1000) %>% 
   bind_rows(logvast %>% 
               mutate(Model = "VAST-lognormal")) %>% 
   dplyr::mutate(t = biomass/1000,
                 lci = t - sd/1000 * 1.96,
                 uci = t + sd/1000 * 1.96)  %>%
-  dplyr::select(-biomass, -sd) %>%
+  dplyr::select(-biomass, -sd, -se) %>%
   dplyr::bind_rows(sb %>%
                      dplyr::rename(t = biomass) %>%
                      dplyr::mutate(Model = "Design-based") %>%
