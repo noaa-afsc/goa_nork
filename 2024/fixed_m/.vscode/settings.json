@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.Rmd": "rmd",
+        "*.tpl": "cpp",
+        "*.dat": "cpp",
+        "*.htp": "cpp"
+    }
+}
