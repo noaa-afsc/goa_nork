@@ -1,0 +1,43 @@
+---
+title: "GOA northern rockfish apportionment"
+author: "Ben Williams"
+institute: "September 2024 Groundfish Plan Team"
+format: revealjs
+---
+
+## Issue
+
+-   Apportionment has been based upon area estimates from the **design-based** survey abundance.
+
+-   Assessment uses a **model-based** index of abundance, which does not always align with the design-based estimates.
+
+-   For consistency, propose to change apportionment to be based upon the **model-based** index of abundance
+
+    -   Convergence issues due to lack of fish caught in eastern GOA
+
+## Survey catch: raw data
+
+Catch is the eastern area has always been low
+
+![](figs/map.png){fig-align="center"}
+
+## Survey catch: raw data
+
+![](figs/totals.png){fig-align="center"}
+
+## Survey catch: VAST & D-B
+
+![Vast and design-based estimates of biomass](figs/vast-db.png)
+
+![REMA vast and design-based biomass estimates](figs/rema_bio.png)
+
+![REMA vast and design-based proportions](figs/rema_perc.png)
+
+| Year | Area    | Design-based | VAST |
+|------|---------|--------------|------|
+| 2022 | Western | 73.2         | 53.0 |
+|      | Central | 26.7         | 47.0 |
+| 2023 | Western | 85.7         | 51.9 |
+|      | Central | 14.2         | 48.1 |
+| 2024 | Western | 85.7         | 51.9 |
+|      | Central | 14.2         | 48.1 |
