@@ -29,7 +29,11 @@ Catch is the eastern area has always been low
 
 ![Vast and design-based estimates of biomass](figs/vast-db.png)
 
+## Survey catch: VAST & D-B
+
 ![REMA vast and design-based biomass estimates](figs/rema_bio.png)
+
+## Survey catch: VAST & D-B
 
 ![REMA vast and design-based proportions](figs/rema_perc.png)
 
