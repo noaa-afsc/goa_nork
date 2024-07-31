@@ -1,0 +1,133 @@
+---
+title: "Gulf of Alaska Northern Rockfish Model Updates"
+author: "Ben Williams"
+html:
+  fig-width: 10
+  fig-height: 8
+execute:
+  echo: false
+---
+
+# Introduction
+1. Model corrections  
+The model currently estimates the survey biomass likelihood with a normal error structure $$\mathcal{L} = \lambda \sum_{i}{\frac{(B_i - \hat{B}_i)^2}{2\sigma_i^2}}.$$
+From hereon the survey likelihood will be updated to incorporate a lognormal error structure $$\mathcal{L} = \lambda\sum_{i}{ln \left ( \frac{B_i}{\hat{B}_i} \right )^2\frac{1}{2(\sigma_i/B_i)^2}}.$$
+A comparison will be shown between the base model (normal error structure) and updated model results.
+
+2. Data input changes  
+Survey age composition input sample sizes (ISS) are now available via the [afscISS R package on github](https://afsc-assessments.github.io/afscISS). 
+These sample sizes are corrected for growth variability and aging error (see Hulson and Williams 2024) and should more accurately reflect the annual sample sizes than the currently used 'hybrid method'.
+The hybrid method is the $\sqrt{no. hauls * no. samples}$ scaled to a max of 100.
+The data input changes will be shown using the updated model from step 1 above.
+
+3. Apportionment Update  
+Apportionment for GOA northern rockfish has been based upon area estimates from the **design-based** survey abundance. 
+The assessment uses a **model-based** index of abundance, which does not always align with the design-based area estimates.
+For consistency, propose to change apportionment to be based upon the **model-based** index of abundance. 
+However, there are convergence issues due to lack of fish caught in the eastern GOA. 
+An examination of design-based (via REMA), VAST-based (via REMA), and VAST (without REMA smoothing) will be compared.
+Apportionment examinations will be presented using survey data 2023. 
+
+
+4. Modeling framework change  
+The GOA northern rockfish assessment is currently a bespoke model in `ADMB`, the model will be transitioned out of `ADMB` and into `RTMB.`
+A full examination of model results will be compared to model outputs from step 2 above.
+
+# Results 
+1. Model corrections
+Changing to a lognormal error structure for the survey biomass likelihood results in an increase in estimated total and female spawning biomass.  
+Model likelihoods and key parameter estimates are shown in the tables below in the 'Base' and 'Srv likelihood' columns.
+
+2. Data input changes
+Updating the survey input sample size also results in a slight increase in estimated total and female spawning biomass. 
+Model likelihoods and key parameter estimates are shown in the tables below in the 'Srv likelihood' and 'ISS' columns.
+
+Likelihood values 
+
+| Likelihood | Base | Srv likelihood | ISS | RTMB |
+|------------|------|----------------|-----|------|
+|Catch      | 0.91  | 0.93 | 0.1085 | 0.1085 |
+|Survey biomass| 6.022 | 8.002 | 8.149 | 8.1492 |
+|Fishery ages | 40.177 | 40.289 | 41.850 | 41.847 |
+|Survey ages | 69.160 | 69.096 | 83.052 | 83.052 |
+|Fishery lengths | 67.907 | 67.860 | 70.219 | 70.219 |
+|Recruitment devs | 8.640 | 8.706 | 9.3115 | 9.3115 |
+|F regularity | 5.457 | 5.479 | 5.674 | 5.674 |
+|M prior | 0.014 | 0.0067 | 0.0117 | 0.0117 |
+|q prior | 0.052 | 0.00047 | 0.0058 | 0.0058 |
+
+Parameter estimates, 'N/A' values were held constant between the ISS and RTMB models.
+
+| Parameter | Base | Srv likelihood | ISS | RTMB |
+|------------|------|----------------|-----|-----|
+| M          | 0.0595 | 0.0596 | 0.0595 | N/A |
+| q          | 0.865 | 0.986 | 0.953 | N/A |
+| avg rec    | 3.504 | 3.529 | 3.523 | N/A |
+| F40        | 0.061 | 0.0614 | 0.0609 | 0.0609 |
+| total biomass | 95,559 | 100,938 | 101,452 | 101,452 |
+| spawning biomass | 39,463 | 41,828 | 42,658 | 42,658 |
+| B100         | 82,350 | 85,054 | 85,112 | 85,112 |
+| B40         | 32,940 | 34,022 | 34,045 | 34,045 |
+| ABC         | 4,972 | 5,274 | 5,325 | 5,325 |
+
+3. Apportionment Update  
+One issue with the model-based index and REMA analysis is that catch in the eastern portion of the GOA has been consistently low or zero.
+
+```{r}
+#| label: fig-map
+#| fig-align: center
+#| fig-cap: "Survey catch (numbers) by year."
+knitr::include_graphics("figs/map.png")
+```
+
+```{r}
+#| label: fig-total
+#| fig-align: center
+#| fig-cap: "Survey catch (numbers) by year and area."
+knitr::include_graphics("figs/totals.png")
+```
+
+In order to address this, the eastern GOA is dropped from the VAST estimated index of abundance. 
+There is 1 t allocated for GOA northern rockfish in the 'Other rockfish' complex for management purposes. 
+
+```{r}
+#| label: fig-vstdb
+#| fig-align: center
+#| fig-cap: "Vast and design-based estimates of biomass."
+knitr::include_graphics("figs/vast-db.png")
+```
+
+The 'standard' approach has been to take regional estimates of survey biomass, smooth then using the `REMA` random effects package in R and use the `REMA` output for apportionment. 
+There are two issues with this. 
+1. With the limited number of samples in the eastern GOA, `REMA` will fail to converge if survey data from the 1980s is not included when using *design-based* values.
+2. When running `REMA` on *VAST* output, we are now smoothing a smoother and may not be capturing changes in distribution over time.
+
+```{r}
+#| label: fig-rema
+#| fig-align: center
+#| fig-cap: "REMA vast and design-based biomass estimates."
+knitr::include_graphics("figs/rema_bio.png")
+```
+
+Using both VAST and REMA seemingly fixes the percents of the stock in each area ~ 50% for the past couple of surveys, though the design-based survey continues to bounce around substantially.
+
+```{r}
+#| label: fig-perc
+#| fig-align: center
+#| fig-cap: "REMA vast and design-based proportions."
+knitr::include_graphics("figs/rema_perc.png")
+```
+
+Using the REMA-smoothed VAST estimate would lead to a substantial difference in apportionment compared to what has been done in the past. 
+
+| Year | Area    | Design-based | VAST | VAST no REMA|
+|------|---------|--------------|------|----------------|
+| 2022 | Central | 73.2         | 53.0 |     52.0      |
+|      | Western | 26.7         | 47.0 |     48.0      |
+| 2023 | Central | 85.7         | 51.9 |     55.7      |
+|      | Western | 14.2         | 48.1 |     44.3      |
+| 2024 | Central | 85.7         | 51.9 |     55.7      |
+|      | Western | 14.2         | 48.1 |     44.3      |
+
+The Author's recommended approach is to use VAST output without the additional REMA smoothing.
+
