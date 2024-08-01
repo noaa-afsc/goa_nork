@@ -120,14 +120,17 @@ knitr::include_graphics("figs/rema_perc.png")
 
 Using the REMA-smoothed VAST estimate would lead to a substantial difference in apportionment compared to what has been done in the past. 
 
-| Year | Area    | Design-based | VAST | VAST no REMA|
+| Year | Area    | Design-based | VAST | VAST - no REMA |
 |------|---------|--------------|------|----------------|
-| 2022 | Central | 73.2         | 53.0 |     52.0      |
-|      | Western | 26.7         | 47.0 |     48.0      |
-| 2023 | Central | 85.7         | 51.9 |     55.7      |
-|      | Western | 14.2         | 48.1 |     44.3      |
-| 2024 | Central | 85.7         | 51.9 |     55.7      |
-|      | Western | 14.2         | 48.1 |     44.3      |
+| 2021 | Western | 44.6         | 46.0 |     46.5      |
+|      | Central | 55.4         | 54.0 |     53.5      |
+| 2022 | Western | 26.7         | 47.0 |     48.0      |
+|      | Central | 73.2         | 53.0 |     52.0      |
+| 2023 | Western | 14.2         | 48.1 |     44.3      |
+|      | Central | 85.7         | 51.9 |     55.7      |
 
 The Author's recommended approach is to use VAST output without the additional REMA smoothing.
 
+4. Modeling framework change  
+A couple of items of note for changing to `RTMB` from `ADMB`. 
+First, when holding all of the parameters the same between the two models the same output values (total biomass, spawning biomass, etc.) are produced and the likelihoods are within 
