@@ -107,9 +107,10 @@ obj <- RTMB::MakeADFun(f,
                         pars, 
                         map = map)  
 report <- obj$report(obj$env$last.par.best)
+proj_bio(report)
 
 # examine model run with same starting point as ADMB
-pars2 = list(log_M = log(0.05954247),
+pars2 = list(log_M = log(0.06),
              log_a50C = log(7.5),
              deltaC = 3.0,
              log_a50S = log(7.3),
@@ -125,7 +126,7 @@ pars2 = list(log_M = log(0.05954247),
              log_F50 = 0,
              sigmaR = 1.5)
 
-lower = c(#log(0.001), # log M
+lower = c(log(0.001), # log M
           log(3), #log a50C
           .5, # delta C
           log(3), # log_a50S
@@ -139,7 +140,7 @@ lower = c(#log(0.001), # log M
           rep(-4.605,3))#,  # Fspr
           0.3) # sigmaR
 
-upper = c(#log(0.15), # log M
+upper = c(log(0.15), # log M
           log(12), #log a50C
           8.5, # delta C
           log(12), # log_a50S
@@ -157,6 +158,7 @@ obj1 <- RTMB::MakeADFun(f,
                         pars2,
                         map = list(log_M = factor(NA),
                                     sigmaR = factor(NA)))  
+obj1$report(obj1$env$last.par.best)$spawn_bio
 fit1 <- nlminb(start = obj1$par,
                objective = obj1$fn,
                gradient = obj1$gr,
@@ -164,7 +166,7 @@ fit1 <- nlminb(start = obj1$par,
                               eval.max=20000),
                 lower = lower,
                 upper = upper)
-
+names(obj1$par)
 ## for a stock assessment, inputs depend on whether RE exist or not
 sdrep <- sdreport(obj1, getJointPrecision = TRUE)
 Q <- sdrep$jointPrecision
@@ -176,14 +178,45 @@ if(!is.null(Q)){
     Q <- solve(M)
 }               
 report1 <- obj1$report(obj1$env$last.par.best)
-report$q
+proj_bio(report1)
+
+vals = seq(0, 1, length.out = 50)
+plot(exp(vals), single_likelihood(param_name='log_q', 
+                  param_values = vals,
+                  fit = fit1,
+                  obj = obj1),
+     type = 'l')
+
+data.frame(vals = exp(seq(0, 2.5, length.out = 50)),
+           a50C = single_likelihood(param_name='log_a50C', 
+                             param_values = vals,
+                             fit = fit1,
+                             obj = obj1),
+           a50S = single_likelihood(param_name='log_a50S', 
+                                    param_values = vals,
+                                    fit = fit1,
+                                    obj = obj1)) %>% 
+  pivot_longer(-vals, names_to = 'parameter', values_to = 'likelihood') %>% 
+  ggplot(aes(vals, likelihood, color = parameter)) + 
+  geom_line()
+
+vals = seq(-1.2, .5, length.out = 50)
+plot(exp(vals), single_likelihood(param_name='log_q', 
+                             param_values = vals,
+                             fit = fit1,
+                             obj = obj1),
+     type = 'l')
+
+
 report1$q
+report1$M
 report$a50C
 report1$a50C
 report$deltaC
 report1$deltaC
 report1$a50S
 report1$deltaS
+report$deltaS
 plot(years, report$spawn_bio)
 lines(years, report1$spawn_bio)
 report$B40
@@ -195,34 +228,96 @@ proj_bio(report1)
 ## if using RTMB, need to add data input to globals
 globals <- list(data=data) # NULL
 chains <- 3
+# Cole recommends 5 chains, 1000 iters, 250 warmup
 mcmc <- sample_sparse_tmb(obj1, iter=4000, warmup=500,
                           init='random', chains=chains,
                           cores=chains, metric='dense',
                           Qinv=M, Q=Q,
                           globals=globals, skip_optimization=TRUE)
 summary(mcmc) ## gives you minESS and maxRhat
+summary(mcmc$monitor$n_eff)
+summary(mcmc$monitor$Rhat)
+post <- extract_samples(mcmc, as.list=TRUE)
+postlist <- coda::mcmc.list(lapply(post, coda::mcmc))
+coda::traceplot(postlist)
+glimpse(post)
+sp <- extract_sampler_params(mcmc)
+glimpse(sp)
+plot_marginals(mcmc, pars=1:5)
+## What if you want a posterior for derived quantities in the report? Just
+## loop through each posterior sample (row) and call the report function
+## which returns a list. The last column is the log-posterior density (lp__)
+## and needs to be dropped
+
+obj1$report(post[1,-ncol(post)])         # sd0 is only element
+sd0 <- rep(NA, len=nrow(post))
+for(i in 1:nrow(post)){
+  r <- obj2$report(post[1,-ncol(post)])
+  sd0[i] <- r$B40
+}
+hist(sd0)
+
+get_item <- function(item='spawn_bio', post, obj, reps = NULL) {
+  mapit = function(i, post, obj) {
+    surv_i = paste0(obj$report(post[i,-ncol(post)]),"$", item)
+    list(surv_i = surv_i)
+  }
+  results = purrr::map(1:reps, mapit, post=post, obj=obj)
+  do.call(cbind, map(results, "surv_i")) 
+}
+
+
+# also try plot_uncertainties()
 
 ## diagnose issues
-pairs_admb(mcmc, pars=1:5, order='slow')
-pairs_admb(mcmc, pars=1:5, order='mismatch')
+pairs_admb(mcmc2, pars=1:5, order='slow')
+pairs_admb(mcmc2, pars=1:5, order='mismatch')
 
 
 launch_shinyadmb(mcmc)
 
 
 # update model with priors on selectivity
+# 2nd try ----
 data$mean_a50C = 7.5
 data$cv_a50C = 1
 data$mean_deltaC = 3.8
 data$cv_deltaC = 1
 data$mean_q
-data$cv_q = 0.25
-
+data$cv_q = 0.45
+data$cv_M = 0.05
 obj2 <- RTMB::MakeADFun(f1, 
                         pars2,
-                        map = list(log_M = factor(NA),
+                        map = list(#log_M = factor(NA),
                                    sigmaR = factor(NA))) 
+obj2$report(obj2$env$last.par.best)$spawn_bio
+lower = c(log(0.001), # log M
+  log(3), #log a50C
+  .5, # delta C
+  log(3), # log_a50S
+  0.5, # delta S
+  log(0.5), # logq
+  -15, # log mean R
+  rep(-15, length(pars$init_log_Rt)), # init rec devs
+  rep(-15, length(years)), # rec devs
+  -15, # log mean F
+  rep(-15, length(years)), # Fdevs
+  rep(-4.605,3))#,  # Fspr
+0.3) # sigmaR
 
+upper = c(log(0.15), # log M
+  log(12), #log a50C
+  8.5, # delta C
+  log(12), # log_a50S
+  8.5, # delta S
+  log(1.5), # logq
+  10, # log mean R
+  rep(15,  length(pars$init_log_Rt)), # init rec devs
+  rep(15, length(years)), # rec devs
+  15, # log mean F
+  rep(15, length(years)), # Fdevs
+  rep(0,3))#,  # Fspr
+10) # sigmaR
 fit2 <- nlminb(obj2$par,
                obj2$fn,
                obj2$gr,
@@ -241,11 +336,137 @@ if(!is.null(Q)){
     Q <- solve(M)
 }               
 report2 <- obj2$report(obj2$env$last.par.best)
+report2$M
+report2$q
+proj_bio(report2)
+report2$a50C
+
+valsq = seq(-1.2, 1.2, length.out = 50)
+valsM = seq(log(0.01), log(0.15), length.out = 50)
+data.frame(valsq,
+           par = single_likelihood(param_name='log_q', 
+                             param_values = valsq,
+                             fit = fit2,
+                             obj = obj2)) %>% 
+  # dplyr::mutate(vals = exp(vals)) %>% 
+  ggplot(aes(valsq, par)) + 
+  geom_line()
+
+valsM = seq(log(0.01), log(0.15), length.out = 50)
+data.frame(vals,
+           M = single_likelihood(param_name='log_M', 
+                                 param_values = vals,
+                                 fit = fit2,
+                                 obj = obj2)) %>% 
+  # dplyr::mutate(vals = exp(vals)) %>% 
+  ggplot(aes(vals, M)) + 
+  geom_line() +
+  xlab('Natural mortality (M)') +
+  ylab('Likelihood')
+
+
+vals = seq(log(3), log(12), length.out = 50)
+data.frame(vals,
+           a50C = single_likelihood(param_name='log_a50C', 
+                                    param_values = vals,
+                                    fit = fit1,
+                                    obj = obj1),
+           a50S = single_likelihood(param_name='log_a50S', 
+                                    param_values = vals,
+                                    fit = fit1,
+                                    obj = obj1)) %>% 
+  mutate(vals = exp(vals)) %>% 
+  pivot_longer(-vals, names_to = 'parameter', values_to = 'likelihood') %>% 
+  ggplot(aes(vals, likelihood, color = parameter)) + 
+  geom_line()
+
+pairs_admb(mcmc, order='mismatch', pars=1:5) 
+## if using RTMB, need to add data input to globals
+globals <- list(data=data) # NULL
+chains <- 5
+# Cole recommends 5 chains, 1000 iters, 250 warmup
+mcmc2 <- sample_sparse_tmb(obj2, iter=500, warmup=250,
+                          init='random', chains=chains,
+                          cores=chains, metric='dense',
+                          Qinv=M, Q=Q,control=list(adapt_delta=0.95),
+                          globals=globals, skip_optimization=TRUE)
+
+summary(mcmc2) ## gives you minESS and maxRhat
+summary(mcmc2$monitor$n_eff)
+summary(mcmc2$monitor$Rhat)
+post2 <- extract_samples(mcmc2, as.list=TRUE)
+postlist2 <- coda::mcmc.list(lapply(post2, coda::mcmc))
+coda::traceplot(postlist2)
+glimpse(post2)
+sp2 <- extract_sampler_params(mcmc2)
+
+np = extract_sampler_params(mcmc2) %>%
+  pivot_longer(-c(chain, iteration), names_to='Parameter', values_to='Value') %>% 
+  select(Iteration=iteration, Parameter, Value, Chain=chain) %>%
+  mutate(Parameter=factor(Parameter),
+         Iteration=as.integer(Iteration),
+         Chain=as.integer(Chain)) 
+  
+
+adnuts::plot_uncertainties(mcmc2)
+aaa = adnuts::extract_samples(mcmc2)
+
+mcmc_nuts_acceptance(np) + ggtitle("NUTS Energy Diagnostic") + theme_minimal()
+
+glimpse(sp2)
+plot_marginals(mcmc2, pars=1:6)
+## diagnose issues
+pairs_admb(mcmc2, pars=1:5, order='slow')
+pairs_admb(mcmc2, pars=1:5, order='mismatch')
+
+post = as.matrix(mcmc2)
+rstan::traceplot(mcmc2, pars = c("log_M", "log_q"), inc_warmup = FALSE, nrow = 2)
+# # 3nd try ----
+
+mcmc2$mle$est
+
+data$srv_age_wt <- 1
+data$srv_wt <- 1
+data$fish_age_wt <- 1
+data$fish_size_wt <- 1
+
+obj3 <- RTMB::MakeADFun(f1, 
+                        pars2,
+                        map = list(log_M = factor(NA),
+                                   sigmaR = factor(NA))) 
+fit3 <- nlminb(obj3$par,
+               obj3$fn,
+               obj3$gr,
+               control = list(iter.max=100000,
+                              eval.max=20000),
+               lower = lower,
+               upper = upper)
+## for a stock assessment, inputs depend on whether RE exist or not
+sdrep3 <- sdreport(obj3, getJointPrecision = TRUE)
+
+fit3$par["log_q"]
+# Q <- sdrep$jointPrecision
+# ## if no random effectrs this will be NULL
+# if(!is.null(Q)){
+#   M <- solve(Q)
+# } else {
+#   M <- sdrep$cov.fixed
+#   Q <- solve(M)
+# }               
+report3 <- obj3$report(obj3$env$last.par.best)
+report3$M
+report3$q
+report3$sigmaR
+proj_bio(report3)
+report1$log_mean_R
 report2$log_mean_R
 report2$spawn_bio
+report3$spawn_bio
 report2$B40
-report2$q
+report3$B40
 
+report2$q
+report3$q
 ## if using RTMB, need to add data input to globals
 globals <- list(data=data) # NULL
 chains <- 3
@@ -261,12 +482,14 @@ pairs_admb(mcmc, pars=1:5)
 pairs_admb(mcmc, pars=1:5, order='slow')
 pairs_admb(mcmc, pars=1:5, order='mismatch')
 
+proj_bio(report2)
 
-launch_shinyadmb(mcmc)
+adnuts::launch_shinyadmb(mcmc)
 report2$a50C
 report2$a50S
 report2$deltaS
 report2$deltaC
+report2$q
 report2$slx
 plot(1:50, report2$slx[,1], type= 'l')
 lines(1:50, report2$slx[,2], col=4)
@@ -367,12 +590,12 @@ slxs %>%
 ggsave(here::here(2024, 'base_srv_like_iss', 'figs', "slx-diff.png"), width=6.5, height=4.5, units='in')
 
 ## biomass
-data.frame('ssb-rtmb' = report$spawn_bio,
-           'tot-rtmb' = report$tot_bio) %>% 
-  bind_cols(data.frame('ssb-rtmb.1' = report1$spawn_bio,
-                       'tot-rtmb.1' = report1$tot_bio)) %>% 
+data.frame('ssb-RTMB' = report$spawn_bio,
+           'tot-RTMB' = report$tot_bio) %>% 
+  bind_cols(data.frame('ssb-RTMB.1' = report2$spawn_bio,
+                       'tot-RTMB.1' = report2$tot_bio)) %>% 
   bind_cols(bio) %>% 
-  rename(`tot-base.1a`=tot_biom, `ssb-base.1a`=sp_biom, `tot-rtmb`=tot.rtmb, `ssb-rtmb`=ssb.rtmb, `tot-rtmb.1`=tot.rtmb.1, `ssb-rtmb.1`=ssb.rtmb.1) %>% 
+  rename(`tot-Base.1a`=tot_biom, `ssb-Base.1a`=sp_biom) %>% 
   pivot_longer(-c(year, F, recruits)) -> Bs
   
 Bs %>% 
@@ -567,13 +790,13 @@ df6 %>%
 
 
 # survey biomass
-data.frame(rtmb = report$srv_pred,
-           rtmb1 = report1$srv_pred) %>% 
+data.frame(RTMB = report$srv_pred,
+           RTMB.1 = report2$srv_pred) %>% 
   bind_cols(srv) %>% 
-  rename(admb = pred) -> ds
+  rename(ADMB.1a = pred) -> ds
 
 ds %>% 
-  pivot_longer(c(rtmb, rtmb1)) %>% 
+  pivot_longer(c(RTMB, RTMB.1, ADMB.1a)) %>% 
   ggplot(aes(year, value, color = name)) + 
   geom_point(aes(y=biomass), color = 'black') +
   geom_line() +
@@ -653,13 +876,32 @@ df5 %>%
 ggsave(here::here(2024, 'base_srv_like_iss', 'figs', "fac-diff.png"), width=6.5, height=6.5, units='in')
 
 
-par_name = 'log_q'
-par_values = seq(-5, 5, length.out = 50)
+par_name = 'log_a50S'
+par_values = seq(0, 2.5, length.out = 50)
 par_like = single_likelihood(par_name, par_values, obj1, fit1)
-plot(par_values, par_like, type="l", xlab=par_name, ylab="Log-Likelihood")
 
-data.frame(pars = par_values, 
-           log_q = par_like) -> likes
+
+par_name = 'log_a50C'
+par_values = seq(0, 2.5, length.out = 50)
+par_like2 = single_likelihood(par_name, par_values, obj1, fit1)
+
+par_name = 'deltaC'
+par_values = seq(3, 12, length.out = 50)
+dc = single_likelihood(par_name, par_values, obj2, fit2)
+
+
+par_name = 'deltaS'
+par_values= seq(3, 12, length.out = 50)
+ds = single_likelihood(par_name, par_values, obj2, fit2)
+
+
+
+data.frame(pars = exp(par_values), 
+           log_a50S = par_like,
+           log_a50C = par_like2) %>% 
+  pivot_longer(-pars) %>% 
+ggplot(aes(pars, value, color = name)) + 
+  geom_line()
 
 par_name = 'log_a50S'
 par_values = seq(-5, 5, length.out = 50)
@@ -674,3 +916,61 @@ likes %>%
   ggplot(aes(pars, value, color = name)) + 
   geom_line()
 glimpse(likes)
+
+
+
+load(here::here('2024','sep_pt','figs','a50C.RData'), a50C <- new.env())
+load(here::here('2024','sep_pt','figs','deltaC.RData'), deltaC <- new.env())
+load(here::here('2024','sep_pt','figs','a50S.RData'), a50S <- new.env())
+load(here::here('2024','sep_pt','figs','deltaS.RData'), deltaS <- new.env())
+load(here::here('2024','sep_pt','figs','q.RData'), q <- new.env())
+
+a50C$shinystan_density_gg$data %>% 
+  ggplot(aes(x,y)) +
+  geom_area(alpha = 0.2) +
+  stat_function(fun = dnorm, args = list(mean = (data$mean_a50C), sd = (data$cv_a50C))) +
+  expand_limits(x=c(5,10)) +
+  ylab('') +
+  xlab(expression('Fishery selectivity A'[50]))
+
+deltaC$shinystan_density_gg$data %>% 
+  ggplot(aes(x,y)) +
+  geom_area(alpha = 0.2) +
+  stat_function(fun = dnorm, args = list(mean = (data$mean_deltaC), sd = (data$cv_deltaC))) +
+  expand_limits(x=c(1,6)) +
+  ylab('') +
+  xlab(expression('Fishery delta'))
+
+a50S$shinystan_density_gg$data %>% 
+  ggplot(aes(x,y)) +
+  geom_area(alpha = 0.2) +
+  stat_function(fun = dnorm, args = list(mean = (data$mean_a50C), sd = (data$cv_a50C))) +
+  expand_limits(x=c(5,10)) +
+  ylab('') +
+  xlab(expression('Survey selectivity A'[50]))
+
+deltaS$shinystan_density_gg$data %>% 
+  ggplot(aes(x,y)) +
+  geom_area(alpha = 0.2) +
+  stat_function(fun = dnorm, args = list(mean = (data$mean_deltaC), sd = (data$cv_deltaC))) +
+  # expand_limits(x=c(5,10)) +
+  ylab('') +
+  xlab(expression('Survey delta'))
+
+q$shinystan_density_gg$data %>% 
+  ggplot(aes(x,y)) +
+  geom_area(alpha = 0.2) +
+  stat_function(fun = dnorm, args = list(mean = (data$mean_q), sd = (data$cv_q))) +
+  # expand_limits(x=c(5,2.5)) +
+  ylab('') +
+  xlab(expression('Survey delta'))
+
+bayesplot::mcmc_areas(mcmc, pars = c('log_q', 'log_a50C'))
+bayesplot::plot_density(shinystan_density_gg$data$y)
+data$mean_q
+
+par_name = 'log_a50C'
+par_values = seq(0, 3, length.out = 50)
+par_like = single_likelihood(par_name, par_values, obj, fit)
+# Plot the profile
+plot(par_values, par_like, type="l", xlab=par_name, ylab="Log-Likelihood")
