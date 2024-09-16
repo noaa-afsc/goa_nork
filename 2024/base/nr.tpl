@@ -734,6 +734,7 @@ FUNCTION Get_Numbers_At_Age
       itmp = styr+1-j;
       natage(styr,j) = mfexp(log_mean_rec  - natmort * double(j-1)+ log_rec_dev(itmp)); 
     }
+    // FLAG should be (1. - exp(-M))
     natage(styr,nages_M) = mfexp(log_mean_rec - natmort * (nages_M-1)) / (1. - exp(-natmort) );
   }
   
