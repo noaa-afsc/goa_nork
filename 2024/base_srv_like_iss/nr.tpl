@@ -1053,7 +1053,8 @@ FUNCTION Surv_Likelihood
 // Calculate likelihood for survey biomass
   for (i=1; i<=nyrs_srv1; i++) {
       if(ph_logsurv>1) 
-	  surv_like(1) += square((log(obs_srv1_biom(i))-log(pred_srv1(i)) ))/ (2.*square(obs_srv1_se(i)/obs_srv1_biom(i))); // likelihood for survey biomass
+      surv_like(1) += log(pow(log(1 + square(obs_srv1_se(i)) / square(obs_srv1_biom(i))), 0.5)) + 0.5 * square(log(obs_srv1_biom(i) / pred_srv1(i)) / pow(log(1 + square(obs_srv1_se(i)) / square(obs_srv1_biom(i))), 0.5));
+	  // surv_like(1) += square((log(obs_srv1_biom(i))-log(pred_srv1(i)) ))/ (2.*square(obs_srv1_se(i)/obs_srv1_biom(i))); // likelihood for survey biomass
 	  else 
 	  	  surv_like(1) += square(obs_srv1_biom(i)-pred_srv1(i) )/ (2.*square(obs_srv1_se(i))); }  // likelihood for survey biomass
  if(nyrs_srv2>0) {  for (i=1; i<=nyrs_srv2; i++) {

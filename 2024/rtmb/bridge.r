@@ -36,6 +36,7 @@ data <- list(
              years = years,
              length_bins = 15:45,
              waa = waa,
+             maa = maa,
              wt_mature = maa * waa / 2,
              spawn_mo = 5,
              catch_ind = rep(1, length(years)),
@@ -108,6 +109,7 @@ obj <- RTMB::MakeADFun(f,
                         map = map)  
 report <- obj$report(obj$env$last.par.best)
 proj_bio(report)
+report$B40
 
 # examine model run with same starting point as ADMB
 pars2 = list(log_M = log(0.06),
@@ -126,7 +128,7 @@ pars2 = list(log_M = log(0.06),
              log_F50 = 0,
              sigmaR = 1.5)
 
-lower = c(log(0.001), # log M
+lower = c(#log(0.001), # log M
           log(3), #log a50C
           .5, # delta C
           log(3), # log_a50S
@@ -140,7 +142,7 @@ lower = c(log(0.001), # log M
           rep(-4.605,3))#,  # Fspr
           0.3) # sigmaR
 
-upper = c(log(0.15), # log M
+upper = c(#log(0.15), # log M
           log(12), #log a50C
           8.5, # delta C
           log(12), # log_a50S
@@ -179,23 +181,24 @@ if(!is.null(Q)){
 }               
 report1 <- obj1$report(obj1$env$last.par.best)
 proj_bio(report1)
-
+report1$M
+report1$q
 vals = seq(0, 1, length.out = 50)
-plot(exp(vals), single_likelihood(param_name='log_q', 
+plot((vals), single_likelihood(param_name='log_q', 
                   param_values = vals,
                   fit = fit1,
                   obj = obj1),
      type = 'l')
 
-data.frame(vals = exp(seq(0, 2.5, length.out = 50)),
+data.frame(vals = (seq(log(3), log(12), length.out = 50)),
            a50C = single_likelihood(param_name='log_a50C', 
                              param_values = vals,
-                             fit = fit1,
-                             obj = obj1),
+                             fit = fit2,
+                             obj = obj2),
            a50S = single_likelihood(param_name='log_a50S', 
                                     param_values = vals,
-                                    fit = fit1,
-                                    obj = obj1)) %>% 
+                                    fit = fit2,
+                                    obj = obj2)) %>% 
   pivot_longer(-vals, names_to = 'parameter', values_to = 'likelihood') %>% 
   ggplot(aes(vals, likelihood, color = parameter)) + 
   geom_line()
@@ -203,8 +206,8 @@ data.frame(vals = exp(seq(0, 2.5, length.out = 50)),
 vals = seq(-1.2, .5, length.out = 50)
 plot(exp(vals), single_likelihood(param_name='log_q', 
                              param_values = vals,
-                             fit = fit1,
-                             obj = obj1),
+                             fit = fit2,
+                             obj = obj2),
      type = 'l')
 
 
@@ -285,7 +288,7 @@ data$mean_deltaC = 3.8
 data$cv_deltaC = 1
 data$mean_q
 data$cv_q = 0.45
-data$cv_M = 0.05
+data$cv_M = 0.15
 obj2 <- RTMB::MakeADFun(f1, 
                         pars2,
                         map = list(#log_M = factor(NA),
@@ -338,26 +341,48 @@ if(!is.null(Q)){
 report2 <- obj2$report(obj2$env$last.par.best)
 report2$M
 report2$q
-proj_bio(report2)
+report2$B40
+
 report2$a50C
+report2$deltaC
+report2$a50S
+report2$deltaS
+report2$log_mean_R
+report2$F40
+report2$B0
+report2$B40
+proj_bio(report2)
+report2$like_srv
+report2$like_fish_age
+report2$like_srv_age
+report2$like_fish_size
+report2$like_rec
+report2$sprpen
+report2$f_regularity
+report2$nll_M
+report2$nll_q
+report2$nll_a50C
+report2$nll_deltaC
+report2$nll_a50S
+report2$nll_deltaS
 
 valsq = seq(-1.2, 1.2, length.out = 50)
 valsM = seq(log(0.01), log(0.15), length.out = 50)
 data.frame(valsq,
            par = single_likelihood(param_name='log_q', 
                              param_values = valsq,
-                             fit = fit2,
-                             obj = obj2)) %>% 
+                             fit = fit1,
+                             obj = obj1)) %>% 
   # dplyr::mutate(vals = exp(vals)) %>% 
   ggplot(aes(valsq, par)) + 
   geom_line()
 
-valsM = seq(log(0.01), log(0.15), length.out = 50)
-data.frame(vals,
+valsM = seq(log(0.00001), log(0.15), length.out = 50)
+data.frame(vals=valsM,
            M = single_likelihood(param_name='log_M', 
-                                 param_values = vals,
-                                 fit = fit2,
-                                 obj = obj2)) %>% 
+                                 param_values = valsM,
+                                 fit = fit1,
+                                 obj = obj1)) %>% 
   # dplyr::mutate(vals = exp(vals)) %>% 
   ggplot(aes(vals, M)) + 
   geom_line() +
@@ -365,7 +390,7 @@ data.frame(vals,
   ylab('Likelihood')
 
 
-vals = seq(log(3), log(12), length.out = 50)
+vals = seq(log(5), log(12), length.out = 50)
 data.frame(vals,
            a50C = single_likelihood(param_name='log_a50C', 
                                     param_values = vals,
@@ -375,7 +400,7 @@ data.frame(vals,
                                     param_values = vals,
                                     fit = fit1,
                                     obj = obj1)) %>% 
-  mutate(vals = exp(vals)) %>% 
+  # mutate(vals = exp(vals)) %>% 
   pivot_longer(-vals, names_to = 'parameter', values_to = 'likelihood') %>% 
   ggplot(aes(vals, likelihood, color = parameter)) + 
   geom_line()
@@ -390,6 +415,9 @@ mcmc2 <- sample_sparse_tmb(obj2, iter=500, warmup=250,
                           cores=chains, metric='dense',
                           Qinv=M, Q=Q,control=list(adapt_delta=0.95),
                           globals=globals, skip_optimization=TRUE)
+
+saveRDS(mcmc2, file = here::here(2024, 'rtmb', 'mcmc.RData'))
+readRDS(here::here(2024, 'rtmb', 'mcmc.RData'))
 
 summary(mcmc2) ## gives you minESS and maxRhat
 summary(mcmc2$monitor$n_eff)
@@ -522,7 +550,7 @@ data.frame(length = length_bins,
   mutate(year = rep(fish_size_yrs, length(length_bins)),
          groups = 'rtmb') %>% 
   bind_rows(data.frame(length = length_bins, 
-             report$fish_size_pred) %>% 
+             report2$fish_size_pred) %>% 
   pivot_longer(-length) %>% 
   mutate(year = rep(fish_size_yrs, length(length_bins)),
          groups = 'rtmb.1')) %>% 
@@ -561,8 +589,8 @@ ggsave(here::here(2024, 'base_srv_like_iss', 'figs', "fsc-diff.png"), width=6.5,
 ## selectivity
 as.data.frame(report$slx) %>% 
   rename(fishery = V1, survey = V2) %>% 
-  bind_cols(as.data.frame(report1$slx) %>% 
-              rename(fishery.1 = V1, survey.1 = V2)) %>% 
+  # bind_cols(as.data.frame(report2$slx) %>% 
+  #             rename(fishery.1 = V1, survey.1 = V2)) %>% 
   bind_cols(slx) -> slxs 
   
 slxs %>% 
@@ -592,8 +620,8 @@ ggsave(here::here(2024, 'base_srv_like_iss', 'figs', "slx-diff.png"), width=6.5,
 ## biomass
 data.frame('ssb-RTMB' = report$spawn_bio,
            'tot-RTMB' = report$tot_bio) %>% 
-  bind_cols(data.frame('ssb-RTMB.1' = report2$spawn_bio,
-                       'tot-RTMB.1' = report2$tot_bio)) %>% 
+  # bind_cols(data.frame('ssb-RTMB.1' = report2$spawn_bio,
+  #                      'tot-RTMB.1' = report2$tot_bio)) %>% 
   bind_cols(bio) %>% 
   rename(`tot-Base.1a`=tot_biom, `ssb-Base.1a`=sp_biom) %>% 
   pivot_longer(-c(year, F, recruits)) -> Bs
@@ -611,8 +639,8 @@ ggsave(here::here(2024, 'base_srv_like_iss', 'figs', "bio.png"), width=6.5, heig
 
 Bs %>% 
   pivot_wider(values_from=value, names_from=name) %>% 
-  mutate(tot = (`tot-rtmb` - `tot-base.1a`) / `tot-base.1a`,
-         ssb = (`ssb-rtmb` - `ssb-base.1a`) / `ssb-base.1a`) %>% 
+  mutate(tot = (`tot.RTMB` - `tot-Base.1a`) / `tot-Base.1a`,
+         ssb = (`ssb.RTMB` - `ssb-Base.1a`) / `ssb-Base.1a`) %>% 
   pivot_longer(c(tot, ssb)) %>% 
   ggplot(aes(year, value, color = name)) + 
   geom_point() +
@@ -628,7 +656,9 @@ ggsave(here::here(2024, 'base_srv_like_iss', 'figs', "bio-diff.png"), width=6.5,
 
  Bs %>% 
    mutate(id = case_when(grepl('ssb', name) ~ sub('ssb-', "", name),
-                         grepl('tot', name) ~ sub('tot-', "", name))) -> Fs
+                         grepl('tot', name) ~ sub('tot-', "", name))) %>% 
+   distinct(year, F, id) %>% 
+   filter(!(id %in% c('ssb.RTMB', 'ssb.RTMB.1'))) -> Fs
    
  Fs %>% 
    ggplot(aes(year, F, color = id)) +
@@ -642,7 +672,7 @@ ggsave(here::here(2024, 'base_srv_like_iss', 'figs', "bio-diff.png"), width=6.5,
   Fs %>% 
     distinct(year, F, id) %>% 
     pivot_wider(values_from=F, names_from=id) %>% 
-    mutate(diff = (rtmb - `base.1a`) / `base.1a`) %>% 
+    mutate(diff = (tot.RTMB - `Base.1a`) / `Base.1a`) %>% 
   ggplot(aes(year, diff)) + 
   geom_point() +
   # facet_wrap(~year) +
@@ -653,23 +683,38 @@ ggsave(here::here(2024, 'base_srv_like_iss', 'figs', "bio-diff.png"), width=6.5,
   
   
 # survey biomass
-data.frame(rtmb = report$srv_pred) %>% 
-  bind_cols(rtmb.1 = report1$srv_pred) %>% 
+data.frame(RTMB = report$srv_pred) %>% 
+  # bind_cols(RTMB.1 = report2$srv_pred) %>% 
   bind_cols(srv) %>% 
-  rename(base.1a = pred) -> ds
+  rename(Base.1a = pred) -> ds
 
   ds %>% 
-    pivot_longer(c(rtmb, base.1a, rtmb.1)) %>% 
+    pivot_longer(c(RTMB, Base.1a, RTMB.1)) %>% 
   ggplot(aes(year, value, color = name)) + 
-  geom_point(aes(y=biomass), color = 'black') +
+  geom_point(aes(y=biomass), color = 'darkgray') +
+    geom_errorbar(aes(ymin=lci, ymax=uci), color = 'darkgray', width = 0.2) +
   geom_line() +
   scico::scale_color_scico_d(name="",palette='roma', end = 0.6) +
   expand_limits(y=0) +
   ylab('Biomass') +
   xlab('Years') +
-  theme(legend.position = c(0.8, 0.2))
+  theme(legend.position = c(0.7, 0.2))
 
   ggsave(here::here(2024, 'base_srv_like_iss', 'figs', "srvbio.png"), width=6.5, height=4.5, units='in')
+  
+  
+  ds %>% 
+    select(year, RTMB, Base.1a) %>% 
+    mutate(diff = (RTMB - Base.1a) / Base.1a) %>% 
+    ggplot(aes(year, diff)) + 
+    geom_point() +
+    xlab('Year') +
+    scale_y_continuous(labels = scales::percent) +
+    # scico::scale_color_scico_d(name="", palette = 'roma') +
+    ylab('percent difference') +
+    geom_hline(yintercept=0, lty=3)
+  
+  ggsave(here::here(2024, 'base_srv_like_iss', 'figs', "srvbio-diff.png"), width=6.5, height=4.5, units='in')
   
 ## fish age comp
   data.frame(length = length_bins, 
@@ -677,32 +722,32 @@ data.frame(rtmb = report$srv_pred) %>%
     pivot_longer(-length) %>% 
     mutate(year = rep(fish_size_yrs, length(length_bins)),
            groups = 'rtmb') %>% 
-    bind_rows(data.frame(length = length_bins, 
-                         report$fish_size_pred) %>% 
-                pivot_longer(-length) %>% 
-                mutate(year = rep(fish_size_yrs, length(length_bins)),
-                       groups = 'rtmb.1')) %>% 
+    # bind_rows(data.frame(length = length_bins, 
+    #                      report2$fish_size_pred) %>% 
+    #             pivot_longer(-length) %>% 
+    #             mutate(year = rep(fish_size_yrs, length(length_bins)),
+    #                    groups = 'rtmb.1')) %>% 
     bind_rows(fsc) -> df4
   
 data.frame(age = data$ages, 
            report$fish_age_pred) %>% 
   pivot_longer(-age) %>% 
   mutate(year = rep(fish_age_yrs, length(ages)),
-         groups = 'rtmb') %>%
-  bind_rows(data.frame(age = data$ages, 
-                       report1$fish_age_pred) %>% 
-              pivot_longer(-age) %>% 
-              mutate(year = rep(fish_age_yrs, length(ages)),
-                     groups = 'rtmb.1')) %>% 
-  bind_rows(fac)-> df5
+         groups = 'RTMB') %>%
+  # bind_rows(data.frame(age = data$ages, 
+  #                      report2$fish_age_pred) %>% 
+  #             pivot_longer(-age) %>% 
+  #             mutate(year = rep(fish_age_yrs, length(ages)),
+  #                    groups = 'RTMB.1')) %>% 
+  bind_rows(fac) -> df5
   
 df5 %>%  
-  mutate(groups = ifelse(groups=='pred', 'admb.1a', groups)) %>% 
+  mutate(groups = ifelse(groups=='pred', 'Base.1a', groups)) %>% 
   ggplot(aes(age, value, color = groups, shape = groups, linetype=groups)) + 
   geom_point(show.legend=FALSE) +
   geom_line(show.legend=T) +
-  scale_shape_manual(values = c(NA,19,NA),guide = guide_none()) +
-  scale_linetype_manual(values = c(1,0,1),guide = guide_none()) +
+  # scale_shape_manual(values = c(NA,19,NA, NA),guide = guide_none()) +
+  # scale_linetype_manual(values = c(1,0,1, 1),guide = guide_none()) +
   scico::scale_color_scico_d(name="",palette = 'roma', begin=0.2) +
   facet_wrap(~year)
 ggsave(here::here(2024, 'base_srv_like_iss', 'figs','fac.png'), width=6.5, height=6.5, units='in')
@@ -711,7 +756,7 @@ df5 %>%
   select(age, value, year, groups) %>% 
   filter(groups!='obs') %>% 
   pivot_wider(names_from=groups, values_from = value) %>% 
-  mutate(diff = (rtmb - pred) / pred,
+  mutate(diff = (RTMB - pred) / pred,
          Age = factor(age)) %>% 
   pivot_longer(diff) %>% 
   ggplot(aes(year, value, color = Age)) + 
@@ -733,13 +778,26 @@ data.frame(age = data$ages,
          groups = 'rtmb') %>% 
   bind_rows(sac)-> df6
 
+data.frame(age = data$ages, 
+           report$srv_age_pred) %>% 
+  pivot_longer(-age) %>% 
+  mutate(year = rep(srv_age_yrs, length(ages)),
+         groups = 'RTMB') %>%
+  bind_rows(data.frame(age = data$ages, 
+                       report2$srv_age_pred) %>% 
+              pivot_longer(-age) %>% 
+              mutate(year = rep(srv_age_yrs, length(ages)),
+                     groups = 'RTMB.1')) %>% 
+  bind_rows(sac) -> df6
+
+
 df6 %>%  
-  mutate(groups = ifelse(groups=='pred', 'admb', groups)) %>% 
+  mutate(groups = ifelse(groups=='pred', 'Base.1a', groups)) %>% 
   ggplot(aes(age, value, color = groups, shape = groups, linetype=groups)) + 
   geom_point(show.legend=FALSE) +
   geom_line(show.legend=T) +
-  scale_shape_manual(values = c(NA,19,NA),guide = guide_none()) +
-  scale_linetype_manual(values = c(1,0,1),guide = guide_none()) +
+  scale_shape_manual(values = c(NA,19,NA,NA),guide = guide_none()) +
+  scale_linetype_manual(values = c(1,0,1,1),guide = guide_none()) +
   scico::scale_color_scico_d(name="",palette = 'roma', begin=0.2) +
   facet_wrap(~year)
 ggsave(here::here(2024, 'base_srv_like_iss', 'figs','sac.png'), width=6.5, height=6.5, units='in')
@@ -807,7 +865,7 @@ ds %>%
   theme(legend.position = c(0.8, 0.2))
 
 
-# ggsave(here::here(2024, 'base_srv_like_iss', 'figs', "srvbio.png"), width=6.5, height=4.5, units='in')
+ggsave(here::here(2024, 'base_srv_like_iss', 'figs', "srvbio.png"), width=6.5, height=4.5, units='in')
 
 ## fish age comp
 data.frame(age = data$ages, 
@@ -839,16 +897,16 @@ data.frame(age = data$ages,
            report$fish_age_pred) %>% 
   pivot_longer(-age) %>% 
   mutate(year = rep(fish_age_yrs, length(ages)),
-         groups = 'rtmb') %>% 
+         groups = 'RTMB') %>% 
   bind_rows(data.frame(age = data$ages, 
-                       report1$fish_age_pred) %>% 
+                       report2$fish_age_pred) %>% 
               pivot_longer(-age) %>% 
               mutate(year = rep(fish_age_yrs, length(ages)),
-                     groups = 'rtmb.1')) %>% 
+                     groups = 'RTMB.1')) %>% 
   bind_rows(fac) -> df5
 
 df5 %>% 
-  mutate(groups = ifelse(groups=='pred', 'base.1a', groups)) %>% 
+  mutate(groups = ifelse(groups=='pred', 'Base.1a', groups)) %>% 
   ggplot(aes(age, value, color = groups, shape = groups, linetype=groups)) + 
   geom_point(show.legend=FALSE) +
   geom_line(show.legend=T) +
@@ -878,12 +936,12 @@ ggsave(here::here(2024, 'base_srv_like_iss', 'figs', "fac-diff.png"), width=6.5,
 
 par_name = 'log_a50S'
 par_values = seq(0, 2.5, length.out = 50)
-par_like = single_likelihood(par_name, par_values, obj1, fit1)
+par_like = single_likelihood(par_name, par_values, obj2, fit2)
 
 
 par_name = 'log_a50C'
 par_values = seq(0, 2.5, length.out = 50)
-par_like2 = single_likelihood(par_name, par_values, obj1, fit1)
+par_like2 = single_likelihood(par_name, par_values, obj2, fit2)
 
 par_name = 'deltaC'
 par_values = seq(3, 12, length.out = 50)
@@ -896,7 +954,7 @@ ds = single_likelihood(par_name, par_values, obj2, fit2)
 
 
 
-data.frame(pars = exp(par_values), 
+data.frame(pars = (par_values), 
            log_a50S = par_like,
            log_a50C = par_like2) %>% 
   pivot_longer(-pars) %>% 
@@ -916,6 +974,8 @@ likes %>%
   ggplot(aes(pars, value, color = name)) + 
   geom_line()
 glimpse(likes)
+
+report$slx[,2] - report2$slx[,2]
 
 
 

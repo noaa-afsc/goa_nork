@@ -28,6 +28,7 @@ f <- function(pars) {
   initNat = rep(0, A)
   catch_pred = rep(0, T)
   srv_pred = rep(0, Ts)
+  srv_var = rep(0,Ts)
   fish_age_pred = matrix(0, A1, Tfa)
   srv_age_pred = matrix(0, A1, Tsa)
   fish_size_pred = matrix(0, L, Tfs)
@@ -123,8 +124,12 @@ f <- function(pars) {
       srv_pred[isrv] = sum(Nat[,t] * slx[,2] * waa)
       # }
       srv_pred[isrv] = srv_pred[isrv] * q
-      srv_like = srv_like + sum((log(srv_obs[isrv]) - log(srv_pred[isrv]))^2 /
-      (2 * (srv_sd[isrv] / srv_obs[isrv])^2))
+                      
+      srv_var[isrv] = sqrt(log(1 + srv_sd[isrv]^2 / srv_obs[isrv]^2))
+      srv_like = srv_like + log(srv_var[isrv]) + 0.5 * (log(srv_obs[isrv] / srv_pred[isrv]) / srv_var[isrv])^2;
+      
+      # srv_like = srv_like + sum((log(srv_obs[isrv]) - log(srv_pred[isrv]))^2 /
+      # (2 * (srv_sd[isrv] / srv_obs[isrv])^2))
       # srv_like = srv_like + sum((srv_obs[isrv]-srv_pred[isrv])^2/ (2.*(srv_sd[isrv]^2)))
       isrv = isrv + 1
     }
@@ -265,6 +270,7 @@ f <- function(pars) {
   RTMB::REPORT(log_mean_F)
   RTMB::REPORT(log_Ft)
   RTMB::REPORT(waa)
+  RTMB::REPORT(maa)
   RTMB::REPORT(wt_mature)
   RTMB::REPORT(yield_ratio)
   RTMB::REPORT(Fat)
@@ -322,7 +328,7 @@ f1 <- function(pars) {
   spawn_adj = exp(-M)^(spawn_fract)
   A = nrow(age_error)
   A1 = length(ages)
-  T = length(catch_obs)
+  T = sum(catch_ind)
   Ts = sum(srv_ind)
   Tfa = sum(fish_age_ind)
   Tsa = sum(srv_age_ind)
@@ -340,6 +346,7 @@ f1 <- function(pars) {
   initNat = rep(0, A)
   catch_pred = rep(0, T)
   srv_pred = rep(0, Ts)
+  srv_var = rep(0,Ts)
   fish_age_pred = matrix(0, A1, Tfa)
   srv_age_pred = matrix(0, A1, Tsa)
   fish_size_pred = matrix(0, L, Tfs)
@@ -416,10 +423,12 @@ f1 <- function(pars) {
   
   ## catch ----
   for(t in 1:T){
+    if(catch_ind[t] == 1) {
     for(a in 1:A){
       Cat[a,t] = Fat[a,t] / Zat[a,t] * Nat[a,t] * (1.0 - Sat[a,t])
     }
     catch_pred[t] = sum(Cat[,t] * waa)
+    }
   }
   ssqcatch = sum(catch_wt * (log(catch_obs + g) - log(catch_pred + g))^2)
   
@@ -433,8 +442,12 @@ f1 <- function(pars) {
       srv_pred[isrv] = sum(Nat[,t] * slx[,2] * waa)
       # }
       srv_pred[isrv] = srv_pred[isrv] * q
-      srv_like = srv_like + sum((log(srv_obs[isrv]) - log(srv_pred[isrv]))^2 /
-      (2 * (srv_sd[isrv] / srv_obs[isrv])^2))
+      srv_var[isrv] = sqrt(log(1 + srv_sd[isrv]^2 / srv_obs[isrv]^2))
+      srv_like = srv_like + log(srv_var[isrv]) + 0.5 * (log(srv_obs[isrv] / srv_pred[isrv]) / srv_var[isrv])^2;
+      
+      
+      # srv_like = srv_like + sum((log(srv_obs[isrv]) - log(srv_pred[isrv]))^2 /
+      # (2 * (srv_sd[isrv] / srv_obs[isrv])^2))
       # srv_like = srv_like + sum((srv_obs[isrv]-srv_pred[isrv])^2/ (2.*(srv_sd[isrv]^2)))
       isrv = isrv + 1
     }
@@ -578,6 +591,7 @@ f1 <- function(pars) {
   RTMB::REPORT(log_mean_F)
   RTMB::REPORT(log_Ft)
   RTMB::REPORT(waa)
+  RTMB::REPORT(maa)
   RTMB::REPORT(wt_mature)
   RTMB::REPORT(yield_ratio)
   RTMB::REPORT(Fat)
