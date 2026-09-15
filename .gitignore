@@ -2,4 +2,14 @@
 .Rhistory
 .RData
 .Ruserdata
-
+*\raw
+*vast
+2018_GOAnork.pdf
+2019_GOAnork.pdf
+*.json
+*.cpp
+*.htp
+*.r01
+*.r02
+*.r03
+*.log
