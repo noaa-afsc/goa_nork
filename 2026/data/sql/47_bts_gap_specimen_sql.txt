@@ -1,0 +1,73 @@
+<SQL>
+SELECT
+  "year",
+  "survey_definition_id" AS "survey",
+  "species_code",
+  "stratum",
+  "hauljoin",
+  "sex",
+  "length_mm" AS "length",
+  "age",
+  ("latitude_dd_start" + "latitude_dd_end") / 2.0 AS "lat_mid",
+  ("longitude_dd_start" + "longitude_dd_end") / 2.0 AS "long_mid",
+  "weight_g" AS "weight"
+FROM (
+  SELECT
+    "...1"."CRUISEJOIN" AS "cruisejoin",
+    "...1"."HAULJOIN" AS "hauljoin",
+    "HAUL" AS "haul",
+    "HAUL_TYPE" AS "haul_type",
+    "PERFORMANCE" AS "performance",
+    "DATE_TIME_START" AS "date_time_start",
+    "DURATION_HR" AS "duration_hr",
+    "DISTANCE_FISHED_KM" AS "distance_fished_km",
+    "NET_WIDTH_M" AS "net_width_m",
+    "NET_MEASURED" AS "net_measured",
+    "NET_HEIGHT_M" AS "net_height_m",
+    "STRATUM" AS "stratum",
+    "LATITUDE_DD_START" AS "latitude_dd_start",
+    "LATITUDE_DD_END" AS "latitude_dd_end",
+    "LONGITUDE_DD_START" AS "longitude_dd_start",
+    "LONGITUDE_DD_END" AS "longitude_dd_end",
+    "STATION" AS "station",
+    "DEPTH_GEAR_M" AS "depth_gear_m",
+    "DEPTH_M" AS "depth_m",
+    "BOTTOM_TYPE" AS "bottom_type",
+    "SURFACE_TEMPERATURE_C" AS "surface_temperature_c",
+    "GEAR_TEMPERATURE_C" AS "gear_temperature_c",
+    "WIRE_LENGTH_M" AS "wire_length_m",
+    "GEAR" AS "gear",
+    "ACCESSORIES" AS "accessories",
+    "...1"."AKFIN_LOAD_DATE" AS "akfin_load_date.x",
+    "CRUISE" AS "cruise",
+    "YEAR" AS "year",
+    "SURVEY_DEFINITION_ID" AS "survey_definition_id",
+    "SURVEY_NAME" AS "survey_name",
+    "VESSEL_ID" AS "vessel_id",
+    "VESSEL_NAME" AS "vessel_name",
+    "SPONSOR_ACRONYM" AS "sponsor_acronym",
+    "DATE_START" AS "date_start",
+    "DATE_END" AS "date_end",
+    "...2"."AKFIN_LOAD_DATE" AS "akfin_load_date.y",
+    "SPECIMEN_ID" AS "specimen_id",
+    "SPECIES_CODE" AS "species_code",
+    "LENGTH_MM" AS "length_mm",
+    "SEX" AS "sex",
+    "WEIGHT_G" AS "weight_g",
+    "AGE" AS "age",
+    "MATURITY" AS "maturity",
+    "GONAD_G" AS "gonad_g",
+    "SPECIMEN_SUBSAMPLE_METHOD" AS "specimen_subsample_method",
+    "SPECIMEN_SAMPLE_TYPE" AS "specimen_sample_type",
+    "AGE_DETERMINATION_METHOD" AS "age_determination_method",
+    "...3"."AKFIN_LOAD_DATE" AS "akfin_load_date"
+  FROM (gap_products.akfin_haul) "...1"
+  INNER JOIN (gap_products.akfin_cruise) "...2"
+    ON ("...1"."CRUISEJOIN" = "...2"."CRUISEJOIN")
+  INNER JOIN (gap_products.akfin_specimen) "...3"
+    ON ("...1"."HAULJOIN" = "...3"."HAULJOIN")
+  WHERE
+    ("...2"."SURVEY_DEFINITION_ID" IN (47.0)) AND
+    ("...3"."SPECIES_CODE" IN (30420.0))
+) "q01"
+ORDER BY "year"

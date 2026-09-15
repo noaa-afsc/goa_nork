@@ -1,0 +1,21 @@
+<SQL>
+SELECT
+  "ID" AS "id",
+  "YEAR" AS "year",
+  "FMP_AREA_CODE" AS "fmp_area_code",
+  "AREA_LABEL" AS "area_label",
+  "SPECIES_GROUP_LABEL" AS "species_group_label",
+  "SPECIES_GROUP_CODE" AS "species_group_code",
+  "IN_HARVEST_SPEC" AS "in_harvest_spec",
+  "OVERFISHING_LEVEL" AS "overfishing_level",
+  "ACCEPTABLE_BIOLOGICAL_CATCH" AS "acceptable_biological_catch",
+  "TOTAL_ALLOWABLE_CATCH" AS "total_allowable_catch",
+  "INITIAL_TOTAL_ALLOWABLE_CATCH" AS "initial_total_allowable_catch",
+  "CDQ_RESERVE" AS "cdq_reserve",
+  "SORT_ORDER" AS "sort_order",
+  "ITAC_INSEASON_ADJUSTMENTS" AS "itac_inseason_adjustments",
+  "FINAL_TAC" AS "final_tac",
+  "AKFIN_LOAD_DATE" AS "akfin_load_date"
+FROM (akr.v_cas_tac) "q01"
+WHERE ("SPECIES_GROUP_CODE" IN ('NORK')) AND ("FMP_AREA_CODE" IN ('GOA'))
+ORDER BY "area_label", "year"

@@ -1,0 +1,18 @@
+<SQL>
+SELECT
+  "SURVEY_DEFINITION_ID" AS "survey_definition_id",
+  "AREA_ID" AS "area_id",
+  "YEAR" AS "year",
+  "SPECIES_CODE" AS "species_code",
+  "SEX" AS "sex",
+  "AGE" AS "age",
+  "POPULATION_COUNT" AS "population_count",
+  "LENGTH_MM_MEAN" AS "length_mm_mean",
+  "LENGTH_MM_SD" AS "length_mm_sd",
+  "AREA_ID_FOOTPRINT" AS "area_id_footprint",
+  "AKFIN_LOAD_DATE" AS "akfin_load_date"
+FROM (gap_products.akfin_agecomp) "q01"
+WHERE
+  ("SURVEY_DEFINITION_ID" IN (47.0)) AND
+  ("AREA_ID" IN (99903.0)) AND
+  ("SPECIES_CODE" IN (30420.0))

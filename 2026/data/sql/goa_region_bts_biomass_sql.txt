@@ -1,0 +1,24 @@
+<SQL>
+SELECT
+  "SURVEY_DEFINITION_ID" AS "survey_definition_id",
+  "AREA_ID" AS "area_id",
+  "SPECIES_CODE" AS "species_code",
+  "YEAR" AS "year",
+  "N_HAUL" AS "n_haul",
+  "N_WEIGHT" AS "n_weight",
+  "N_COUNT" AS "n_count",
+  "N_LENGTH" AS "n_length",
+  "CPUE_KGKM2_MEAN" AS "cpue_kgkm2_mean",
+  "CPUE_KGKM2_VAR" AS "cpue_kgkm2_var",
+  "CPUE_NOKM2_MEAN" AS "cpue_nokm2_mean",
+  "CPUE_NOKM2_VAR" AS "cpue_nokm2_var",
+  "BIOMASS_MT" AS "biomass_mt",
+  "BIOMASS_VAR" AS "biomass_var",
+  "POPULATION_COUNT" AS "population_count",
+  "POPULATION_VAR" AS "population_var",
+  "AKFIN_LOAD_DATE" AS "akfin_load_date"
+FROM (gap_products.akfin_biomass) "q01"
+WHERE
+  ("SPECIES_CODE" IN (30420.0)) AND
+  ("YEAR" <= 2026.0) AND
+  ("AREA_ID" IN (99903.0))

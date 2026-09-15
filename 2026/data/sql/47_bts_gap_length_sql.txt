@@ -1,0 +1,27 @@
+<SQL>
+SELECT "q01".*
+FROM (
+  SELECT
+    "...1"."CRUISEJOIN" AS "cruisejoin",
+    "YEAR" AS "year",
+    "SURVEY_DEFINITION_ID" AS "survey_definition_id",
+    "SURVEY_NAME" AS "survey_name",
+    "...2"."HAULJOIN" AS "hauljoin",
+    "LONGITUDE_DD_END" AS "end_latitude",
+    "LATITUDE_DD_END" AS "end_longitude",
+    "DEPTH_M" AS "bottom_depth",
+    "STRATUM" AS "stratum",
+    "GEAR_TEMPERATURE_C" AS "gear_temperature",
+    "PERFORMANCE" AS "performance",
+    "SPECIES_CODE" AS "species_code",
+    "SEX" AS "sex",
+    "LENGTH_MM" AS "length",
+    "FREQUENCY" AS "frequency"
+  FROM (gap_products.akfin_cruise) "...1"
+  LEFT JOIN (gap_products.akfin_haul) "...2"
+    ON ("...1"."CRUISEJOIN" = "...2"."CRUISEJOIN")
+  LEFT JOIN (gap_products.akfin_length) "...3"
+    ON ("...2"."HAULJOIN" = "...3"."HAULJOIN")
+) "q01"
+WHERE ("species_code" = 30420.0) AND ("survey_definition_id" = 47.0)
+ORDER BY "year"
