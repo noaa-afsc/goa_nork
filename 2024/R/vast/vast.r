@@ -132,16 +132,16 @@ vast <- read.csv(here::here('2024', 'R', 'vast', "1_1_2023_alt", "Index.csv")) %
     scico::scale_color_scico_d(palette = "roma") 
     
 
-# ba <- read.csv(here::here('2024', 'R', 'vast', "2_1_2023", "Index.csv")) %>% 
-#   rename_all(tolower) %>% 
-#   filter(stratum=='Stratum_1') %>% 
-#   select(stratum, year = time, biomass = estimate, se = std..error.for.estimate) %>% 
-#   filter(biomass>0)
+ba <- read.csv(here::here('2024', 'R', 'vast', "2_1_2023", "Index.csv")) %>%
+  rename_all(tolower) %>%
+  filter(stratum=='Stratum_1') %>%
+  select(stratum, year = time, biomass = estimate, se = std..error.for.estimate) %>%
+  filter(biomass>0)
 
 read.csv(here::here('2024', 'R', 'vast', "1_1_2023_alt", "Index.csv")) %>% 
 rename_all(tolower) %>% 
   filter(stratum!='Stratum_1') %>%
-  mutate(area = ifelse(stratum=='Stratum_2', 'WESTERN GOA', 'CENTRAL GOA'))
+  mutate(area = ifelse(stratum=='Stratum_2', 'WESTERN GOA', 'CENTRAL GOA')) %>% 
 select(stratum, year = time, biomass = estimate, se = std..error.for.estimate) %>% 
 filter(biomass >0, stratum != 'Stratum_4') %>% 
 ggplot(aes(year, biomass, color = stratum)) +
@@ -182,10 +182,12 @@ read.csv(here::here('2024', 'R', 'vast', "1_1_2023_alt", "Index.csv")) %>%
 
 
 library(rema)
+theme_set(afscassess::theme_report())
 # model ----
 # dusky
 yr = 2024
 area_dat %>% 
+  filter(area!='EASTERN GOA') %>% 
   mutate(cv = sqrt(var)/biomass) %>% 
   select(strata = area, year, biomass, cv) %>% 
   ungroup() -> db
@@ -199,45 +201,100 @@ read.csv(here::here('2024', 'R', 'vast', "1_1_2023_alt", "Index.csv")) %>%
   filter(biomass >0) %>% 
   select(-se) -> vast
 
+vast %>% 
+  group_by(year) %>% 
+  mutate(biomass = biomass / sum(biomass)) %>% 
+select(-cv) %>% tail()
+  tidyr::pivot_wider(names_from=strata, values_from=biomass) %>% 
+  mutate(model_name = 'vast')-> v1
+  
+
 input <- prepare_rema_input(model_name = 'db',
                             biomass_dat = db,
                             end_year = yr,
+                            # PE_options = list(pointer_PE_biomass = c(1,1)),
                             # how do you deal with zero biomass observations?
                             # see ?prepare_rema_input() for more options
-                            zeros = list(assumption = 'NA'))
+                            zeros = list(assumption = 'NA'),
+                            extra_biomass_cv = list(assumption = 'extra_cv'))
 m <- fit_rema(input)
 out <- tidy_rema(m)
-vast %>% 
-  tidyr::pivot_wider(names_from=strata, values_from=biomass, -cv)
-
-inputv <- prepare_rema_input(model_name = 'vast',
-                            biomass_dat = vast,
-                            end_year = yr,
-                            # how do you deal with zero biomass observations?
-                            # see ?prepare_rema_input() for more options
-                            zeros = list(assumption = 'NA'))
-mv <- fit_rema(inputv)
-outv <- tidy_rema(mv)
-
-outv$proportion_biomass_by_strata %>% 
-  vroom_write(here::here(yr, "results", "dusky_ratios.csv"), delim=",")
+out$proportion_biomass_by_strata %>% View
+tidy_rema(rema_model = m)
 
 
 png(filename=here::here("figs", "dusky_re.png"), width = 6.5, height = 6.5, 
     units = "in", type ="cairo", res = 200)
 
+out$biomass_by_strata
 
-out$proportion_biomass_by_strata %>% 
-  tidyr::pivot_longer(-c(model_name, year)) %>% 
-  bind_rows(
-    outv$proportion_biomass_by_strata %>% 
-      tidyr::pivot_longer(-c(model_name, year)) 
-  ) %>% 
-  ggplot(aes(year, value, color = name, group = interaction(name, model_name), lty= model_name)) + 
+out$biomass_by_strata %>% 
+  # bind_rows(vast) %>% 
+  rename(model = model_name) %>% 
+  tidyr::pivot_longer(-c(model, year)) %>% 
+  ggplot(aes(year, value,  color = model, lty= model)) + 
+  # geom_point(aes(y = obs), color = 'lightgray') + 
+  # geom_errorbar(aes(ymin = lci, ymax = uci), color = 'lightgray', width = 0.2) + 
   geom_line() + 
-  # facet_wrap(~name) +
-    scico::scale_color_scico_d(palette = 'roma')
+  geom_point() +
+  scico::scale_color_scico_d(palette = 'roma') +
+  facet_wrap(~name) +
+  expand_limits(y = 0) +
+  ylab ('Biomass t') + 
+  xlab('Year') +
+  scale_y_continuous(labels = scales::comma) +
+  theme(legend.position = c(0.86, 0.8))
+
+out$biomass_by_strata %>% 
+  ggplot(aes(year, pred)) + 
+  geom_point(aes(y=obs), color = 'gray') +
+  geom_errorbar(aes(ymin = obs_lci, ymax = obs_uci), color = 'gray', width =0.2) +
+  geom_point() + 
+  geom_line() +
+  # geom_point(data=vast, aes(y=biomass), color = 4) +
+  # geom_line(data=vast, aes(y=biomass), color = 4) +
+  facet_wrap(~strata) +
+  coord_cartesian(ylim=c(0,4e+05))
+
+# vast %>% 
+  # filter(area!='Total') %>% 
+  group_by(year) %>% 
+  mutate(v = biomass / sum(biomass),
+         area = case_when(area=='Central'~ 'CENTRAL GOA', 
+                          area=='Western'~ 'WESTERN GOA', 
+                          TRUE ~ 'Total')) %>% 
+  rename(name = area, model_name = type) %>% 
+  tidyr::pivot_wider(names_from = name, values_from = v) %>% View
   
+png(filename=here::here('2024', "sep_pt", "figs", "vast-db-bio.png"), width = 6.5, height = 6.5,
+    units = "in", type ="cairo", res = 200)
+out$proportion_biomass_by_strata %>% tail()
+out$biomass_by_strata %>% 
+  # tidyr::pivot_longer(-c(model_name, year)) %>% 
+  select(model = model_name, year, name = strata, value = pred, obs, lci = obs_lci, uci = obs_uci) %>% 
+  bind_rows(
+    vast %>%
+      # filter(area!='Total') %>%
+      group_by(year) %>%
+      mutate(value = biomass, model = 'vast') %>% 
+             # area = case_when(area=='Central'~ 'CENTRAL GOA',
+             #                  area=='Western'~ 'WESTERN GOA',
+             #                  TRUE ~ 'Total')) %>%
+      rename(name = strata)
+  ) %>%
+  ggplot(aes(year, value,  color = model, lty= model)) + 
+  # geom_point(aes(y = obs), color = 'lightgray') + 
+  # geom_errorbar(aes(ymin = lci, ymax = uci), color = 'lightgray', width = 0.2) + 
+  geom_line() + 
+  geom_point() +
+    scico::scale_color_scico_d(palette = 'roma') +
+  facet_wrap(~name) +
+  expand_limits(y = 0) +
+  ylab ('Biomass t') + 
+  xlab('Year') +
+  scale_y_continuous(labels = scales::comma) +
+  theme(legend.position = c(0.86, 0.8))
+dev.off()
   # ggplot(aes(year, obs)) + 
   # geom_point() + 
   geom_line(aes(x=year, y=pred), color = 4) +
@@ -292,7 +349,7 @@ out$proportion_biomass_by_strata %>%
   
   
   
-  
+  out$biomass_by_strata %>% 
   filter(year>=1990) %>% 
   mutate(strata = case_when(strata=="EASTERN GOA" ~ "Eastern",
                             strata=="CENTRAL GOA" ~ "Central",
@@ -310,3 +367,11 @@ out$proportion_biomass_by_strata %>%
   scale_x_continuous(breaks = seq(1990,2020,5))
 
 dev.off()
+
+rema
+vast %>% 
+  filter(area=='Western') %>% 
+  ggplot(aes(year, biomass)) + 
+  geom_line()
+  bind_rows(rema) +
+    expand_limits(y = 0)
