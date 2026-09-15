@@ -13,3 +13,13 @@
 *.r02
 *.r03
 *.log
+*\2024
+*\2023
+*\figs
+*\proj
+*Sebastes_polyspinis_1_1_default_maxcells_epsilon2off
+*website
+2026/base/mcmc.RDS
+2026/base/mcmcout.RDS
+2026/base/mcmcmc.RDS
+2026/base/mcmcpars.RDS
