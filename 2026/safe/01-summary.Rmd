@@ -1,0 +1,55 @@
+
+# Executive Summary
+
+Gulf of Alaska `r species` (*Sebastes polyspinis*) are classified as a Tier 3 stock and assessed using a statistical age-structured model with a full stock assessment typically produced in even years and a harvest projection stock assessment produced in odd years to coincide with the availability of new trawl survey data (odd years).
+For Gulf of Alaska northern rockfish in `r year`, we present a operational update assessment and projection model to recommend harvest levels for the next two years.
+This assessment consists of a population model, which uses survey and fishery data to generate a historical time series of population estimates, and a projection model, which uses results from the population model to predict future population estimates and recommended harvest levels. 
+The data sets used in this assessment include total catch biomass, fishery age and size compositions, trawl survey abundance estimates, and trawl survey age compositions. 
+
+
+
+## Summary of Changes in Assessment Inputs
+
+*Changes in the input data:*  
+Relative to the last full assessment the following substantive changes have been made to assessment inputs: 
+
+  - Update survey biomass estimates through `r year-1`, 
+  - Update survey age compositions with `r year-1` data,
+  <!-- - Update fishery age compositions with `r year-2` data, -->
+  - Update final catch values for `r year-2` and `r year-1`, and use preliminary catch for `r year`,
+  - Update weight-at-age with survey data through `r year-1`,
+  - Update size-at-age transition matrix with survey data through `r year-1`,
+  - Update survey age composition input sample sizes to reflect current best practices.
+
+*Changes in assessment methodology:*  
+
+No model changes were implemented.
+
+## Summary of Results
+
+Model 24 was updated with new data ( `r pref_mod`). 
+This model generally produces good visual fits to the data and biologically reasonable patterns of recruitment, abundance, and selectivity, and has a negative retrospective Mohn's rho value. 
+
+*ABC recommendation*  
+The `r pref_mod` projected age 2+ total biomass for `r year+1` is `r tot` t. 
+The recommended ABC for `r year+1` is `r abc` t, the maximum allowable ABC under Tier `r tier`. 
+This ABC is a `r perc`% increase compared to the `r year` ABC of `r abc0` and a `r perc1`% increase from the projected `r year+1` ABC from the prior assessment.
+The `r year+1` GOA-wide OFL for `r species` is `r ofl` t.
+The stock is not being subject to overfishing, is not currently overfished, nor is it approaching a condition of being overfished. 
+
+\pagebreak
+
+Reference values for GOA `r species` are summarized in the following table, with the recommended ABC and OFL values in bold.
+
+```{r, child= "01a-main_table.Rmd", eval = T}
+
+```
+
+
+```{r, child= "01b-apportionment.Rmd", eval = T}
+
+```
+
+
+
+

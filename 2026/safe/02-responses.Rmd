@@ -1,0 +1,47 @@
+## Responses to SSC and Plan Team Comments on Assessments in General
+> “The SSC supports the JGPT's recommendation that stock assessment authors transition from the ADMB RE variants to the rema framework, which implements the same model variants in a single framework with several improvements.”(SSC, Oct 2022)  
+
+Apportionment was previously transitioned from the ADMB RE model to the rema framework [@Williams2022]. 
+However, the rema framework uses the design-based survey biomass estimates as inputs. 
+As this model uses VAST-based estimates of survey abundance we propose using VAST-based area biomass estimates for determining apportionment.
+These VAST-based estimates are described in detail in Appendix 10c.
+
+## Responses to SSC and Plan Team Comments Specific to this Assessment
+
+> "The SSC supports the GOA GPT recommendations to investigate potential mechanisms for the
+underlying pattern [to the fishery length composition] and recommends the authors consider whether a selectivity time block, to account for changes in the fishery (i.e., POP rebuilding), is appropriate and improves fit to the compositional information." (SSC December 2022)  
+
+A selectivity-at-age timeblock was examined, though results did not improve the compositional fit. 
+The authors will continue examining timeblock implementation, as well as exploring using a length-based selectivity for early years of the fishery and exploring the stability of the size-at-age transition matrix over time (currently has a single time block). 
+
+> "The SSC notes the MCMC on the estimates of q include a long right tail with unrealistic values of q. The
+SSC requests the authors investigate a model run with a fixed M." (SSC December 2022) 
+
+Estimates of *q* appear better behaved in the current assessment. 
+The authors examined a model run with a fixed *M*, though with the tight CV on the *M* prior results were essentially the same. 
+
+> "The SSC also requests the following for future assessments: bubble plots of Pearson residuals for all age
+and length data, including the sign and scale of residuals; and inclusion of a figure showing changes in
+previous VAST estimates due to updating with new survey information." (SSC December 2022)
+
+Pearson and one-step ahead residual plots are presented, as well as a figure showing previous VAST estimates.
+
+> "The SSC reiterates its past support of empirical
+research projects on maturity and skip spawning, perhaps with industry partnership."(SSC December 2022)  
+
+Examinations of maturity and skip spawning are ongoing. 
+The biological maturity ogive has been updated with additional data [@Conrath2019] and maturity estimation has been moved out of the model to facilitate future examinations of functional (skip spawning) rates on model outputs.
+
+2024 SSC 
+ - The SSC agrees with the GOA GPT and authors' recommendation that these trends do not 
+warrant a reduction from maxABC. The SSC also supports the GOA GPT recommended use of the 
+status quo design-based (REMA) methods for apportionment for 2025.  
+
+ - The survey likelihood is downweighted and the model is sensitive to decisions on survey weighting. 
+Therefore, the SSC recommends continued work on developing a more formal weighting procedure 
+for this assessment. 
+
+
+  
+
+

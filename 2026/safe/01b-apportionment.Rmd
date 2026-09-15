@@ -1,0 +1,41 @@
+## Area Allocation of Harvest
+
+The following table shows the recommended ABC apportionment for `r year + 1` and `r year+2`. 
+Please refer to the Area Allocation of Harvests section of this document for the apportionment rationale for GOA `r species`.
+
+```{r}
+# apportionment table example
+appo <- data.frame(X = c(NA, 2025, 2025, 2026, 2026),
+           X1 = c("", "abc", "ofl", "abc", "ofl"),
+           Western = c(55.71, 2828, NA, 2727, NA),
+           Central = c(44.28, 2248, NA, 2168, NA),
+           Eastern = c(0.02, 1, NA, 1, NA),
+           Total = c(100, 5077, 6064, 4896, 5848))
+
+flextable::flextable(appo[-1,]) %>% 
+    flextable::add_header_row(values = paste0(appo[1,], "%"), top=FALSE) %>%
+    flextable::border_remove() %>% 
+    flextable::compose(i=1, j=1:2, part='header', 
+                       value=flextable::as_paragraph('')) %>%
+    flextable::compose(i=2, j=1:2, part='header', 
+                        value=flextable::as_paragraph('Area Apportionment')) %>% 
+    flextable::merge_h(i=1:2, part = "header") %>% 
+    flextable::font(fontname = "Times New Roman", part = "all") %>%
+    flextable::fontsize(size = 11, part = "all") %>% 
+    flextable::align(j = 1, part = "all", align="left") %>% 
+     flextable::compose(i = 1:2, j = 1, 
+                       value = flextable::as_paragraph(as.character(year+1)), 
+                       part = "body") %>% 
+    flextable::compose(i = 3:4, j = 1, 
+                       value = flextable::as_paragraph(as.character(year+2)), 
+                       part = "body")  %>% 
+    flextable::compose(i = 1:4, j = 2, 
+                       value = flextable::as_paragraph(rep(c('ABC (t)', 'OFL (t)'), 2)), 
+                       part = "body") %>% 
+    # flextable::height(height = 0.2, part='body') %>% 
+    # flextable::hrule(rule = "exact") %>% 
+    flextable::hline_top(part='all') %>% 
+    flextable::hline_bottom() 
+  
+```
+

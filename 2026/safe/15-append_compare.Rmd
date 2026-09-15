@@ -1,0 +1,721 @@
+# Appendix 10c: Model comparisons
+
+Variants of many of these comparisons were presented and accepted during the groundfish Plan Team September 2024 meeting.
+The models have been updated to present results using 2024 data, where applicable.
+
+## Transition the model from ADMB to RTMB
+### Introduction
+
+The `ADMB` program is in the process of an 'orderly shutdown of development' (see: [ADMB](http://admb-foundation.org/wp-content/uploads/2023/05/ADMB_Foundation_meeting_2022-04-28.pdf)) and `TMB` (Template Model Builder) is a viable alternative for fishery stock assessment development. 
+`TMB` is widely seen as the successor to `ADMB`, though there are some noted differences (e.g., `TMB` has no native phasing, so all parameters are estimated simultaneously). 
+`RTMB` allows for accessing most of the utility found in `TMB` but the models can be written entirely in `R` rather than `C++` [@RTMB]. 
+
+To compare model outputs the last full model accepted by the SSC for northern rockfish with the model 22.1 ([ADMB](https://github.com/noaa-afsc/goa_nork/tree/main/2024/base)) was converted to RTMB code ([RTMB](https://github.com/noaa-afsc/goa_nork/tree/main/2024/R)). 
+`Model 22.1` has historically had a tight prior on *M* (mean 0.06, CV 0.05), and fixed $\sigma^r$ at 1.5.
+
+The RTMB model was run using the same data (through 2022), and parameter inputs and bounds (if any) as the ADMB model.
+
+### Results 
+Outputs are equivalent (total biomass, spawning biomass, etc.) and the likelihoods are generally the same or within a few decimal points, when comparing the ADMB and RTMB models. 
+That is, the RTMB model is effectively recreating the ADMB model, differences can generally be attributed to differences in how the two programs round values.
+There is no discernible differences between model selectivities, biomass estimates and composition data, the percent differences between models are < 0.0005% (Figures 10c-\@ref(fig:compslx) & 10c-\@ref(fig:compbio)). 
+
+\pagebreak
+```{r}
+t1 = readRDS(here::here(year, 'data', 'user_input', 'rtmb-like.RDS'))
+t1 %>% 
+  dplyr::rename(Likelihood = Item) %>% 
+  flextable::flextable() %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::fontsize(size = 10, part = "all") %>% 
+  flextable::padding(padding = 0, part = "all")  %>%  
+  flextable::autofit() %>%  
+  flextable::set_caption("Likelihood values for comparing the GOA northern rockfish coded in ADMB and RTMB.")
+```
+  <br>
+  
+```{r}
+t2 = readRDS(here::here(year, 'data', 'user_input', 'rtmb-compare.RDS'))
+t2 %>% as.data.frame() %>% 
+  flextable::flextable() %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::fontsize(size = 10, part = "all") %>% 
+  flextable::padding(padding = 0, part = "all")  %>%  
+  flextable::autofit() %>%  
+  flextable::set_caption("Key parameters and output values for comparing the GOA northern rockfish coded in ADMB and RTMB.")
+```
+
+
+```{r compslx, fig.cap="Percent difference for selectivity (fishery and survey) and maturity between the ADMB and RTMB models using equivalent data and parameter inputs.", eval = T}
+
+knitr::include_graphics(here::here(year, 'compare_models', "compare-slx.png"))
+```
+
+```{r compbio, fig.cap="Percent difference for fishing mortality (F), recruitment, spawning biomass and total biomass between the ADMB and RTMB models using equivalent data and parameter inputs.", eval = T}
+
+knitr::include_graphics(here::here(year, 'compare_models', "compare-bio.png"))
+```
+
+## Change survey biomass negative log likelihood
+### Introduction
+
+The base model (m22.1) estimates the survey biomass negative log likelihood with a normal error structure $$\mathcal{L} = \lambda \sum_{y}{\frac{(I_y - \hat{I}_y)^2}{2  SE(I_y)^2}}.$$
+We propose adopting the more standard lognormal error structure negative log likelihood error structure to the objective function: 
+$$\mathcal{L} =\lambda\sum\limits_{y} \left [ log(\sigma_{y}) + 0.5 \left( \tfrac{log(I_y / \hat{I}_y)} {\sigma_{y}}\right)^2 \right ] $$
+
+where $$\sigma_{y} = \sqrt{log \left( 1 + \frac{SE(I_y)^2}{I_y^2} \right )}$$ 
+and $I_y$ are annual survey biomass observations, $\hat{I}_y$ are estimated annual survey biomass, *y* is year, $\sigma_{y}$ is annual survey biomass log standard error estimated using method of moments, and $\lambda$ is the likelihood weight and $SE(I_y)$ is the annual survey biomass standard error.
+The lognormal error structure is more appropriate for these data and is more commonly used for assessment models. 
+A comparison will be shown between model 22.1 (normal error structure) and updated model results (model 22.1a).
+
+## Results
+Changing to a lognormal error structure for the survey biomass likelihood results in an increase in estimated total and female spawning biomass, with an associated increase in $B_{40}$ and *maxABC*, and a decrease in the survey biomass likelihood.  
+Model likelihoods and key parameter estimates are shown in (Tables 10c-\@ref(tab:complike) and 10c-\@ref(tab:comppar)).
+
+
+```{r}
+
+m0 = readRDS(here::here(year, 'm22.1', "m22.1.rds")) # 2024 data
+m1 = readRDS(here::here(year, 'm22.1a', "m22.1a.rds")) # lognormal srv biomass likelihood
+m2 = readRDS(here::here(year, 'm22.1b', "m22.1b.rds")) # iss change
+m3 = readRDS(here::here(year, 'm22.1c', "m22.1c.rds")) # VAST lognormal
+m4 = readRDS(here::here(year, 'm24', "m24.rds")) # maturity change
+
+source(here::here(year, 'R', 'utils.R'))
+pr0 = proj_bio(m0)
+pr1 = proj_bio(m1)
+pr2 = proj_bio(m2)
+pr3 = proj_bio(m3)
+pr4 = proj_bio(m4)
+```
+
+
+## Change survey age composition input sample sizes 
+### Introduction
+Survey age composition input sample sizes [ISS, see @Hulson2024] are now available via the [afscISS R package on github, @afscISS]. 
+These sample sizes are corrected for growth variability and aging error  and should more accurately reflect the annual sample sizes than the currently used 'hybrid method'.
+The hybrid method is the $\sqrt{no. hauls * no. samples}$ scaled to a max of 100.
+The data input changes are shown using the updated M22.1a described above.
+
+### Results
+Updating the survey input sample size (ISS) results in a slight increase in estimated total and female spawning biomass, and associated management parameters. 
+Model likelihoods and key parameter estimates are shown in (Tables 10c-\@ref(tab:complike) and 10c-\@ref(tab:comppar)).
+
+
+## Trawl survey biomass examinations 
+### Introduction
+The AFSC Groundfish Assessment Program (GAP) implements a default VAST model to estimate bottom trawl survey biomass. 
+The default model uses Poisson-delta model with a Gamma error structure for 'when present' observations, with 750 knots (see Appendix 10b). 
+However the VAST model currently used for GOA dusky rockfish, and recommended for use in the northern rockfish assessment [@Williams2023], uses a lognormal error structure for 'when present' observations.
+Survey biomass inputs vary between VAST models (Figure 10c-\@ref(fig:fcompare)) however, the assessment models produces similar outputs for all survey inputs (Figure 10c-\@ref(fig:fcompare1)). 
+This is likely due, in part, to the down-weighting of the survey likelihood by 0.25.
+                                                                                                                                 
+Given the relative longevity of the species it is unlikely that the large swings in estimated biomass are correct. 
+They are likely due to the trawl survey sample design and inability to trawl in the preferred habitat of northern rockfish. 
+Though it is unclear whether addressing this sampling issue via modeling is appropriate it would be more in line with our understanding of the stock dynamics to choose a model that has less annual variability.  
+
+Further examination of the current GAP recommended default model and lognormal error model is warranted so model residuals were examined. 
+The default VAST (Gamma) model residuals show similar deviation from observed values (Figure 10c-\@ref(fig:vast-residb)) than the VAST (lognormal) model (Figure 10c-\@ref(fig:vast-reside)). 
+Therefore our recommendation is to use VAST with a lognormal error structure as it maintains the use of the delta model (reduced bias), has same # of knots as default GAP settings, has similar residual diagnostics and is precautionary relative to default GAP settings.
+
+
+
+```{r complike, eval=T}
+
+data.frame(Item = c('Catch', 
+                    'Survey', 
+                    "Fish age", 
+                    'Survey age', 
+                    'Fish size', 
+                    'Recruitment', 
+                    'F regularity', 
+                    'SPR penalty', 
+                    'M prior', 
+                    'q prior', 
+                    'Objective function'), 
+           M22.1 = c(m0$ssqcatch, 
+                    m0$like_srv,
+                    m0$like_fish_age,
+                    m0$like_srv_age, 
+                    m0$like_fish_size, 
+                    m0$like_rec, 
+                    m0$f_regularity, 
+                    m0$sprpen, 
+                    m0$nll_M, 
+                    m0$nll_q, 
+                    round(sum(m0$ssqcatch, 
+                              m0$like_srv, 
+                              m0$like_fish_age, 
+                              m0$like_srv_age, 
+                              m0$like_fish_size, 
+                              m0$like_rec, 
+                              m0$f_regularity, 
+                              m0$sprpen, 
+                              m0$nll_M, 
+                              m0$nll_q), 4)),
+           
+           M22.1a = c(m1$ssqcatch, 
+                    m1$like_srv,
+                    m1$like_fish_age,
+                    m1$like_srv_age, 
+                    m1$like_fish_size, 
+                    m1$like_rec, 
+                    m1$f_regularity, 
+                    m1$sprpen, 
+                    m1$nll_M, 
+                    m1$nll_q, 
+                    round(sum(m1$ssqcatch, 
+                              m1$like_srv, 
+                              m1$like_fish_age, 
+                              m1$like_srv_age, 
+                              m1$like_fish_size, 
+                              m1$like_rec, 
+                              m1$f_regularity, 
+                              m1$sprpen, 
+                              m1$nll_M, 
+                              m1$nll_q), 4)),
+            M22.1b = c(m2$ssqcatch,
+                    m2$like_srv,
+                    m2$like_fish_age,
+                    m2$like_srv_age,
+                    m2$like_fish_size,
+                    m2$like_rec,
+                    m2$f_regularity,
+                    m2$sprpen,
+                    m2$nll_M,
+                    m2$nll_q,
+                    round(sum(m2$ssqcatch,
+                              m2$like_srv,
+                              m2$like_fish_age,
+                              m2$like_srv_age,
+                              m2$like_fish_size,
+                              m2$like_rec,
+                              m2$f_regularity,
+                              m2$sprpen,
+                              m2$nll_M,
+                              m2$nll_q), 4)),
+            M22.1c = c(m3$ssqcatch,
+                    m3$like_srv,
+                    m3$like_fish_age,
+                    m3$like_srv_age,
+                    m3$like_fish_size,
+                    m3$like_rec,
+                    m3$f_regularity,
+                    m3$sprpen,
+                    m3$nll_M,
+                    m3$nll_q,
+                    round(sum(m3$ssqcatch,
+                              m3$like_srv,
+                              m3$like_fish_age,
+                              m3$like_srv_age,
+                              m3$like_fish_size,
+                              m3$like_rec,
+                              m3$f_regularity,
+                              m3$sprpen,
+                              m3$nll_M,
+                              m3$nll_q), 4)),
+           M24 = c(m4$ssqcatch,
+                    m4$like_srv,
+                    m4$like_fish_age,
+                    m4$like_srv_age,
+                    m4$like_fish_size,
+                    m4$like_rec,
+                    m4$f_regularity,
+                    m4$sprpen,
+                    m4$nll_M,
+                    m4$nll_q,
+                    round(sum(m4$ssqcatch,
+                              m4$like_srv,
+                              m4$like_fish_age,
+                              m4$like_srv_age,
+                              m4$like_fish_size,
+                              m4$like_rec,
+                              m4$f_regularity,
+                              m4$sprpen,
+                              m4$nll_M,
+                              m4$nll_q), 4))
+           ) %>% 
+   dplyr::mutate(dplyr::across(2:6, round, 3)) %>% 
+  flextable::flextable() %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::fontsize(size = 10, part = "all") %>% 
+  flextable::padding(padding = 0.5, part = "all")  %>%  
+  flextable::set_header_labels(values = 
+                                 list(Item = 'Likelihood')) %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::autofit() %>% 
+  flextable::align(j=1, part= "all") %>%  
+  flextable::set_caption("Model likelihood values for incremental GOA northern rockfish model changes. M22.1 is the SSC accepted 2022 model using 2024 data, M22.1a updates to a lognormal error structure survey likelihood, M22.1b uses adjusted ISS values, M22.1c changes from Gamma to lognormal VAST survey abundance, and M24 updates maturity. Note: M22.1 and the remaining models are not directlly comparable due to the change in the survey negative log likelihood.")
+```
+\pagebreak
+
+```{r comppar, eval=T}
+data.frame(Item = c('M', 
+                    'q', 
+                    "Log mean recruitment", 
+                    'Log mean F', 
+                    'A50 fishery', 
+                    'Delta fishery', 
+                    'A50 survey', 
+                    'Delta survey', 
+                    '2023 Total biomass', 
+                    '2023 Spawning biomass', 
+                    '2023 OFL',
+                    '2023 FOFL',
+                    '2023 ABC',
+                    '2023 FABC'), 
+           M22.1 = c(m0$M, 
+                    m0$q,
+                    m0$log_mean_R,
+                    m0$log_mean_F, 
+                    m0$a50C, 
+                    m0$deltaC, 
+                    m0$a50S, 
+                    m0$deltaS, 
+                    pr0[1,3], 
+                    pr0[1,2], 
+                    pr0[1,5],
+                    pr0[1,7],
+                    pr0[1,4],
+                    pr0[1,6]),
+          M22.1a = c(m1$M, 
+                    m1$q,
+                    m1$log_mean_R,
+                    m1$log_mean_F, 
+                    m1$a50C, 
+                    m1$deltaC, 
+                    m1$a50S, 
+                    m1$deltaS, 
+                    pr1[1,3], 
+                    pr1[1,2], 
+                    pr1[1,5],
+                    pr1[1,7],
+                    pr1[1,4],
+                    pr1[1,6]),
+          M22.1b = c(m2$M,
+                    m2$q,
+                    m2$log_mean_R,
+                    m2$log_mean_F,
+                    m2$a50C,
+                    m2$deltaC,
+                    m2$a50S,
+                    m2$deltaS,
+                    pr2[1,3],
+                    pr2[1,2],
+                    pr2[1,5],
+                    pr2[1,7],
+                    pr2[1,4],
+                    pr2[1,6]),
+          M22.1c = c(m3$M,
+                    m3$q,
+                    m3$log_mean_R,
+                    m3$log_mean_F,
+                    m3$a50C,
+                    m3$deltaC,
+                    m3$a50S,
+                    m3$deltaS,
+                    pr3[1,3],
+                    pr3[1,2],
+                    pr3[1,5],
+                    pr3[1,7],
+                    pr3[1,4],
+                    pr3[1,6]),
+           M24 = c(m4$M,
+                    m4$q,
+                    m4$log_mean_R,
+                    m4$log_mean_F,
+                    m4$a50C,
+                    m4$deltaC,
+                    m4$a50S,
+                    m4$deltaS,
+                    pr4[1,3],
+                    pr4[1,2],
+                    pr4[1,5],
+                    pr4[1,7],
+                    pr4[1,4],
+                    pr4[1,6])
+          )%>% 
+   dplyr::mutate(across(2:6, round, 3)) %>% 
+  flextable::flextable() %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::fontsize(size = 10, part = "all") %>% 
+  flextable::padding(padding = 0.5, part = "all")  %>% 
+  flextable::colformat_double(i=c(9:11, 13), digit=0) %>% 
+  flextable::set_header_labels(values = 
+                                 list(Item = 'Parameter/Estimate')) %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::autofit() %>% 
+  flextable::align(j=1, part= "all") %>%  
+  flextable::set_caption("Estimates of key parameters and outputs for incremental GOA northern rockfish model changes. M22.1 is the SSC accepted 2022 model using 2024 data, M22.1a updates to a lognormal error structure survey likelihood, M22.1b uses adjusted ISS values, M22.1c changes from Gamma to lognormal VAST survey abundance, and M24 updates maturity. Note: M22.1 and the remaining models are not directlly comparable due to the change in the survey negative log likelihood.")
+
+```
+
+\pagebreak
+
+```{r fcompare, fig.cap="Survey input model estimates with 95% confidence intervals. The VAST-based inputs are shown for 2021 and 2023 as the estimates change with the addition of new data.", eval = T}
+
+knitr::include_graphics(here::here(year, "compare_models", "surveys.png"))
+```
+
+```{r fcompare1, fig.cap="Survey biomass estimates from all explored models.", eval = T}
+
+knitr::include_graphics(here::here(year, "compare_models", "surveys_out.png"))
+```
+
+```{r vast-residb, fig.cap="Default VAST (Gamma) model quantile residuals.", eval = T}
+knitr::include_graphics(here::here(2024, "R", "vast", "2_1_2023", "quantile_residuals.png"))
+```
+
+```{r vast-reside, fig.cap="Vast (lognormal) quantile residuals."}
+
+knitr::include_graphics(here::here(2024, "R", "vast", "1_1_2023_alt", "quantile_residuals.png"))
+```
+
+
+## Maturity 
+
+The inclusion of biological maturity data from @Conrath2019 is described in the *Data* section of this report. 
+
+### Results
+Updating the maturity results in a slight increase in estimated female spawning biomass, all other likelihoods and parameters are the same as for m22.1c. 
+Model likelihoods and key parameter estimates are shown in (Tables 10c-\@ref(tab:complike) and 10c-\@ref(tab:comppar)).
+
+
+
+## Change to VAST-based apportionment
+## Introduction
+Apportionment for GOA northern rockfish has been based upon area estimates from the design-based survey abundance. 
+The assessment uses a model-based [VAST, @Thorson2016] index of abundance, which does not always align with the design-based area estimates.
+For consistency, we propose to change apportionment to be based upon the model-based index of abundance. 
+
+The 'standard' apportionment scenario has been to use the REMA [@rema] random effects model to smooth the area apportionments.
+One issue with the model-based index and REMA analysis is that northern rockfish catch in the eastern GOA has been consistently low or zero (Figures \@ref(fig:figmap) and \@ref(fig:figtotal)).
+Due to this sparseness both the `VAST` and `REMA` models have had convergence issues for the eastern GOA. 
+In order to address this, the eastern GOA is dropped from the estimated index of abundance. 
+There is 1 t allocated for eastern GOA northern rockfish in the 'Other rockfish' complex for management purposes. 
+
+
+```{r figmap, fig.cap="Survey catch (numbers) by year."}
+knitr::include_graphics(here::here(2024, "sep_pt", "figs", "map.png"))
+```
+
+```{r figtotal, fig.cap="Survey catch (numbers) by year and area. Note the different y-axis scales"}
+
+knitr::include_graphics(here::here(2024, "sep_pt", "figs", "totals.png"), dpi=200)
+```
+
+
+
+
+An examination of design-based (via REMA), and VAST (without REMA smoothing) will be compared.
+Apportionment examinations will be presented using survey data through 2023. 
+
+## Results
+
+The REMA smoothed design-based and VAST area biomass are on the same scale, however, when examined as a proportion, VAST exhibits less variability between regions (Figure 10c-\@ref(fig:fvstdb)).
+The design-based model w/REMA would place 72.5% of the biomass in the central GOA in 2023, the VAST model w/o REMA would apportion 55.7%.
+Overall the VAST-based apportionment is more stable over time than the rema-based model. 
+The SSC had requested an examination of a temporal AR1 function in the VAST-based apportionment methodology, however, repeated attempts were met with non-convergence issues. 
+
+
+```{r fvstdb, fig.cap= "REMA smoothed design-based, and VAST apportionment proportions by area."}
+
+knitr::include_graphics(here::here(2024, "sep_pt", "figs", "vast-db.png"))
+```
+\pagebreak
+
+: Apportionment percent estimates for design-based w/REMA and VAST estimated survey abundance w/o using REMA. 
+The eastern GOA is set at 1t and allocated to the "Other rockfish" complex for all scenarios, and is not shown here. 
+
+| Year | Area    | Design-based w/REMA |  VAST  |
+|:------|:---------|:--------------:|:----------------:|
+| 2021 | Western | 51.3         |      48.0      |
+|      | Central | 48.7         |      52.0      |
+| 2022 | Western | 38.7         |      48.0      |
+|      | Central | 61.3         |      52.0      |
+| 2023 | Western | 27.5         |      44.3      |
+|      | Central | 72.5         |      55.7      |
+| 2024 | Western | 27.5         |      44.3      |
+|      | Central | 72.5         |      55.7      |
+
+
+Using these apportionment values the area apportionment based on projected 2025 and 2026 ABCs would be:
+
+| Year | Area    | Design-based w/REMA |  VAST  | 
+|:------|:---------|:--------------:|:----------------:|
+|2025    | Western  | 1396  |   2249 |
+|       | Central   | 3680  | 2827 |
+|2026    | Western  | 1346  |   2168 |
+|       | Central   | 3549  | 2727 |
+
+## Alternate models
+
+Below are some examinations of changing the survey biomass negative log likelihood weighting from 0.25 to 1.0.
+These models are provided for comparison, but are not put forward as possible changes this assessment cycle as they were not presented at the September 2024 Plan Team meeting.
+Changing the likelihood weight, increases survey, spawning, and total biomass estimates for all models examined. 
+
+```{r fsrvwt, fig.cap="Comparison of survey biomass estimates when changing the survey NLL weighting from 0.25 to 1.0. Gray points are VAST-estimated survey biomass."}
+
+knitr::include_graphics(here::here(year, "compare_models", "srv_bio_wts.png"))
+
+```
+
+```{r fsssbwt, fig.cap="Comparison of spawning biomass estimates when changing the survey NLL weighting from 0.25 to 1.0. "}
+
+knitr::include_graphics(here::here(year, "compare_models", "spawn_bio_wts.png"))
+
+```
+
+```{r ftotwt, fig.cap="Comparison of total biomass estimates when changing the survey NLL weighting from 0.25 to 1.0."}
+
+knitr::include_graphics(here::here(year, "compare_models", "tot_bio_wts.png"))
+
+```
+
+
+```{r}
+m0a = readRDS(here::here(year, 'm22.1', "m22.1_rewt.rds")) # 2024 data
+m1a = readRDS(here::here(year, 'm22.1a', "m22.1a_rewt.rds")) # lognormal srv biomass likelihood
+m2a = readRDS(here::here(year, 'm22.1b', "m22.1b_rewt.rds")) # iss change
+m3a = readRDS(here::here(year, 'm22.1c', "m22.1c_rewt.rds")) # VAST lognormal
+m4a = readRDS(here::here(year, 'm24', "m24_rewt.rds")) # maturity change
+
+pr0a = proj_bio(m0a)
+pr1a = proj_bio(m1a)
+pr2a = proj_bio(m2a)
+pr3a = proj_bio(m3a)
+pr4a = proj_bio(m4a)
+```
+
+\pagebreak
+
+```{r complikewt, eval=T}
+
+data.frame(Item = c('Catch', 
+                    'Survey', 
+                    "Fish age", 
+                    'Survey age', 
+                    'Fish size', 
+                    'Recruitment', 
+                    'F regularity', 
+                    'SPR penalty', 
+                    'M prior', 
+                    'q prior', 
+                    'Objective function'), 
+           M22.1 = c(m0a$ssqcatch, 
+                    m0a$like_srv,
+                    m0a$like_fish_age,
+                    m0a$like_srv_age, 
+                    m0a$like_fish_size, 
+                    m0a$like_rec, 
+                    m0a$f_regularity, 
+                    m0a$sprpen, 
+                    m0a$nll_M, 
+                    m0a$nll_q, 
+                    round(sum(m0a$ssqcatch, 
+                              m0a$like_srv, 
+                              m0a$like_fish_age, 
+                              m0a$like_srv_age, 
+                              m0a$like_fish_size, 
+                              m0a$like_rec, 
+                              m0a$f_regularity, 
+                              m0a$sprpen, 
+                              m0a$nll_M, 
+                              m0a$nll_q), 4)),
+           
+           M22.1a = c(m1a$ssqcatch, 
+                    m1a$like_srv,
+                    m1a$like_fish_age,
+                    m1a$like_srv_age, 
+                    m1a$like_fish_size, 
+                    m1a$like_rec, 
+                    m1a$f_regularity, 
+                    m1a$sprpen, 
+                    m1a$nll_M, 
+                    m1a$nll_q, 
+                    round(sum(m1a$ssqcatch, 
+                              m1a$like_srv, 
+                              m1a$like_fish_age, 
+                              m1a$like_srv_age, 
+                              m1a$like_fish_size, 
+                              m1a$like_rec, 
+                              m1a$f_regularity, 
+                              m1a$sprpen, 
+                              m1a$nll_M, 
+                              m1a$nll_q), 4)),
+            M22.1b = c(m2a$ssqcatch,
+                    m2a$like_srv,
+                    m2a$like_fish_age,
+                    m2a$like_srv_age,
+                    m2a$like_fish_size,
+                    m2a$like_rec,
+                    m2a$f_regularity,
+                    m2a$sprpen,
+                    m2a$nll_M,
+                    m2a$nll_q,
+                    round(sum(m2a$ssqcatch,
+                              m2a$like_srv,
+                              m2a$like_fish_age,
+                              m2a$like_srv_age,
+                              m2a$like_fish_size,
+                              m2a$like_rec,
+                              m2a$f_regularity,
+                              m2a$sprpen,
+                              m2a$nll_M,
+                              m2a$nll_q), 4)),
+            M22.1c = c(m3a$ssqcatch,
+                    m3a$like_srv,
+                    m3a$like_fish_age,
+                    m3a$like_srv_age,
+                    m3a$like_fish_size,
+                    m3a$like_rec,
+                    m3a$f_regularity,
+                    m3a$sprpen,
+                    m3a$nll_M,
+                    m3a$nll_q,
+                    round(sum(m3a$ssqcatch,
+                              m3a$like_srv,
+                              m3a$like_fish_age,
+                              m3a$like_srv_age,
+                              m3a$like_fish_size,
+                              m3a$like_rec,
+                              m3a$f_regularity,
+                              m3a$sprpen,
+                              m3a$nll_M,
+                              m3a$nll_q), 4)),
+           M24 = c(m4a$ssqcatch,
+                    m4a$like_srv,
+                    m4a$like_fish_age,
+                    m4a$like_srv_age,
+                    m4a$like_fish_size,
+                    m4a$like_rec,
+                    m4a$f_regularity,
+                    m4a$sprpen,
+                    m4a$nll_M,
+                    m4a$nll_q,
+                    round(sum(m4a$ssqcatch,
+                              m4a$like_srv,
+                              m4a$like_fish_age,
+                              m4a$like_srv_age,
+                              m4a$like_fish_size,
+                              m4a$like_rec,
+                              m4a$f_regularity,
+                              m4a$sprpen,
+                              m4a$nll_M,
+                              m4a$nll_q), 4))
+           ) %>% 
+   dplyr::mutate(dplyr::across(2:6, round, 3)) %>% 
+  flextable::flextable() %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::fontsize(size = 10, part = "all") %>% 
+  flextable::padding(padding = 0.5, part = "all")  %>%  
+  flextable::set_header_labels(values = 
+                                 list(Item = 'Likelihood')) %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::autofit() %>% 
+  flextable::align(j=1, part= "all") %>%  
+  flextable::set_caption("Model likelihood values for incremental GOA northern rockfish model changes with the weighting on the survey biomass likelihood increased from 0.25 to 1.0. M22.1 is the SSC accepted 2022 model using 2024 data, M22.1a updates to a lognormal error structure survey likelihood, M22.1b uses adjusted ISS values, M22.1c changes from Gamma to lognormal VAST survey abundance, and M24 updates maturity. Note: M22.1 and the remaining models are not directlly comparable due to the change in the survey negative log likelihood.")
+```
+\pagebreak
+
+```{r compparwt, eval=T}
+data.frame(Item = c('M', 
+                    'q', 
+                    "Log mean recruitment", 
+                    'Log mean F', 
+                    'A50 fishery', 
+                    'Delta fishery', 
+                    'A50 survey', 
+                    'Delta survey', 
+                    '2023 Total biomass', 
+                    '2023 Spawning biomass', 
+                    '2023 OFL',
+                    '2023 FOFL',
+                    '2023 ABC',
+                    '2023 FABC'), 
+           M22.1 = c(m0a$M, 
+                    m0a$q,
+                    m0a$log_mean_R,
+                    m0a$log_mean_F, 
+                    m0a$a50C, 
+                    m0a$deltaC, 
+                    m0a$a50S, 
+                    m0a$deltaS, 
+                    pr0a[1,3], 
+                    pr0a[1,2], 
+                    pr0a[1,5],
+                    pr0a[1,7],
+                    pr0a[1,4],
+                    pr0a[1,6]),
+          M22.1a = c(m1a$M, 
+                    m1a$q,
+                    m1a$log_mean_R,
+                    m1a$log_mean_F, 
+                    m1a$a50C, 
+                    m1a$deltaC, 
+                    m1a$a50S, 
+                    m1a$deltaS, 
+                    pr1a[1,3], 
+                    pr1a[1,2], 
+                    pr1a[1,5],
+                    pr1a[1,7],
+                    pr1a[1,4],
+                    pr1a[1,6]),
+          M22.1b = c(m2a$M,
+                    m2a$q,
+                    m2a$log_mean_R,
+                    m2a$log_mean_F,
+                    m2a$a50C,
+                    m2a$deltaC,
+                    m2a$a50S,
+                    m2a$deltaS,
+                    pr2a[1,3],
+                    pr2a[1,2],
+                    pr2a[1,5],
+                    pr2a[1,7],
+                    pr2a[1,4],
+                    pr2a[1,6]),
+          M22.1c = c(m3a$M,
+                    m3a$q,
+                    m3a$log_mean_R,
+                    m3a$log_mean_F,
+                    m3a$a50C,
+                    m3a$deltaC,
+                    m3a$a50S,
+                    m3a$deltaS,
+                    pr3a[1,3],
+                    pr3a[1,2],
+                    pr3a[1,5],
+                    pr3a[1,7],
+                    pr3a[1,4],
+                    pr3a[1,6]),
+           M24 = c(m4a$M,
+                    m4a$q,
+                    m4a$log_mean_R,
+                    m4a$log_mean_F,
+                    m4a$a50C,
+                    m4a$deltaC,
+                    m4a$a50S,
+                    m4a$deltaS,
+                    pr4a[1,3],
+                    pr4a[1,2],
+                    pr4a[1,5],
+                    pr4a[1,7],
+                    pr4a[1,4],
+                    pr4a[1,6])
+          )%>% 
+   dplyr::mutate(across(2:6, round, 3)) %>% 
+  flextable::flextable() %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::fontsize(size = 10, part = "all") %>% 
+  flextable::padding(padding = 0.5, part = "all")  %>% 
+  flextable::colformat_double(i=c(9:11, 13), digit=0) %>% 
+  flextable::set_header_labels(values = 
+                                 list(Item = 'Parameter/Estimate')) %>% 
+  flextable::colformat_num(j=1, big.mark = "") %>% 
+  flextable::autofit() %>% 
+  flextable::align(j=1, part= "all") %>%  
+  flextable::set_caption("Estimates of key parameters and outputs for incremental GOA northern rockfish model changes with the weighting on the survey biomass likelihood increased from 0.25 to 1.0. M22.1 is the SSC accepted 2022 model using 2024 data, M22.1a updates to a lognormal error structure survey likelihood, M22.1b uses adjusted ISS values, M22.1c changes from Gamma to lognormal VAST survey abundance, and M24 updates maturity. Note: M22.1 and the remaining models are not directlly comparable due to the change in the survey negative log likelihood.")
+
+```
+

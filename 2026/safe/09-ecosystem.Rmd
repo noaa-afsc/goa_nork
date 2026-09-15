@@ -1,0 +1,65 @@
+# Ecosystem Considerations
+
+In general, a determination of ecosystem considerations for GOA northern rockfish is hampered by a lack of biological and habitat information. 
+However, a review of the most recent (2024) GOA Ecosystem Status Report did not reveal strong evidence of declining trends in indicators which results in strong concern for northern rockfish. 
+Information regarding the FMP, non-FMP, and prohibited species caught in rockfish target fisheries to help understand ecosystem impacts by the northern fishery (Tables 12-\@ref(tab:fmp-bycatch) - 12-\@ref(tab:psc)).
+
+## Ecosystem Effects on the Stock
+
+*Prey availability/abundance trends:* Unfortunately, there is no information on the food habits of larval or post-larval rockfish to help determine possible relationships between prey availability and year-class strength. 
+Moreover, identification to the species level for field collected larval slope rockfish is difficult. 
+Visual identification is not possible, though genetic techniques allow identification to species level for larval slope rockfish. 
+Some juvenile rockfish found in inshore habitat feed on shrimp, amphipods, and other crustaceans, as well as some mollusk and fish. 
+Adult northern rockfish feed on euphausiids. 
+Euphausiids are also a major item in the diet of walleye pollock. 
+Changes in the abundance of walleye pollock could lead to a corollary change in the availability of euphausiids, which could then impact northern rockfish. 
+Prey availability and nutritional quality appeared to be approximately average in 2023, with potential for improvement in 2024.
+Northern rockfish body condition in 2023 returned close to average, and could be expected to remain in that range in 2024 (after being below-average since 2013)[@OLeary2023]. 
+Limited information on biomass of euphausiids and calanoid copepod in 2024 indicate average to above average availability, and a potential increase from 2023 [Seward Line, @Hopcroft2024, zooplanktivorous seabird reproductive success, @Drummond2024 and @Whelan2024]. 
+Shrimp (potential juvenile prey) CPUEs declined between the 2021  and 2023 NOAA bottom trawl surveys in Chirikof, Kodiak, and Yakutat [@Laman2023a].
+
+
+*Predator population trends:* There is no indication of increased predation, but  there is potential for decreased competition for zooplankton from low returns of pink salmon in 2024. 
+Potential predators include Pacific halibut and other large fish, which have remained at relatively lower population biomass. 
+Competitors for zooplankton prey could be reduced in 2024 due to unexpected low returns (in an even/low return year) of pink salmon [@Whitehouse2024]. 
+Other zooplanktivorous competitors include Pacific Ocean perch, which remains in high abundance, and walleye pollock. 
+Pink salmon are expected to have higher/odd year returns in 2025, potentially bringing an increased competition for prey resources. 
+Predator effects would likely be more important on larval, post-larval, and small juvenile northern rockfish, but information on these life stages and their predators is lacking.
+However, survival of larvae are thought to be more related to the abundance and timing of prey availability than predation, due to the lack of rockfish as a prey item commonly found in diets of other species. 
+
+*Changes in physical environment:* Changes in structural habitat present a potential concern for northern rockfish. 
+Vertical structure, including sponges, corals, and rocky habitat, is important habitat for northern rockfish and has experienced multi-year decline (with high uncertainty) across the GOA. 
+Observations in 2021 from AFSC’s bottom trawl and observer data of non-target catches (both not designed to sample structural epifauna and associated with high uncertainty) can be used to monitor trends in structural epifauna, although with uncertainty as these surveys/fisheries are not designed to target these species [AFSC bottom trawl, @Palsson2021a, Observer data, @Whitehouse2021].  
+By combining this fishery independent (AFSC survey) and fishery dependent (observer data) datasets, however, we can see a consistent trend rise above potential variability due to potential gear and effort changes (observer data) and the non-targeted sampling of both methods. 
+A VAST model was run for gorgonian corals, pennatulaceans (e.g., sea pens), and sponges integrating and modeling trawls station densities across the Gulf of Alaska [@Palsson2021]. 
+A continued multi-year decline (with high uncertainty) in relative abundance of sponges, structural habitat of importance, presents an ongoing concern for northern rockfish. 
+Observations in 2023 from AFSC’s fishery-independent bottom trawl survey and fisheries-dependent observer data of non-target catches (both not designed to target structural epifauna) show relative stability until 2015 followed by a continual 9 year decline in the GOA wide index through 2023 to a historic low value [NOAA bottom trawl, @Laman2023, Observer data, @Whitehouse2024]. 
+The declines in sponges appear to be driven by trends in western GOA (Shumagin and to a lesser extent Kodiak regions).
+
+Benthic thermal conditions for adults (banks along shelf edge approximately 75-150m) in 2024 were approximately average, while larval rockfish growth may have benefited from warm spring/summer surface waters [primarily in the eastern GOA)(satellite-derived data, @Lemagie2024; Seward Line, @Danielson2024]. 
+The 2023/2024 El Niño event brought warmer surface temperatures to the GOA in the winter, but it was moderate and short-lived, resulting in approximately average surface temperatures by spring in the western GOA and continued warm surface waters through the spring in the eastern GOA. 
+Larval surveys in Shelikof Strait in 2023 observed a decline to below average (from 2019 and 2021) of larval rockfish [not identified to species; @Rogers2023], which may or may not be in response to a cooler 2023 spring and/or reduced zooplankton availability in that year. 
+AFSC bottom trawl survey data revealed slight decrease in depth in northern rockfish distribution within the GOA [1990-2023, @Laman2023b]. 
+Surface waters in 2025 are predicted to cool with the development of a weak La Niña [@Lemagie2024]. 
+ 
+## Fishery Effects on the Ecosystem 
+
+*Fishery-specific contribution to bycatch of HAPC biota:* In the GOA, bottom trawl fisheries for pollock, deepwater flatfish, and Pacific ocean perch account for most of the observed bycatch of coral, while rockfish fisheries account for little of the bycatch of sea anemones, sea whips, and sea pens. 
+The bottom trawl fisheries for Pacific ocean perch and Pacific cod and the pot fishery for Pacific cod account for most of the observed bycatch of sponges (Table 10-\@ref(tab:nonfmp-bycatch)).
+
+*Fishery-specific concentration of target catch in space and time relative to predator needs in space and time (if known) and relative to spawning components:* The directed slope rockfish trawl fishery that begins in April is concentrated in known areas of abundance and typically lasts only a few weeks. 
+The annual exploitation rates on rockfish are thought to be quite low. 
+Insemination is likely in the fall or winter, and parturition is likely to occur in the spring. 
+While reproductive activities are probably not directly affected by the commercial fishery, there is evidence of skip spawning often caused by a lack of fertilization [@Conrath2019].
+If fishing were to reduce the population substantially or cause significant localized depletion it would be possible to increase the amount of observed skip spawning within the stock.
+
+*Fishery-specific effects on amount of large size target fish:* No evidence for targeting large fish.
+
+*Fishery contribution to discards and offal production:* Fishery discard rates of northern rockfish during 2009-2022 have been 1.5-9.1%.
+
+*Fishery-specific effects on age-at-maturity and fecundity of the target fishery:* Unknown.
+
+*Fishery-specific effects on EFH living and non-living substrate:* Unknown, but the heavy-duty “rockhopper” trawl gear commonly used in the fishery can disturb seafloor habitat. 
+Table 10-\@ref(tab:nonfmp-bycatch) shows the estimated bycatch of living structure such as benthic urochordates, corals, sponges, sea pens, and sea anemones by the GOA rockfish fisheries. 
+The average bycatch of corals/bryozoans and sponges by rockfish fisheries are a large proportion of the catch of those species taken by all Gulfwide fisheries.
+

@@ -1,0 +1,4 @@
+# Appendix 10d: Apportionment
+
+## Base area apportionment on VAST model outputs 
+instead of REMA-smoothed, design-based survey abundance

@@ -1,0 +1,86 @@
+# Analytical approach
+
+Operational Update: The data description for northern rockfish has been truncated to highlight relevant details and changes made for this cycle. 
+The reader is referred to the last full assessment (Williams et al. 2023) for the entirety of this section.
+
+## General Model Structure
+
+The model structure used for this Operational Update is unchanged from 2023. 
+The northern rockfish assessment is a single-sex, age-structured statistical catch-at-age model written in RTMB [@RTMB]. 
+Formulae for the population dynamics, observation, and likelihood components of the assessment model are presented in the Appendix.
+
+## Description of Alternative Models
+
+No alternative models were evaluated during this assessment cycle.
+
+
+## Parameters Estimated Outside the Assessment Model
+
+Values estimated outside the assessment include the parameters of the von Bertalanffy growth curve ($L_\inf, K, ~\text{and}~ t_0$), intercept and slope parameters for a regression of length uncertainty versus age, and weight-at-age parameters ($w_\inf$). 
+The values used to specify size-at-age probability matrix were updated using new age and length data from the trawl survey.
+Aging error and maturity-at-age were held the same as the last full assessment [@Williams2023].
+
+A comparison of these values is as follows:
+Symbol, Description	2021 Value	Updated Value
+L_∞, asymptotic length	41.1 cm	unchanged
+κ, growth rate	0.18 cmyr^(-1)	unchanged
+t_0, age at length zero	-0.49	-0.51
+w_∞, asymptotic weight	901 g	899 g
+k, weight-at-age growth rate	0.2 kgyr^(-1)	unchanged
+t_0, age at weight zero	-0.37	-0.38
+a, b, slope and intercept of linear relationship between sd(length at age) and age, post 1980s	-0.02, 2.18	-0.02, 2.17
+
+
+## Parameters Estimated Inside the Assessment Model
+
+The parameters estimated conditionally inside the assessment model are listed in the table below.
+Parameters estimated within the assessment model.
+Parameter	Symbol	Number
+Natural mortality	M	1
+Survey catchability	q	1
+log(mean recruitment)	μ_r	1
+Recruitment variability	σ_r	1
+Spawner-per-recruit reference points	F_(35%), F_(40%), F_(100%)	3
+Recruitment deviations	ϵ_y^r	89
+Average fishing mortality	μ_f	1
+Fishing mortality deviations	ϵ_y^f	63
+Fishery selectivity coefficients	s_a^f	6
+Survey selectivity coefficients	s_a^t	2
+Maturity-at-age coefficients	m ̂_a	2
+Total		170
+
+Two parameters are estimated with priors: natural mortality ($M∼N(0.06,0.003)$), and catchability ($q∼N(1,0.45)$).
+Fishery and survey selectivity are age-based and estimated to be asymptotic with a two-parameter logistic curve.
+
+
+The numbers of estimated parameters from model 24 are:
+
+```{r, eval = T}
+
+data.frame(Parameter = c("Natural mortality", "Catchability", "Log mean recruitment", 
+						"Spawners per recruit levels", "Recruitment deviations", 
+						"Average fishing mortality", "Fishing mortality deviations", 
+                   "Logistic fishery selectivity", "Logistic survey selectivity", 
+                    "Total"),
+           Symbol = c("M", "q", "\\mu_r",  "F_{35\\%},~F_{40\\%},~F_{50\\%}", "\\tau_y", "\\mu_F", "\\phi_y", "a_{f50\\%}, \\delta_f", "a_{s50\\%}, \\delta_s", "" ),
+           Number = c(1, 1, 1, 3, 114, 1, 66, 2, 2, 191)) %>% 
+  flextable::flextable() %>% 
+  flextable::compose(i = ~ Symbol != "", 
+    								 j="Symbol", 
+  									value=flextable::as_paragraph(flextable::as_equation(Symbol))) %>% 
+  flextable::padding(padding = 0.8, part = "all") %>% 
+  flextable::autofit() %>% 
+  flextable::width(j=1, width=2) %>% 
+  flextable::width(j=2, width=2) %>% 
+  flextable::align(j=2, part='header', align='right') %>% 
+  flextable::align(j=2, part='body', align='right') %>% 
+  # flextable::height(height=0.15, part='body') %>% 
+  flextable::hrule(rule='exact', part='body') %>% 
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+    flextable::fontsize(size = 11, part = "all") 
+```
+
+Evaluation of model uncertainty was obtained through a Markov Chain Monte Carlo (MCMC) algorithm [@sparsenuts]. 
+The MCMC was setup with 5 chains over 2,000 iterations, with a warmup of 400 iterations. 
+There were six divergences after the warmup, the minimum effective sample size was 461, and the maximum Rhat was 1.021.
+We use these MCMC methods to provide further evaluation of uncertainty in the results below including 95% credible intervals for some parameters (computed as the 5^th^ and 95^th^ percentiles of the MCMC samples).
